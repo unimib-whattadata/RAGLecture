@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Building a RAG System with LangChain and ICD-11</title>
+
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+
+    <style>
+        .reveal .slides {
+            text-align: left;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-align: center;
+        }
+        .reveal .slides section {
+            padding: 20px;
+        }
+        .reveal pre {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .reveal code {
+            font-family: 'Fira Code', monospace;
+        }
+        .reveal .fragment {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .reveal .fragment.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .reveal ul {
+            margin-left: 2em;
+        }
+        .reveal li {
+            margin-bottom: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Title Slide -->
+            <section>
+                <h1>Building a RAG System</h1>
+                <h3>with LangChain and ICD-11 Data</h3>
+                <p>Use arrow keys or swipe to navigate</p>
+            </section>
+
+            <!-- Objectives -->
+            <section>
+                <h2>Objectives</h2>
+                <ul>
+                    <li class="fragment fade-in">Understand Retrieval Augmented Generation (RAG)</li>
+                    <li class="fragment fade-in">Learn to acquire and preprocess ICD-11 data</li>
+                    <li class="fragment fade-in">Utilize LangChain components:
+                        <ul>
+                            <li>Document Loaders</li>
+                            <li>Text Splitters</li>
+                            <li>Embedding Models</li>
+                            <li>Vector Stores</li>
+                            <li>Language Models</li>
+                        </ul>
+                    </li>
+                    <li class="fragment fade-in">Build and query a RAG chain</li>
+                </ul>
+            </section>
+
+            <!-- Understanding ICD-11 -->
+            <section>
+                <section>
+                    <h2>Understanding ICD-11</h2>
+                    <p class="fragment fade-in">International Classification of Diseases, 11th Revision</p>
+                    <ul>
+                        <li class="fragment fade-in">Global standard for health information</li>
+                        <li class="fragment fade-in">Used for disease classification and statistics</li>
+                        <li class="fragment fade-in">Contains detailed medical information</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>ICD-11 Data Structure</h2>
+                    <ul>
+                        <li class="fragment fade-in">Codes: Unique identifiers for conditions</li>
+                        <li class="fragment fade-in">Titles: Names of conditions</li>
+                        <li class="fragment fade-in">Definitions: Detailed descriptions</li>
+                        <li class="fragment fade-in">Diagnostic Criteria: When available</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Prerequisites -->
+            <section>
+                <h2>Prerequisites</h2>
+                <ul>
+                    <li class="fragment fade-in">Python environment</li>
+                    <li class="fragment fade-in">Google API Key for Gemini</li>
+                    <li class="fragment fade-in">ICD-11 data (CSV format)</li>
+                    <li class="fragment fade-in">Required Python packages:
+                        <pre><code data-trim data-noescape class="language-python">
+pip install langchain langchain-community 
+pip install langchain-chroma langchain-google-genai 
+pip install python-dotenv requests pandas
+                        </code></pre>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Key Dependencies -->
+            <section>
+                <h2>Key Dependencies</h2>
+                <ul>
+                    <li class="fragment fade-in">
+                        <strong>LangChain:</strong> Framework for building LLM applications
+                    </li>
+                    <li class="fragment fade-in">
+                        <strong>ChromaDB:</strong> Vector database for storing embeddings
+                    </li>
+                    <li class="fragment fade-in">
+                        <strong>Google Generative AI:</strong> For LLM and embeddings
+                    </li>
+                    <li class="fragment fade-in">
+                        <strong>Pandas:</strong> Data manipulation and CSV handling
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Loading Data -->
+            <section>
+                <h2>Loading ICD-11 Data</h2>
+                <pre><code data-trim data-noescape class="language-python">
+def load_icd11_from_csv(file_path: str) -> list[Document]:
+    df = pd.read_csv(file_path, delimiter=';')
+    icd_documents = []
+    for index, row in df.iterrows():
+        content = f"ICD-11 Code: {row['code']}\nTitle: {row['title']}\nDefinition: {row['definition']}"
+        metadata = {"code": row["code"], "title": row["title"]}
+        icd_documents.append(Document(page_content=content, metadata=metadata))
+    return icd_documents
+                </code></pre>
+            </section>
+
+            <!-- Vector Store -->
+            <section>
+                <h2>Creating Vector Store</h2>
+                <pre><code data-trim data-noescape class="language-python">
+# Initialize embeddings
+embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+
+# Create or load vector store
+vectorstore = Chroma.from_documents(
+    documents=icd11_chunks,
+    embedding=embeddings,
+    persist_directory="./chroma_db"
+)
+
+# Create retriever
+retriever = vectorstore.as_retriever()
+                </code></pre>
+            </section>
+
+            <!-- RAG Chain -->
+            <section>
+                <h2>Building the RAG Chain</h2>
+                <pre><code data-trim data-noescape class="language-python">
+# Initialize LLM
+llm = ChatGoogleGenerativeAI(model="gemma-3-1b-it", temperature=0.7)
+
+# Create prompt template
+template = """You are a helpful assistant for medical information.
+Use the following context to answer the question.
+If you don't know, just say that you don't know.
+
+Context: {context}
+Question: {question}
+Answer:"""
+
+# Build RAG chain
+rag_chain = (
+    {"context": retriever, "question": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
+)
+                </code></pre>
+            </section>
+
+            <!-- Demo -->
+            <section>
+                <h2>System Demonstration</h2>
+                <div class="fragment fade-in">
+                    <h3>Example Queries:</h3>
+                    <ul>
+                        <li>"What is the ICD-11 code for Dissociative identity disorder?"</li>
+                        <li>"What is the definition of Anxiety?"</li>
+                        <li>"What is the capital of France?" (should return "I don't know")</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Next Steps -->
+            <section>
+                <h2>Next Steps & Improvements</h2>
+                <ul>
+                    <li class="fragment fade-in">Integrate with full WHO ICD-11 API</li>
+                    <li class="fragment fade-in">Implement advanced text splitting</li>
+                    <li class="fragment fade-in">Add hybrid search capabilities</li>
+                    <li class="fragment fade-in">Implement reranking</li>
+                    <li class="fragment fade-in">Build evaluation metrics</li>
+                    <li class="fragment fade-in">Create web interface</li>
+                    <li class="fragment fade-in">Add chat history support</li>
+                </ul>
+            </section>
+
+            <!-- Thank You -->
+            <section>
+                <h2>Thank You!</h2>
+                <p>For more information:</p>
+                <ul>
+                    <li><a href="https://revealjs.com">revealjs.com</a></li>
+                    <li><a href="https://python.langchain.com">python.langchain.com</a></li>
+                    <li><a href="https://icd.who.int">icd.who.int</a></li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <!-- Reveal.js JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/zoom/zoom.js"></script>
+
+    <script>
+        Reveal.initialize({
+            controls: true,
+            help: true,
+            keyboard: true,
+            overview: true,
+            center: true,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: null,
+            defaultTiming: null,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            viewDistance: 3,
+            parallaxBackgroundImage: '',
+            parallaxBackgroundSize: '',
+            parallaxBackgroundHorizontal: null,
+            parallaxBackgroundVertical: null,
+            display: 'block',
+
+            plugins: [
+                RevealMarkdown,
+                RevealHighlight,
+                RevealNotes,
+                RevealMath,
+                RevealZoom
+            ]
+        });
+    </script>
+</body>
+</html> 
