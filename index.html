@@ -4,12 +4,12 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Workshop: Building a RAG System with LangChain</title>
+		<title>Retrieval Augmented Generation, Large Language Models and Knowledge Bases</title>
 
 		<!-- Reveal.js CSS -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css">
 		<!-- Theme for professional, dark viewing -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/black.min.css" id="theme">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/theme/black.min.css" id="theme">
 
 		<!-- Code syntax highlighting theme for dark backgrounds -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
@@ -25,6 +25,11 @@
                 --r-code-font: 'Fira Code', 'Courier New', Courier, monospace;
                 --r-link-color: #42affa;
                 --r-link-color-hover: #79c5f8;
+                --tekhelet: #3d348bff;
+                --medium-slate-blue: #7678edff;
+                --selective-yellow: #f7b801ff;
+                --tangerine: #f18701ff;
+                --persimmon: #f35b04ff;
             }
 
             .reveal {
@@ -68,7 +73,6 @@
                 border: none;
                 box-shadow: none;
                 background: transparent !important;
-                filter: invert(1) grayscale(1) brightness(1.5); /* Make logo white for dark theme */
             }
 
             .reveal ul {
@@ -82,6 +86,32 @@
                 width: 1em;
                 margin-left: -1em;
             }
+
+            .reveal .speaker-name {
+                position: absolute;
+                bottom: 40px;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                font-size: 1.1em;
+                opacity: 0.95;
+            }
+
+            .reveal .gradient-title {
+                background: linear-gradient(120deg, var(--tekhelet), var(--medium-slate-blue), var(--selective-yellow), var(--tangerine), var(--persimmon), var(--tekhelet));
+                background-size: 300% 300%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                color: transparent;
+                animation: gradient-move 5s ease-in-out infinite;
+            }
+
+            @keyframes gradient-move {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
         </style>
 
 	</head>
@@ -90,20 +120,22 @@
 			<div class="slides">
 				
                 <!-- Title -->
-				<section>
-					<h1 style="color: #42affa;">Workshop: Building a RAG System</h1>
-                    <h3>with LangChain and ICD-11 Data</h3>
-                    <p class="small-text">A Hands-On Guide to Retrieval-Augmented Generation</p>
+				<section style="position: relative; min-height: 400px;">
+					<img src="imgs/AILC_Logo.png" alt="AILC Logo" class="logo" style="margin-bottom: 24px;" />
+					<h1 class="gradient-title">Retrieval Augmented Generation, Large Language Models and Knowledge Bases</h1>
+					<p class="small-text">Building a RAG System with LangChain and ICD-11 Data</p>
+                    <p>Speaker: Marco Cremaschi</p>
 				</section>
 
                 <!-- Agenda -->
 				<section>
 					<h2>Workshop Agenda</h2>
                     <ul>
-                        <li>Part 1: The Fundamentals (RAG & ICD-11)</li>
-                        <li>Part 2: Setup, Data Loading & Processing</li>
+                        <li class="fragment">Part 1: The Fundamentals (RAG & ICD-11)</li>
+                        <li class="fragment">Part 2: Setup, Data Loading & Processing</li>
                         <li class="fragment">Part 3: Embeddings & Vector Stores</li>
                         <li class="fragment">Part 4: Building & Querying the RAG Chain</li>
+                        <li class="fragment">Part 5: Building a RAG System with LangChain</li>
                         <li class="fragment">Conclusion & Q&A</li>
                     </ul>
 				</section>
@@ -489,10 +521,10 @@ ask_rag_system("What is the capital of France?")
 			</div>
 		</div>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/notes/notes.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/markdown/markdown.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/highlight.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/markdown/markdown.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js"></script>
 		<script>
 			Reveal.initialize({
                 view: 'scroll',
