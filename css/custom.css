@@ -1,0 +1,61 @@
+:root {
+  --tekhelet: #3b2a8c;
+  --medium-slate-blue: #7b6cff;
+  --selective-yellow: #ffb800;
+  --tangerine: #ff9500;
+  --persimmon: #ff6f3c;
+}
+
+.reveal h2.gradient-title {
+  background: linear-gradient(120deg, var(--tekhelet), var(--medium-slate-blue), var(--selective-yellow), var(--tangerine), var(--persimmon), var(--tekhelet));
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-move 5s ease-in-out infinite;
+}
+
+@keyframes gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.reveal section:first-of-type img.r-stretch {
+  max-width: 250px;
+  max-height: 120px;
+  margin-bottom: 20px;
+}
+
+.part-highlight {
+  color: var(--selective-yellow);
+  font-weight: bold;
+}
+
+.gradient-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tekhelet {
+  color: var(--tekhelet) !important;
+}
+.medium-slate-blue {
+  color: var(--medium-slate-blue) !important;
+}
+.selective-yellow {
+  color: var(--selective-yellow) !important;
+}
+.tangerine {
+  color: var(--tangerine) !important;
+}
+.persimmon {
+  color: var(--persimmon) !important;
+} 
