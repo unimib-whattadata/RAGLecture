@@ -6,7 +6,7 @@
   --persimmon: #ff6f3c;
 }
 
-.reveal h2.gradient-title {
+.gradient-title {
   background: linear-gradient(120deg, var(--tekhelet), var(--medium-slate-blue), var(--selective-yellow), var(--tangerine), var(--persimmon), var(--tekhelet));
   background-size: 300% 300%;
   -webkit-background-clip: text;

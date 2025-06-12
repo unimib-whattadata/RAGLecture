@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
 
-    <title>reveal.js</title>
+    <title>AICL Lectures 2025</title>
 
     <link rel="stylesheet" href="css/custom.css" />
     <link rel="stylesheet" href="dist/reset.css" />
@@ -20,6 +20,7 @@
   <body>
     <div class="reveal">
       <div class="slides">
+		<!-- Title -->
         <section>
           <img class="r-stretch" src="imgs/AILC_Logo.png" />
           <h2 class="gradient-title">
@@ -30,6 +31,8 @@
 
           <aside class="notes">Shhh, these are your private notes 📝</aside>
         </section>
+
+		<!-- Speaker and Helpers -->
         <section>
           <h2>Speaker and Helpers</h2>
           <div
@@ -93,26 +96,48 @@
 
 		<!-- What is RAG? -->
 		<section>
-				<h2>What is RAG?</h2>
-				<p>Retrieval-Augmented Generation (RAG) is an AI framework for improving the quality of LLM-generated responses by grounding the model on external sources of knowledge.</p>
-				<p class="fragment">It combines a retriever (to find relevant information) with a generator (an LLM to craft an answer).</p>
-				<img class="r-stretch" data-preview-image src="https://placehold.co/800x400/222222/EEEEEE?text=RAG+Architecture+Diagram" alt="RAG Architecture">
+			<h2>What is <span class="gradient-title">RAG</span>?</h2>
+			<p>Retrieval-Augmented Generation (RAG) is an AI framework for improving the quality of LLM-generated responses by grounding the model on external sources of knowledge</p>
+			<p class="fragment">It combines a retriever (to find relevant information) with a generator (an LLM to craft an answer).</p>
+		</section>
+
+		<!-- RAG architecture -->
+		<section  data-background-color="white">
+			<img src="imgs/rag_architecture.png" alt="RAG Architecture">
 		</section>
 						
-						<!-- What is ICD-11? -->
-						<section>
-							<section>
-								<h2>The Knowledge Base: ICD-11</h2>
-								<div class="left-align">
-									<p>The International Classification of Diseases, 11th Revision (ICD-11) is the global standard for diagnostic health information. You can learn more at the <a href="https://icd.who.int/en" target="_blank">official WHO site</a>.</p>
-									<ul>
-										<li>Developed and maintained by the World Health Organization (WHO).</li>
-										<li>Our RAG system will use this data to answer medical coding questions.</li>
-									</ul>
-								</div>
-								<img class="logo" src="https://placehold.co/200x150/000000/FFFFFF?text=WHO+Logo" alt="WHO Logo" onerror="this.onerror=null;this.src='https://placehold.co/200x150?text=Image+Not+Found';">
-							</section>
-						</section>
+		<!-- What is ICD-11? -->
+		<section>
+			<h2>The Knowledge Base: <span class="gradient-title">ICD-11</span></h2>
+
+			<p>The International Classification of Diseases, 11th Revision (ICD-11) is the global standard for diagnostic health information</p>
+			<p>The ICD-11 now catalogues roughly 85,000 distinct pathological entities, giving health professionals an unprecedented breadth of diagnostic detail.</p>
+			<p>You can learn more at the <a href="https://icd.who.int/en" target="_blank">official WHO site</a></p>
+		</section>
+
+				<!-- What is ICD-11? -->
+				<section   data-background-color="white">
+					<iframe src="https://icd.who.int/browse/2025-01/mms/en" width="100%" height="600"></iframe>
+				</section>
+
+		<!-- What is ICD-11? -->
+		<section>
+			<h2>The Knowledge Base: <span class="gradient-title">ICD-11</span></h2>
+			<ul>
+				<li>Our RAG system will use this data from Chapter 6 to obtain suggestions for diagnoses.</li>
+			</ul>	
+		</section>
+
+
+		<!-- What is ICD-11? -->
+		<section>
+			<h2>The Knowledge Base: <span class="gradient-title">ICD-11</span></h2>
+			<ul>
+				<li>Developed and maintained by the World Health Organization (WHO).</li>
+				<li>Our RAG system will use this data to answer medical coding questions.</li>
+			</ul>
+			<img class="logo" src="https://placehold.co/200x150/000000/FFFFFF?text=WHO+Logo" alt="WHO Logo" onerror="this.onerror=null;this.src='https://placehold.co/200x150?text=Image+Not+Found';">
+		</section>
 						
 						<!-- Prerequisites -->
 						<section>
