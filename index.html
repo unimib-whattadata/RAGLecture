@@ -241,7 +241,14 @@
               vector store.
             </p>
             <pre><code class="language-bash" data-line-numbers>
-		!pip install -qU langchain langchain-community langchain-chroma langchain-google-genai python-dotenv requests pandas
+		!pip install -qU langchain langchain-community
+								</code></pre>
+                            <pre><code class="language-bash" data-line-numbers>
+		!pip install -qU langchain-chroma langchain-google-genai
+								</code></pre>
+
+                            <pre><code class="language-bash" data-line-numbers>
+		!pip install -qU langchain python-dotenv requests pandas
 								</code></pre>
           </section>
           <section>
@@ -288,6 +295,33 @@
               We will write a custom function using `pandas` to read our
               specific CSV file and transform each row into a LangChain
               `Document`.
+            </p>
+          </section>
+                    <!-- ===== NEW SLIDES: TEXT SPLITTING ===== -->
+          <section>
+            <h3>Theory: Text Splitting for Retrieval</h3>
+            <p class="left-align">
+              Once raw documents are loaded, they often need to be broken down into
+              smaller, manageable chunks. This is crucial for effective retrieval because:
+            </p>
+            <ul class="left-align fragment">
+              <li>
+                <strong>Relevance:</strong> LLMs have context windows. Sending too much
+                irrelevant information can dilute the useful context. Smaller chunks
+                mean the retriever finds more *precise* relevant passages.
+              </li>
+              <li>
+                <strong>Efficiency:</strong> Embedding and retrieving smaller chunks
+                is faster and uses less memory.
+              </li>
+              <li>
+                <strong>Granularity:</strong> Ensures that retrieved information
+                is at the right level of detail for the LLM to synthesize.
+              </li>
+            </ul>
+            <p class="fragment left-align">
+              The goal is to split text intelligently, maintaining semantic coherence within
+              each chunk while ensuring no crucial information is cut off mid-sentence or mid-paragraph.
             </p>
           </section>
           <section>
@@ -655,7 +689,72 @@
             </ul>
           </div>
         </section>
-
+<section>
+          <section>
+            <h2>Part 5: Beyond Basics: Limitations & Next Steps</h2>
+            <p class="left-align">
+              While powerful, RAG systems are not without their challenges. Understanding
+              their limitations is key to building more robust and reliable applications.
+            </p>
+          </section>
+          <section>
+            <h3>Limitations of Basic RAG</h3>
+            <p class="left-align">
+              Our current RAG system is a solid foundation, but basic RAG can face issues:
+            </p>
+            <ul class="left-align">
+              <li class="fragment">
+                <strong>Context Window Issues:</strong> Even with splitting, very long or complex
+                retrieved contexts might still exceed LLM limits or dilute relevance.
+              </li>
+              <li class="fragment">
+                <strong>"Lost in the Middle":</strong> LLMs sometimes pay less attention to
+                information in the middle of a long context.
+              </li>
+              <li class="fragment">
+                <strong>Retrieval Quality:</strong> If the retriever doesn't find the *most*
+                relevant chunks, the LLM's answer will suffer. Semantic search isn't perfect.
+              </li>
+              <li class="fragment">
+                <strong>Hallucinations Persist:</strong> While reduced, LLMs can still
+                hallucinate if the retrieved context is ambiguous or insufficient.
+              </li>
+              <li class="fragment">
+                <strong>Data Freshness:</strong> The RAG system is only as current as its
+                knowledge base. Updating it requires re-indexing.
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>Advanced RAG Techniques</h3>
+            <p class="left-align">
+              To address these limitations, advanced RAG patterns exist:
+            </p>
+            <ul class="left-align">
+              <li class="fragment">
+                <strong>Query Transformation:</strong> Rewriting or expanding user queries
+                (e.g., adding keywords, generating multiple sub-queries) to improve retrieval.
+              </li>
+              <li class="fragment">
+                <strong>Re-ranking:</strong> After initial retrieval, use a separate
+                re-ranking model to score and reorder documents based on relevance,
+                ensuring the most pertinent ones are at the top.
+              </li>
+              <li class="fragment">
+                <strong>Hybird Search:</strong> Combining semantic search with traditional
+                keyword search (e.g., BM25) for more comprehensive retrieval.
+              </li>
+              <li class="fragment">
+                <strong>Multi-stage Retrieval:</strong> Using multiple retrieval steps,
+                perhaps first to identify broad topics, then specific details.
+              </li>
+              <li class="fragment">
+                <strong>Agentic RAG:</strong> Using an LLM to decide *how* to retrieve
+                information (e.g., searching different tools or databases).
+              </li>
+            </ul>
+          </section>
+          </section>
         <!-- ===== FURTHER READING ===== -->
         <section>
           <h2>For Further Reading</h2>
