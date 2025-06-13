@@ -57,27 +57,27 @@
             </div>
             <div style="text-align: center">
               <img
-			  src="imgs/dc-coloured.png"
+                src="imgs/fd-coloured.png"
                 alt="Giorgio Colombo"
                 style="max-width: 200px"
               />
-              <div style="margin-top: 10px">David Chieregato</div>
+              <div style="margin-top: 10px">Giorgio Colombo</div>
             </div>
-			<div style="text-align: center">
-				<img
-				  src="imgs/fd-coloured.png"
-				  alt="Giorgio Colombo"
-				  style="max-width: 200px"
-				/>
-				<div style="margin-top: 10px">Fabio D'Adda</div>
-			  </div>
             <div style="text-align: center">
               <img
-                src="imgs/dd-coloured.png"
-                alt="Davide Ditolve"
+                src="imgs/fd-coloured.png"
+                alt="Giorgio Colombo"
                 style="max-width: 200px"
               />
-              <div style="margin-top: 10px">Davide Ditolve</div>
+              <div style="margin-top: 10px">Giorgio Colombo</div>
+            </div>
+            <div style="text-align: center">
+              <img
+                src="imgs/dc-coloured.png"
+                alt="Davide Colombo"
+                style="max-width: 200px"
+              />
+              <div style="margin-top: 10px">Davide Colombo</div>
             </div>
           </div>
         </section>
@@ -95,7 +95,7 @@
               ICD-11)
             </li>
             <li class="fragment">
-              <span class="medium-slate-blue">Part 2</span>: Prerequisites, Setup, Data Loading
+              <span class="medium-slate-blue">Part 2</span>: Setup, Data Loading
               & Processing
             </li>
             <li class="fragment">
@@ -193,7 +193,7 @@
 
         <!-- ===== PREREQUISITES ===== -->
         <section>
-          <h2>Prerequisites</h2>
+          <h2 class="title-animate">Prerequisites</h2>
           <p>To follow along, you will need:</p>
           <ul>
             <li>
@@ -208,30 +208,30 @@
         <!-- ===== PART 1: SETUP ===== -->
         <section>
           <section>
-            <h2>Setup</h2>
+            <h2>Part 2: Project Setup</h2>
             <p class="left-align">
-              We begin by setting up a <img src="imgs/Python-Logo.png" alt="Python" style="height: 1em; vertical-align: middle;"> environment
-			  <p>This involves
+              We begin by setting up our Python environment. This involves
               installing all the necessary libraries that form the building
-              blocks of our application</p>
+              blocks of our application.
             </p>
           </section>
           <section>
-            <h3>Setup - Step 1.1: Installing Libraries</h3>
+            <h3>Step 1.1: Installing Libraries</h3>
             <p>
               We use `pip` to install LangChain and its related packages,
               including the integration for Google's AI models and the Chroma
-              vector store
+              vector store.
             </p>
-            <pre>
-				<code class="language-bash" data-line-numbers>!pip install -qU langchain langchain-community</code>
-			</pre>
-            <pre>
-				<code class="language-bash" data-line-numbers><!pip install -qU langchain-chroma langchain-google-genai</code>
-			</pre>
-			<pre>
-				<code class="language-bash" data-line-numbers>!pip install -qU langchain python-dotenv requests pandas</code>
-			</pre>
+            <pre><code class="language-bash" data-line-numbers>
+		!pip install -qU langchain langchain-community
+								</code></pre>
+                            <pre><code class="language-bash" data-line-numbers>
+		!pip install -qU langchain-chroma langchain-google-genai
+								</code></pre>
+
+                            <pre><code class="language-bash" data-line-numbers>
+		!pip install -qU langchain python-dotenv requests pandas
+								</code></pre>
           </section>
           <section>
             <h3>Theory: Securing Credentials</h3>
@@ -247,10 +247,9 @@
             </p>
           </section>
           <section>
-            <h3>Step 1.2: Configuring the API Key</h3>
+            <h3>First Code: Configuring the API Key</h3>
             <p>
-              This code checks if the Google API key is already in the
-              environment. If not, it securely prompts the user to enter it.
+              It's time to write our first lines of Python. The most crucial first step is to authenticate our script with Google's AI services. This code block handles that by securely loading our API key, which is like a password for our program.
             </p>
             <pre><code class="language-python" data-line-numbers>
 		import os

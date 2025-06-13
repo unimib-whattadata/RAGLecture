@@ -166,11 +166,12 @@
 
         <!-- ===== ICD-11 BROWSER ===== -->
         <section data-background-color="white">
-          <!--<iframe
+          <iframe
             src="https://icd.who.int/browse/2025-01/mms/en"
             width="100%"
             height="600"
-          ></iframe>-->
+            id="icd-iframe"
+          ></iframe>
         </section>
 
         <!-- ===== ICD-11 DATA USAGE ===== -->
@@ -199,7 +200,13 @@
             <li>
               <strong>Google API Key:</strong> get one from
               <a href="https://aistudio.google.com/app/apikey" target="_blank"
-                >Google AI Studio</a
+                >Google AI Studio <img src="imgs/Aistudio-logo.png" alt="Drive" style="height: 1em; vertical-align: middle;"></a
+              >
+            </li>
+            <li>
+              <strong>ICD-11 Chapter 6 Dataset:</strong> get from
+              <a href="https://drive.google.com/file/d/1ThIsNf1iuns9wlMZmBHOWRI9E6FiVgjQ/view?usp=drive_link" target="_blank"
+                >Drive <img src="imgs/Drive-Logo.png" alt="Drive" style="height: 1em; vertical-align: middle;"></a
               >
             </li>
           </ul>
@@ -216,7 +223,63 @@
               blocks of our application</p>
             </p>
           </section>
+        
           <section>
+                <h2>Our Tools: The Libraries</h2>
+                <p class="left-align">
+                    Python's power comes from its vast collection of libraries—pre-packaged code that we can use. Here are the key ones for our project:
+                </p>
+                <ul class="left-align">
+                    <li class="fragment"><strong>LangChain <img src="imgs/langchain-logo.png" alt="Python" style="height: 0.5em; vertical-align: middle;">:</strong> The main framework for creating applications with LLMs.</li>
+                    <li class="fragment"><strong>Pandas <img src="imgs/pandas-logo.png" alt="Python" style="height: 0.5em; vertical-align: middle;">:</strong> A powerful tool for reading and manipulating data, like our CSV file.</li>
+                    <li class="fragment"><strong>Chroma <img src="imgs/chroma-logo.png" alt="Python" style="height: 0.5em; vertical-align: middle;">:</strong> A special database (vector store) for storing and searching our text data efficiently.</li>
+                    <li class="fragment"><strong>Google GenAI <img src="imgs/google-icon.png" alt="Python" style="height: 0.5em; vertical-align: middle;">:</strong> The library that lets us connect to and use Google's powerful AI models.</li>
+                </ul>
+            </section>
+            <section>
+                <h2>What is an <code>import</code> Statement?</h2>
+                <p class="left-align">
+                    Think of libraries as toolboxes. An <code>import</code> statement is how we tell Python to open a toolbox and take out a specific tool to use.
+                </p>
+                <pre class="fragment"><code class="language-python" data-line-numbers># This line says: "From the langchain toolbox, get me the 'Document' tool."
+from langchain_core.documents import Document
+
+# Now we can use the 'Document' tool in our code.
+my_doc = Document(page_content="This is a sample document.")
+                </code></pre>
+                <p class="fragment left-align">
+                    Without importing, Python wouldn't know what a `Document` is.
+                </p>
+            </section>
+            <section>
+                <h2>Local Environment vs. Google Colab</h2>
+                <p class="left-align">You can run Python code in different places:</p>
+                <div style="display: flex; gap: 20px;">
+                    <div class="fragment" style="flex: 1; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
+                        <h4>Your PC</h4>
+                        <ul>
+                            <li><strong>Setup:</strong> You install Python and libraries yourself.</li>
+                            <li><strong>Control:</strong> You have full control</li>
+                            <li><strong>Offline:</strong> Works without internet.</li>
+                        </ul>
+                    </div>
+                    <div class="fragment" style="flex: 1; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
+                        <h4>Google Colab</h4>
+                        <ul>
+                            <li><strong>Setup:</strong> No setup needed!</li>
+                            <li><strong>Pre-installed:</strong> Many libraries are already available.</li>
+                            <li><strong>Hardware:</strong> Free access to powerful hardware.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h2>Installing Libraries</h2>
+                 <p class="fragment left-align" style="margin-top: 20px;">
+                    For this workshop, both work perfectly fine! Colab is often easier to start with.
+                 </p>
+            </section>
+            <section>
             <h3>Setup - Step 1.1: Installing Libraries</h3>
             <p>
               We use `pip` to install LangChain and its related packages,
@@ -224,15 +287,130 @@
               vector store
             </p>
             <pre>
-				<code data-line-numbers="1|2|3"  data-trim data-noescape>
-pip install -qU python-dotenv requests pandas
-pip install -qU langchain langchain-community
-pip install -qU langchain-google-genai
-pip install -qU langchain-chroma
+				<code data-line-numbers="1|2|3|4"  data-trim data-noescape>
+          pip install -qU python-dotenv requests pandas
+          pip install -qU langchain langchain-community
+          pip install -qU langchain-google-genai
+          pip install -qU langchain-chroma
 				</code>
 			</pre>
           </section>
+          <section>
+            <h3>Theory: Securing Credentials</h3>
+            <p class="left-align">
+              Hard-coding sensitive information like API keys directly in the
+              source code is a major security risk. A best practice is to load
+              them from environment variables, which keeps them separate from
+              the code.
+            </p>
+            <p class="fragment left-align">
+              The `python-dotenv` library helps manage this by loading variables
+              from a `.env` file for local development.
+            </p>
+          </section>
+          <section>
+            <h3>First Code: Configuring the API Key</h3>
+            <p>
+              It's time to write our first lines of Python. The most crucial first step is to authenticate our script with Google's AI services. This code block handles that by securely loading our API key, which is like a password for our program.
+            </p>
+            <pre><code class="language-python" data-line-numbers="1-3|5-6|8-10" data-trim data-noescape>
+		import os
+		import getpass
+		from dotenv import load_dotenv
+		
+		# Load environment variables from .env file (optional)
+		load_dotenv()
+		
+		# Get Google API Key
+		if "GOOGLE_API_KEY" not in os.environ:
+			os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter your Google API Key: ")
+								</code></pre>
+          </section>
+          <section>
+            <h3>Theory: Loading External Data</h3>
+            <p class="fragment left-align">
+              The first step in the RAG process is "Retrieval". This requires
+              loading our external knowledge into a format the application can
+              use. LangChain provides `Document` objects for this, which contain
+              text (`page_content`) and associated metadata.
+            </p>
+            <p class="fragment left-align">
+              We will write a custom function using `pandas` to read our
+              specific CSV file and transform each row into a LangChain
+              `Document`.
+            </p>
+          </section>
+          <section>
+            <h3>Theory: Why Split Text for Retrieval?</h3>
+            <p class="left-align">
+              Once raw documents are loaded, they often need to be broken down into
+              smaller, manageable chunks. This is crucial for effective retrieval because:
+            </p>
+            <p class="fragment left-align">
+              The goal is to split text intelligently, maintaining semantic coherence within
+              each chunk while ensuring no crucial information is cut off mid-sentence or mid-paragraph.
+            </p>
+          </section>
+          <section>
+            <h3>Theory: The Goal of Splitting</h3>
+            <ul class="left-align">
+              <li class="fragment">
+                <strong>Relevance:</strong> LLMs have context windows. Sending too much
+                irrelevant information can dilute the useful context. Smaller chunks
+                mean the retriever finds more <strong>precise</strong> relevant passages.
+              </li>
+              <li class="fragment">
+                <strong>Efficiency:</strong> Embedding and retrieving smaller chunks
+                is faster and uses less memory.
+              </li>
+              <li class="fragment">
+                <strong>Granularity:</strong> Ensures that retrieved information
+                is at the right level of detail for the LLM to synthesize.
+              </li>
+            </ul>
+          </section>
+                    <section>
+            <h3>Our Data Format: The CSV File</h3>
+             <p class="left-align">
+                Our ICD-11 knowledge is stored in a <strong>CSV (Comma-Separated Values)</strong> file. It's one of the simplest and most common ways to store tabular data.
+             </p>
+             <p class="fragment left-align">
+                Think of it as a plain text spreadsheet. Each line is a row, and commas separate the columns. Because it's so simple, it's incredibly easy for almost any programming language, including Python, to read and work with.
+             </p>
+          </section>
+          <section>
+            <h3>Step 1.3: Implementing the CSV Loader</h3>
+            <p>
+              The function in the next slide reads the `icdchapter6.csv` file, iterates through
+              each row, and creates a `Document` object with formatted content
+              and metadata.
+            </p>
 
+          </section>
+          
+          <section>
+            <h3>Step 1.3: Implementing the CSV Loader</h3>
+            <pre><code class="language-python" data-line-numbers="1-3|4-14|16-18">import pandas as pd
+from langchain_core.documents import Document
+
+def load_icd11_from_csv(file_path: str) -> list[Document]:
+			df = pd.read_csv(file_path, delimiter=';')
+			icd_documents = []
+			for index, row in df.iterrows():
+				content = (f"ICD-11 Code: {row['code']}\\n"
+						   f"Title: {row['title']}\\n"
+						   f"Definition: {row['definition']}")
+				metadata = {"code": row['code'], "title": row['title']}
+				doc = Document(page_content=content, metadata=metadata)
+				icd_documents.append(doc)
+			return icd_documents
+		
+# Let's load the documents
+icd11_documents = load_icd11_from_csv('icdchapter6.csv')
+print(f"Loaded {len(icd11_documents)} documents.")
+								 </code></pre>
+          </section>
+        </section>
         <!-- ===== Q&A ===== -->
         <section>
           <h2>Questions?</h2>
@@ -311,6 +489,17 @@ pip install -qU langchain-chroma
           animateNumber(element, 0, 85000, 2000); // 2 seconds duration
         }
       });
+
+        Reveal.addEventListener('slidechanged', function(event) {
+    // Check if the current slide contains the iframe
+    if (event.currentSlide.querySelector('#icd-iframe')) {
+      // Briefly delay and then blur the iframe to prevent immediate refocus
+      setTimeout(function() {
+        document.getElementById('icd-iframe').blur();
+      }, 100);
+    }
+  });
+
     </script>
   </body>
 </html>
