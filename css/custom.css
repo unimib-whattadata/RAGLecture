@@ -58,4 +58,69 @@
 }
 .persimmon {
   color: var(--persimmon) !important;
+}
+
+/* Title animation */
+.title-animate {
+  position: relative;
+  opacity: 0;
+  animation: titleReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.title-animate::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 0.2em;
+  background: linear-gradient(
+    120deg,
+    var(--tekhelet) 0%,
+    var(--tekhelet) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 0.2em;
+  background-position: 0 88%;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: titleLine 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes titleReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes titleLine {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+/* Number animation */
+.highlight-number {
+  background: linear-gradient(
+    120deg,
+    var(--selective-yellow) 0%,
+    var(--selective-yellow) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 0.2em;
+  background-position: 0 88%;
+  transition: background-size 0.25s ease-in;
+}
+
+.highlight-number.active {
+  background-size: 100% 100%;
 } 

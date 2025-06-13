@@ -16,42 +16,9 @@
 
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="plugin/highlight/monokai.css" />
-    <style>
-      .highlight-number {
-        background: linear-gradient(
-          120deg,
-          var(--selective-yellow) 0%,
-          var(--selective-yellow) 100%
-        );
-        background-repeat: no-repeat;
-        background-size: 100% 0.2em;
-        background-position: 0 88%;
-        transition: background-size 0.25s ease-in;
-      }
-      .highlight-number.active {
-        background-size: 100% 100%;
-      }
-      /* Title animation */
-      .title-animate {
-        opacity: 0;
-        transform: translateY(30px) scale(0.9);
-        animation: titleFadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-      }
-      @keyframes titleFadeIn {
-        0% {
-          opacity: 0;
-          transform: translateY(30px) scale(0.9);
-        }
-        50% {
-          opacity: 0.5;
-          transform: translateY(15px) scale(0.95);
-        }
-        100% {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-      }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
   </head>
   <body>
     <div class="reveal">
@@ -147,6 +114,13 @@
           </ul>
         </section>
 
+        <!-- ===== PREREQUISITES ===== -->
+        <section>
+          <h2 class="title-animate">
+            <span class="tekhelet">Part 1</span>: The Fundamentals
+          </h2>
+        </section>
+
         <!-- ===== WHAT IS RAG ===== -->
         <section>
           <h2>What is <span class="gradient-title">RAG</span>?</h2>
@@ -212,36 +186,23 @@
 
         <!-- ===== PREREQUISITES ===== -->
         <section>
+          <h2 class="title-animate">
+            <span class="medium-slate-blue">Part 2</span>: Project Setup
+          </h2>
+        </section>
+
+        <!-- ===== PREREQUISITES ===== -->
+        <section>
           <h2 class="title-animate">Prerequisites</h2>
-        </section>
-
-        <!-- ===== PREREQUISITES ===== -->
-        <section>
-            <p>To follow along, you will need:</p>
-            <ul>
-              <li>
-                <strong>Google API Key:</strong> get one from
-                <a href="https://aistudio.google.com/app/apikey" target="_blank"
-                  >Google AI Studio</a
-                >
-              </li>
-            </ul>
-        </section>
-
-        <!-- ===== PREREQUISITES ===== -->
-        <section>
-          <h2>Prerequisites</h2>
-          <div class="left-align">
-            <p>To follow along, you will need:</p>
-            <ul>
-              <li>
-                <strong>Google API Key:</strong> get one from
-                <a href="https://aistudio.google.com/app/apikey" target="_blank"
-                  >Google AI Studio</a
-                >
-              </li>
-            </ul>
-          </div>
+          <p>To follow along, you will need:</p>
+          <ul>
+            <li>
+              <strong>Google API Key:</strong> get one from
+              <a href="https://aistudio.google.com/app/apikey" target="_blank"
+                >Google AI Studio</a
+              >
+            </li>
+          </ul>
         </section>
 
         <!-- ===== PART 1: SETUP ===== -->
@@ -831,15 +792,31 @@
       });
 
       // Reset and replay title animation
-      Reveal.on("slidechanged", (event) => {
-        const title = event.currentSlide.querySelector(".title-animate");
+      Reveal.on('slidechanged', event => {
+        const title = event.currentSlide.querySelector('.title-animate');
         if (title) {
+          // Get the color class from the span
+          const colorSpan = title.querySelector('span');
+          if (colorSpan) {
+            const colorClass = colorSpan.className;
+            const colorVar = `var(--${colorClass})`;
+            
+            // Update the ::after pseudo-element color
+            const style = document.createElement('style');
+            style.textContent = `
+              .title-animate::after {
+                background: linear-gradient(120deg, ${colorVar} 0%, ${colorVar} 100%) !important;
+              }
+            `;
+            document.head.appendChild(style);
+          }
+
           // Remove the class to reset the animation
-          title.classList.remove("title-animate");
+          title.classList.remove('title-animate');
           // Force a reflow
           void title.offsetWidth;
           // Add the class back to restart the animation
-          title.classList.add("title-animate");
+          title.classList.add('title-animate');
         }
       });
 
