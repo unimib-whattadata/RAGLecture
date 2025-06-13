@@ -31,6 +31,26 @@
       .highlight-number.active {
         background-size: 100% 100%;
       }
+      /* Title animation */
+      .title-animate {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+        animation: titleFadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      @keyframes titleFadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(30px) scale(0.9);
+        }
+        50% {
+          opacity: 0.5;
+          transform: translateY(15px) scale(0.95);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
     </style>
   </head>
   <body>
@@ -97,9 +117,13 @@
 
         <!-- ===== AGENDA ===== -->
         <section>
-          <h2>Workshop Agenda</h2>
+          <h2 class="title-animate">Workshop Agenda</h2>
+        </section>
+
+        <!-- ===== AGENDA ===== -->
+        <section>
           <ul class="gradient-list">
-            <li class="fragment">
+            <li>
               <span class="tekhelet">Part 1</span>: The Fundamentals (RAG &
               ICD-11)
             </li>
@@ -133,7 +157,7 @@
           </p>
           <p class="fragment">
             It combines a retriever (to find relevant information) with a
-            generator (an LLM to craft an answer).
+            generator (an LLM to craft an answer)
           </p>
         </section>
 
@@ -188,13 +212,11 @@
 
         <!-- ===== PREREQUISITES ===== -->
         <section>
-          <h2>Prerequisites</h2>
+          <h2 class="title-animate">Prerequisites</h2>
         </section>
 
         <!-- ===== PREREQUISITES ===== -->
         <section>
-          <h2>Prerequisites</h2>
-          <div class="left-align">
             <p>To follow along, you will need:</p>
             <ul>
               <li>
@@ -204,7 +226,6 @@
                 >
               </li>
             </ul>
-          </div>
         </section>
 
         <!-- ===== PREREQUISITES ===== -->
@@ -807,6 +828,19 @@
         view: "scroll",
         scrollProgress: true,
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+
+      // Reset and replay title animation
+      Reveal.on("slidechanged", (event) => {
+        const title = event.currentSlide.querySelector(".title-animate");
+        if (title) {
+          // Remove the class to reset the animation
+          title.classList.remove("title-animate");
+          // Force a reflow
+          void title.offsetWidth;
+          // Add the class back to restart the animation
+          title.classList.add("title-animate");
+        }
       });
 
       // Add counting animation
