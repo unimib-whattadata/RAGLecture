@@ -410,6 +410,268 @@ icd11_documents = load_icd11_from_csv('icdchapter6.csv')
 print(f"Loaded {len(icd11_documents)} documents.")
 								 </code></pre>
           </section>
+          <section>
+            <h3>Why These Data Fields? Structuring the Context</h3>
+            <p class="left-align">
+                In our loader, we combined the <strong>code</strong>, <strong>title</strong>, and <strong>definition</strong> for a reason.
+            </p>
+            <ul class="left-align fragment">
+                <li><strong>Code & Title:</strong> These provide clear, structured identifiers. They are perfect for when the LLM needs to give a precise, factual answer.</li>
+                <li><strong>Definition:</strong> This is the most important part for our retriever. It contains the rich, descriptive text that allows for effective <strong>semantic search</strong>, helping the system find relevant concepts even if the query doesn't use exact keywords.</li>
+            </ul>
+          </section>
+        <section>
+          <h3>Why These Data Fields? Structuring the Context</h3>
+             <p class="left-align">
+                By combining them, we create a comprehensive `Document` that gives the LLM everything it needs: a unique ID, a clear label, and a detailed description to inform its answer.
+             </p>
+          </section>
+          <section>
+            <h2>Workshop Checkpoint 1</h2>
+            <p>
+              Your script should now handle installation, API keys, and data
+              loading.
+            </p>
+            <pre><code class="language-python">
+		import os, getpass
+		from dotenv import load_dotenv
+		import pandas as pd
+		from langchain_core.documents import Document
+		
+		# API KEY SETUP
+		load_dotenv()
+		if "GOOGLE_API_KEY" not in os.environ:
+			os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter Google API Key: ")
+		
+		# DATA LOADING FUNCTION
+		def load_icd11_from_csv(file_path: str) -> list[Document]:
+			try:
+				df = pd.read_csv(file_path, delimiter=';'); docs = []
+				for i, row in df.iterrows():
+					c = (f"ICD-11 Code: {row['code']}\\n"
+						 f"Title: {row['title']}\\n"
+						 f"Definition: {row['definition']}")
+					docs.append(Document(page_content=c, metadata={"code": row['code'], "title": row['title']}))
+				return docs
+			except FileNotFoundError: return []
+		
+		# EXECUTE LOADING
+		icd11_documents = load_icd11_from_csv('icdchapter6.csv')
+		if icd11_documents:
+			print(f"Loaded {len(icd11_documents)} documents.")
+			icd11_chunks = icd11_documents
+		else:
+			print("Failed to load documents.")
+								</code></pre>
+          </section>
+        </section>
+        <!-- ===== TITLE SLIDE ===== -->
+         <section>
+          <section>
+            <h2>Part 3: Embeddings & Vector Stores</h2>
+            <p class="left-align">
+              Now that we have our data loaded, we need to make it searchable.
+              We'll do this by converting our text into numerical
+              representations and storing them in a specialized database.
+            </p>
+          </section>
+          <section>
+            <h3>Theory: Creating Text Embeddings</h3>
+            <p class="left-align">
+              To find relevant information, we can't just match keywords. We
+              need to understand the <strong>meaning</strong> or <strong>semantic content</strong> of the
+              text.
+            </p>
+            <p class="fragment left-align">
+              <strong>Embeddings</strong> are numerical vectors that represent
+              this semantic meaning. An embedding model converts our text
+              documents into these vectors, placing similar concepts close to
+              each other in vector space.
+            </p>
+          </section>
+          <section>
+              <h3>A Note on Debugging</h3>
+              <p class="left-align">
+                  Errors are a normal part of coding! <strong>Debugging</strong> is the process of finding and fixing them. No one writes perfect code on the first try.
+              </p>
+              <p class="fragment left-align">
+                  The simplest yet most powerful tool in your debugging toolkit is the <code>print()</code> statement. If you're not sure what a variable holds or if a line of code is being reached, just print it! In Colab, the output will appear right below the code cell.
+              </p>
+          </section>
+          <section>
+                          <h3>A Note on Debugging</h3>
+                          <p>You can print text, variables or both. Here are some examples:
+</p>
+            <pre class="fragment"><code class="language-python" data-line-numbers="1|2|3">print("just a literal text")
+print(variable_name)
+print(f"String interpolation: {variable_name}")
+               </code></pre>
+          </section>
+          <section>
+            <h3>Step 2.1: Initializing the Embedding Model</h3>
+            <p>
+              We'll use Google's `embedding-001` model via the
+              `GoogleGenerativeAIEmbeddings` class in LangChain to perform this
+              conversion.
+            </p>
+            <pre><code class="language-python" data-line-numbers>from langchain_google_genai import GoogleGenerativeAIEmbeddings
+		
+# Initialize the embedding model
+embeddings = GoogleGenerativeAIEmbeddings(
+  model="models/embedding-001"
+)
+print("Embedding model initialized.")
+</code></pre>
+          </section>
+          <section>
+            <h3>Theory: Indexing in a Vector Store</h3>
+            <p class="left-align">
+              Searching through thousands of embeddings one-by-one would be very
+              slow. A <strong>Vector Store</strong> is a specialized database
+              designed to store and efficiently search these high-dimensional
+              vectors using fast algorithms like Approximate Nearest Neighbor
+              (ANN) search.
+            </p>
+            <p class="fragment left-align">
+              We will use <strong>ChromaDB</strong>, a popular open-source
+              vector store that runs in memory but can be persisted to disk to
+              avoid re-processing.
+            </p>
+          </section>
+<section>
+  <h3>Important notes on vector stores</h3>
+<p class="fragment left-align">
+The embedding process requires lot of computation power, and we do not want to repeat each time
+</p>
+<p class="fragment left-align">
+For this example we are going to store on a local disk the vectorstore, so we can retrieve multiples times without reprocessing the embeddings
+</p>
+</section>
+<section>
+            <h3>Step 2.2: Creating the Vector Store</h3>
+            <p>
+              This code creates a new Chroma database from our documents and
+              embeddings if one doesn't already exist, or loads the existing one
+              from disk.
+            </p>
+            <pre><code class="language-python" data-line-numbers="1-4|6-11|12-17|19-21">from langchain_chroma import Chroma
+import os
+		
+persist_directory = "./chroma_db_workshop"
+		
+# Load from disk if it exists, otherwise create it
+if os.path.exists(persist_directory):
+	vectorstore = Chroma(
+	persist_directory=persist_directory,
+	embedding_function=embeddings
+	)
+else:
+	vectorstore = Chroma.from_documents(
+				documents=icd11_chunks,
+				embedding=embeddings,
+				persist_directory=persist_directory
+			)
+		
+# The retriever is our interface for searching
+retriever = vectorstore.as_retriever()
+print("Retriever is ready.")
+								</code></pre>
+          </section>
+          <section>
+            <h2>Workshop Checkpoint 2</h2>
+            <p>
+              Your script should now include the embedding model and vector
+              store creation.
+            </p>
+            <pre><code class="language-python">
+		# ... (previous code from Checkpoint 1) ...
+		from langchain_google_genai import GoogleGenerativeAIEmbeddings
+		from langchain_chroma import Chroma
+		
+		# ... (API Key and Data Loading code) ...
+		icd11_chunks = load_icd11_from_csv('icdchapter6.csv')
+		print(f"Loaded {len(icd11_chunks)} chunks.")
+		
+		# EMBEDDING MODEL
+		embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+		
+		# VECTOR STORE
+		persist_directory = "./chroma_db_workshop"
+		if os.path.exists(persist_directory) and os.listdir(persist_directory):
+			vectorstore = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
+			print("Loaded existing vector store.")
+		else:
+			vectorstore = Chroma.from_documents(documents=icd11_chunks, embedding=embeddings, persist_directory=persist_directory)
+			print("Created new vector store.")
+		
+		retriever = vectorstore.as_retriever()
+		print("Retriever is ready.")
+								 </code></pre>
+          </section>
+         </section>
+        <!-- ===== RAG ===== -->
+        <section>
+          <section>
+            <h2>Part 3: Building & Querying the RAG Chain</h2>
+            <p class="left-align">
+              Now we have all the components: a retriever to fetch data and an
+              LLM to generate answers. The final step is to orchestrate them
+              into a single, cohesive application.
+            </p>
+          </section>
+          <section>
+            <h3>Theory: Composing with LCEL</h3>
+            <p class="left-align">
+              <strong>LangChain Expression Language (LCEL)</strong> is a
+              declarative way to compose components into chains. The pipe (`|`)
+              operator connects each step, passing the output of one step as the
+              input to the next.
+            </p>
+            <div class="fragment left-align">
+              <p>Our chain will be:</p>
+              <ol>
+                <li>The user's question retrieves context.</li>
+                <li>The question and context populate a prompt.</li>
+                <li>The prompt is sent to the LLM.</li>
+                <li>The LLM's response is parsed into a clean string.</li>
+              </ol>
+            </div>
+          </section>
+          <section>
+            <h3>The Art of the Prompt</h3>
+            <p class="left-align">A <strong>prompt</strong> is the set of instructions we give to the LLM. It's the most direct way we have to control its behavior.
+            </p>
+            <p class="fragment left-align">
+              <strong>Prompt Engineering</strong> is the skill of crafting these instructions to get the exact output you want. A good prompt is clear, specific, and provides all the necessary context for the model to succeed.
+            </p>
+          </section>
+          <section>
+            <h3>How RAG Uses a Prompt Template</h3>
+            <p class="left-align">
+              We don't write a new prompt for every user question. Instead, we use a <strong>template</strong>. LangChain dynamically inserts the retrieved context and the user's original question into the placeholders of this template.
+            </p>
+            <pre class="fragment"><code class="language-python">
+# Our template has two placeholders: {context} and {question}
+template = """Use the retrieved context to answer the question.
+
+Context: {context}
+Question: {question}"""
+
+# LangChain will automatically fill these in before sending to the LLM
+            </code></pre>
+          </section>
+          <section>
+            <h3>Giving Clear Instructions</h3>
+            <p class="left-align">
+              The most important part of our prompt is the instructions that guide the LLM's behavior. Consider this line:
+            </p>
+            <p class="fragment highlight-red" style="text-align: center; margin: 20px 0; font-style: italic;">
+              "If you don't know the answer, just say that you don't know."
+            </p>
+            <p class="fragment left-align">
+              This single instruction is critical for building a trustworthy system. It explicitly tells the LLM not to guess or "hallucinate" an answer if the information isn't in the retrieved context. This makes our RAG system more reliable and factual.
+            </p>
+          </section>
         </section>
         <!-- ===== Q&A ===== -->
         <section>
