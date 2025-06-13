@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>AICL Lectures 2025</title>
+
+    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- ===== TITLE SLIDE ===== -->
+        <section>
+          <img class="r-stretch" src="imgs/AILC_Logo.png" />
+          <h2 class="gradient-title">
+            Retrieval Augmented Generation, Large Language Models and Knowledge
+            Bases
+          </h2>
+          <p>Building a RAG System with LangChain and ICD-11 Data</p>
+
+          <aside class="notes">Shhh, these are your private notes 📝</aside>
+        </section>
+
+        <!-- ===== SPEAKER AND HELPERS ===== -->
+        <section>
+          <h2>Speaker and Helpers</h2>
+          <div
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: flex-start;
+              gap: 60px;
+              margin-top: 40px;
+            "
+          >
+            <div style="text-align: center">
+              <img
+                src="imgs/mc-coloured.png"
+                alt="Marco Cremaschi"
+                style="max-width: 200px"
+              />
+              <div style="margin-top: 10px">Marco Cremaschi</div>
+            </div>
+            <div style="text-align: center">
+              <img
+			  src="imgs/dc-coloured.png"
+                alt="Giorgio Colombo"
+                style="max-width: 200px"
+              />
+              <div style="margin-top: 10px">David Chieregato</div>
+            </div>
+			<div style="text-align: center">
+				<img
+				  src="imgs/fd-coloured.png"
+				  alt="Giorgio Colombo"
+				  style="max-width: 200px"
+				/>
+				<div style="margin-top: 10px">Fabio D'Adda</div>
+			  </div>
+            <div style="text-align: center">
+              <img
+                src="imgs/dd-coloured.png"
+                alt="Davide Ditolve"
+                style="max-width: 200px"
+              />
+              <div style="margin-top: 10px">Davide Ditolve</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== AGENDA ===== -->
+        <section>
+          <h2 class="title-animate">Workshop Agenda</h2>
+        </section>
+
+        <!-- ===== AGENDA ===== -->
+        <section>
+          <ul class="gradient-list">
+            <li>
+              <span class="tekhelet">Part 1</span>: The Fundamentals (RAG &
+              ICD-11)
+            </li>
+            <li class="fragment">
+              <span class="medium-slate-blue">Part 2</span>: Prerequisites, Setup, Data Loading
+              & Processing
+            </li>
+            <li class="fragment">
+              <span class="selective-yellow">Part 3</span>: Embeddings & Vector
+              Stores
+            </li>
+            <li class="fragment">
+              <span class="tangerine">Part 4</span>: Building & Querying the RAG
+              Chain
+            </li>
+            <li class="fragment">
+              <span class="persimmon">Part 5</span>: Building a RAG System with
+              LangChain
+            </li>
+            <li class="fragment">Conclusion & Q&A</li>
+          </ul>
+        </section>
+
+        <!-- ===== PREREQUISITES ===== -->
+        <section>
+          <h2 class="title-animate">
+            <span class="tekhelet">Part 1</span>: The Fundamentals
+          </h2>
+        </section>
+
+        <!-- ===== WHAT IS RAG ===== -->
+        <section>
+          <h2>What is <span class="gradient-title">RAG</span>?</h2>
+          <p>
+            Retrieval-Augmented Generation (RAG) is an AI framework for
+            improving the quality of LLM-generated responses by grounding the
+            model on external sources of knowledge
+          </p>
+          <p class="fragment">
+            It combines a retriever (to find relevant information) with a
+            generator (an LLM to craft an answer)
+          </p>
+        </section>
+
+        <!-- ===== RAG ARCHITECTURE ===== -->
+        <section data-background-color="white">
+          <img src="imgs/rag_architecture.png" alt="RAG Architecture" />
+        </section>
+
+        <!-- ===== WHAT IS ICD-11 ===== -->
+        <section>
+          <h2>
+            The Knowledge Base: <span class="gradient-title">ICD-11</span>
+          </h2>
+
+          <p>
+            The International Classification of Diseases, 11th Revision (ICD-11)
+            is the global standard for diagnostic health information
+          </p>
+          <p>
+            The ICD-11 now catalogues roughly
+            <span id="counting-number" class="highlight-number">0</span>
+            distinct pathological entities, giving health professionals an
+            unprecedented breadth of diagnostic detail
+          </p>
+          <p>
+            You can learn more at the
+            <a href="https://icd.who.int/en" target="_blank"
+              >official WHO site</a
+            >
+          </p>
+        </section>
+
+        <!-- ===== ICD-11 BROWSER ===== -->
+        <section data-background-color="white">
+          <!--<iframe
+            src="https://icd.who.int/browse/2025-01/mms/en"
+            width="100%"
+            height="600"
+          ></iframe>-->
+        </section>
+
+        <!-- ===== ICD-11 DATA USAGE ===== -->
+        <section>
+          <h2>
+            The Knowledge Base: <span class="gradient-title">ICD-11</span>
+          </h2>
+          <p>
+            Our RAG system will use this data from Chapter 6 to obtain
+            suggestions for diagnoses
+          </p>
+        </section>
+
+        <!-- ===== PREREQUISITES ===== -->
+        <section>
+          <h2 class="title-animate">
+            <span class="medium-slate-blue">Part 2</span>: Project Setup
+          </h2>
+        </section>
+
+        <!-- ===== PREREQUISITES ===== -->
+        <section>
+          <h2>Prerequisites</h2>
+          <p>To follow along, you will need:</p>
+          <ul>
+            <li>
+              <strong>Google API Key:</strong> get one from
+              <a href="https://aistudio.google.com/app/apikey" target="_blank"
+                >Google AI Studio</a
+              >
+            </li>
+          </ul>
+        </section>
+
+        <!-- ===== PART 1: SETUP ===== -->
+        <section>
+          <section>
+            <h2>Setup</h2>
+            <p class="left-align">
+              We begin by setting up a <img src="imgs/Python-Logo.png" alt="Python" style="height: 1em; vertical-align: middle;"> environment
+			  <p>This involves
+              installing all the necessary libraries that form the building
+              blocks of our application</p>
+            </p>
+          </section>
+          <section>
+            <h3>Setup - Step 1.1: Installing Libraries</h3>
+            <p>
+              We use `pip` to install LangChain and its related packages,
+              including the integration for Google's AI models and the Chroma
+              vector store
+            </p>
+            <pre>
+				<code class="language-bash" data-line-numbers>!pip install -qU langchain langchain-community</code>
+			</pre>
+            <pre>
+				<code class="language-bash" data-line-numbers><!pip install -qU langchain-chroma langchain-google-genai</code>
+			</pre>
+			<pre>
+				<code class="language-bash" data-line-numbers>!pip install -qU langchain python-dotenv requests pandas</code>
+			</pre>
+          </section>
+          <section>
+            <h3>Theory: Securing Credentials</h3>
+            <p class="left-align">
+              Hard-coding sensitive information like API keys directly in the
+              source code is a major security risk. A best practice is to load
+              them from environment variables, which keeps them separate from
+              the code.
+            </p>
+            <p class="fragment left-align">
+              The `python-dotenv` library helps manage this by loading variables
+              from a `.env` file for local development.
+            </p>
+          </section>
+          <section>
+            <h3>Step 1.2: Configuring the API Key</h3>
+            <p>
+              This code checks if the Google API key is already in the
+              environment. If not, it securely prompts the user to enter it.
+            </p>
+            <pre><code class="language-python" data-line-numbers>
+		import os
+		import getpass
+		from dotenv import load_dotenv
+		
+		# Load environment variables from .env file (optional)
+		load_dotenv()
+		
+		# Get Google API Key
+		if "GOOGLE_API_KEY" not in os.environ:
+			os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter your Google API Key: ")
+								</code></pre>
+          </section>
+          <section>
+            <h3>Theory: Loading External Data</h3>
+            <p class="left-align">
+              The first step in the RAG process is "Retrieval". This requires
+              loading our external knowledge into a format the application can
+              use. LangChain provides `Document` objects for this, which contain
+              text (`page_content`) and associated metadata.
+            </p>
+            <p class="fragment left-align">
+              We will write a custom function using `pandas` to read our
+              specific CSV file and transform each row into a LangChain
+              `Document`.
+            </p>
+          </section>
+                    <!-- ===== NEW SLIDES: TEXT SPLITTING ===== -->
+          <section>
+            <h3>Theory: Text Splitting for Retrieval</h3>
+            <p class="left-align">
+              Once raw documents are loaded, they often need to be broken down into
+              smaller, manageable chunks. This is crucial for effective retrieval because:
+            </p>
+            <ul class="left-align fragment">
+              <li>
+                <strong>Relevance:</strong> LLMs have context windows. Sending too much
+                irrelevant information can dilute the useful context. Smaller chunks
+                mean the retriever finds more *precise* relevant passages.
+              </li>
+              <li>
+                <strong>Efficiency:</strong> Embedding and retrieving smaller chunks
+                is faster and uses less memory.
+              </li>
+              <li>
+                <strong>Granularity:</strong> Ensures that retrieved information
+                is at the right level of detail for the LLM to synthesize.
+              </li>
+            </ul>
+            <p class="fragment left-align">
+              The goal is to split text intelligently, maintaining semantic coherence within
+              each chunk while ensuring no crucial information is cut off mid-sentence or mid-paragraph.
+            </p>
+          </section>
+          <section>
+            <h3>Step 1.3: Implementing the CSV Loader</h3>
+            <p>
+              This function reads the `icdchapter6.csv` file, iterates through
+              each row, and creates a `Document` object with formatted content
+              and metadata.
+            </p>
+            <pre><code class="language-python" data-line-numbers="1-15|17-18">
+		import pandas as pd
+		from langchain_core.documents import Document
+		
+		def load_icd11_from_csv(file_path: str) -> list[Document]:
+			df = pd.read_csv(file_path, delimiter=';')
+			icd_documents = []
+			for index, row in df.iterrows():
+				content = (f"ICD-11 Code: {row['code']}\\n"
+						   f"Title: {row['title']}\\n"
+						   f"Definition: {row['definition']}")
+				metadata = {"code": row['code'], "title": row['title']}
+				doc = Document(page_content=content, metadata=metadata)
+				icd_documents.append(doc)
+			return icd_documents
+		
+		# Let's load the documents
+		icd11_documents = load_icd11_from_csv('icdchapter6.csv')
+		print(f"Loaded {len(icd11_documents)} documents.")
+								 </code></pre>
+          </section>
+          <section>
+            <h2>Workshop Checkpoint 1</h2>
+            <p>
+              Your script should now handle installation, API keys, and data
+              loading.
+            </p>
+            <pre><code class="language-python">
+		import os, getpass
+		from dotenv import load_dotenv
+		import pandas as pd
+		from langchain_core.documents import Document
+		
+		# API KEY SETUP
+		load_dotenv()
+		if "GOOGLE_API_KEY" not in os.environ:
+			os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter Google API Key: ")
+		
+		# DATA LOADING FUNCTION
+		def load_icd11_from_csv(file_path: str) -> list[Document]:
+			try:
+				df = pd.read_csv(file_path, delimiter=';'); docs = []
+				for i, row in df.iterrows():
+					c = (f"ICD-11 Code: {row['code']}\\n"
+						 f"Title: {row['title']}\\n"
+						 f"Definition: {row['definition']}")
+					docs.append(Document(page_content=c, metadata={"code": row['code'], "title": row['title']}))
+				return docs
+			except FileNotFoundError: return []
+		
+		# EXECUTE LOADING
+		icd11_documents = load_icd11_from_csv('icdchapter6.csv')
+		if icd11_documents:
+			print(f"Loaded {len(icd11_documents)} documents.")
+			icd11_chunks = icd11_documents
+		else:
+			print("Failed to load documents.")
+								</code></pre>
+          </section>
+        </section>
+
+        <!-- ===== PART 2: EMBEDDINGS ===== -->
+        <section>
+          <section>
+            <h2>Part 3: Embeddings & Vector Stores</h2>
+            <p class="left-align">
+              Now that we have our data loaded, we need to make it searchable.
+              We'll do this by converting our text into numerical
+              representations and storing them in a specialized database.
+            </p>
+          </section>
+          <section>
+            <h3>Theory: Creating Text Embeddings</h3>
+            <p class="left-align">
+              To find relevant information, we can't just match keywords. We
+              need to understand the *meaning* or *semantic content* of the
+              text.
+            </p>
+            <p class="fragment left-align">
+              <strong>Embeddings</strong> are numerical vectors that represent
+              this semantic meaning. An embedding model converts our text
+              documents into these vectors, placing similar concepts close to
+              each other in vector space.
+            </p>
+          </section>
+          <section>
+            <h3>Step 2.1: Initializing the Embedding Model</h3>
+            <p>
+              We'll use Google's `embedding-001` model via the
+              `GoogleGenerativeAIEmbeddings` class in LangChain to perform this
+              conversion.
+            </p>
+            <pre><code class="language-python" data-line-numbers>
+		from langchain_google_genai import GoogleGenerativeAIEmbeddings
+		
+		# Initialize the embedding model
+		embeddings = GoogleGenerativeAIEmbeddings(
+			model="models/embedding-001"
+		)
+		
+		print("Embedding model initialized.")
+								 </code></pre>
+          </section>
+          <section>
+            <h3>Theory: Indexing in a Vector Store</h3>
+            <p class="left-align">
+              Searching through thousands of embeddings one-by-one would be very
+              slow. A <strong>Vector Store</strong> is a specialized database
+              designed to store and efficiently search these high-dimensional
+              vectors using fast algorithms like Approximate Nearest Neighbor
+              (ANN) search.
+            </p>
+            <p class="fragment left-align">
+              We will use <strong>ChromaDB</strong>, a popular open-source
+              vector store that runs in memory but can be persisted to disk to
+              avoid re-processing.
+            </p>
+          </section>
+          <section>
+            <h3>Step 2.2: Creating the Vector Store</h3>
+            <p>
+              This code creates a new Chroma database from our documents and
+              embeddings if one doesn't already exist, or loads the existing one
+              from disk.
+            </p>
+            <pre><code class="language-python" data-line-numbers>
+		from langchain_chroma import Chroma
+		import os
+		
+		persist_directory = "./chroma_db_workshop"
+		
+		# Load from disk if it exists, otherwise create it
+		if os.path.exists(persist_directory):
+			vectorstore = Chroma(
+				persist_directory=persist_directory,
+				embedding_function=embeddings
+			)
+		else:
+			vectorstore = Chroma.from_documents(
+				documents=icd11_chunks,
+				embedding=embeddings,
+				persist_directory=persist_directory
+			)
+		
+		# The retriever is our interface for searching
+		retriever = vectorstore.as_retriever()
+		print("Retriever is ready.")
+								</code></pre>
+          </section>
+          <section>
+            <h2>Workshop Checkpoint 2</h2>
+            <p>
+              Your script should now include the embedding model and vector
+              store creation.
+            </p>
+            <pre><code class="language-python">
+		# ... (previous code from Checkpoint 1) ...
+		from langchain_google_genai import GoogleGenerativeAIEmbeddings
+		from langchain_chroma import Chroma
+		
+		# ... (API Key and Data Loading code) ...
+		icd11_chunks = load_icd11_from_csv('icdchapter6.csv')
+		print(f"Loaded {len(icd11_chunks)} chunks.")
+		
+		# EMBEDDING MODEL
+		embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+		
+		# VECTOR STORE
+		persist_directory = "./chroma_db_workshop"
+		if os.path.exists(persist_directory) and os.listdir(persist_directory):
+			vectorstore = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
+			print("Loaded existing vector store.")
+		else:
+			vectorstore = Chroma.from_documents(documents=icd11_chunks, embedding=embeddings, persist_directory=persist_directory)
+			print("Created new vector store.")
+		
+		retriever = vectorstore.as_retriever()
+		print("Retriever is ready.")
+								 </code></pre>
+          </section>
+        </section>
+
+        <!-- ===== PART 3: RAG CHAIN ===== -->
+        <section>
+          <section>
+            <h2>Part 4: Building & Querying the RAG Chain</h2>
+            <p class="left-align">
+              Now we have all the components: a retriever to fetch data and an
+              LLM to generate answers. The final step is to orchestrate them
+              into a single, cohesive application.
+            </p>
+          </section>
+          <section>
+            <h3>Theory: Composing with LCEL</h3>
+            <p class="left-align">
+              <strong>LangChain Expression Language (LCEL)</strong> is a
+              declarative way to compose components into chains. The pipe (`|`)
+              operator connects each step, passing the output of one step as the
+              input to the next.
+            </p>
+            <div class="fragment left-align">
+              <p>Our chain will be:</p>
+              <ol>
+                <li>The user's question retrieves context.</li>
+                <li>The question and context populate a prompt.</li>
+                <li>The prompt is sent to the LLM.</li>
+                <li>The LLM's response is parsed into a clean string.</li>
+              </ol>
+            </div>
+          </section>
+          <section>
+            <h3>Step 3.1: Constructing the Chain</h3>
+            <p>
+              We define a prompt template and then pipe together the retriever,
+              the prompt, the LLM, and an output parser.
+            </p>
+            <pre><code class="language-python" data-line-numbers="1-18|20-26">
+		from langchain_google_genai import ChatGoogleGenerativeAI
+		from langchain_core.prompts import ChatPromptTemplate
+		from langchain_core.output_parsers import StrOutputParser
+		from langchain_core.runnables import RunnablePassthrough
+		
+		# Initialize the Language Model (LLM)
+		llm = ChatGoogleGenerativeAI(model="gemma-3-1b-it", temperature=0.7)
+		
+		# Define the prompt template
+		template = """You are a helpful assistant for ICD-11.
+		Use the retrieved context to answer the question.
+		If you don't know the answer, just say that you don't know.
+		
+		Context: {context}
+		Question: {question}
+		Answer:"""
+		prompt = ChatPromptTemplate.from_template(template)
+		
+		# Construct the RAG chain with LCEL
+		rag_chain = (
+			{"context": retriever, "question": RunnablePassthrough()}
+			| prompt
+			| llm
+			| StrOutputParser()
+		)
+		
+		print("RAG chain constructed.")
+								</code></pre>
+          </section>
+          <section>
+            <h3>Theory: Querying the System</h3>
+            <p class="left-align">
+              The `rag_chain` we created is now a runnable object. We can use
+              its `.invoke()` method to pass in a user query. This triggers the
+              entire sequence of operations we defined, returning the final,
+              context-aware answer from the LLM.
+            </p>
+          </section>
+          <section>
+            <h3>Step 3.2: Putting it to the Test</h3>
+            <p>
+              We define a helper function and then ask our RAG system a question
+              that is inside its knowledge base and one that is outside of it.
+            </p>
+            <pre><code class="language-python" data-line-numbers>
+		def ask_rag_system(query: str):
+			print(f"\\n--- Asking: '{query}' ---")
+			response = rag_chain.invoke(query)
+			print(f"Answer:\\n{response}")
+		
+		# Query 1: Specific question
+		ask_rag_system("What is the ICD-11 code for 'Dissociative identity disorder'?")
+		
+		# Query 2: Off-topic question
+		ask_rag_system("What is the capital of France?")
+								</code></pre>
+          </section>
+          <section>
+            <h2>Final Code: Complete RAG System</h2>
+            <p>
+              This is the entire script for our RAG system, from start to
+              finish.
+            </p>
+            <pre><code class="language-python">
+		import os, getpass
+		from dotenv import load_dotenv
+		import pandas as pd
+		from langchain_core.documents import Document
+		from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
+		from langchain_chroma import Chroma
+		from langchain_core.prompts import ChatPromptTemplate
+		from langchain_core.output_parsers import StrOutputParser
+		from langchain_core.runnables import RunnablePassthrough
+		
+		# Setup
+		load_dotenv()
+		if "GOOGLE_API_KEY" not in os.environ:
+			os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter Google API Key: ")
+		
+		# Data Loading ... (condensed function)
+		def load_icd11_from_csv(file_path: str): 
+			try:
+				df=pd.read_csv(file_path,delimiter=';');docs=[]
+				for i, r in df.iterrows():
+					c = f"Code: {r['code']}\\nTitle: {r['title']}\\nDef: {r['definition']}"
+					docs.append(Document(page_content=c, metadata={"code": r['code']}))
+				return docs
+			except FileNotFoundError: return []
+		icd11_chunks = load_icd11_from_csv('icdchapter6.csv')
+		
+		# Embeddings & Vector Store
+		embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+		vectorstore = Chroma(persist_directory="./chroma_db_workshop", embedding_function=embeddings)
+		retriever = vectorstore.as_retriever()
+		
+		# RAG Chain
+		llm = ChatGoogleGenerativeAI(model="gemma-3-1b-it", temperature=0.7)
+		template = "Context: {context}\\nQuestion: {question}\\nAnswer:"
+		prompt = ChatPromptTemplate.from_template(template)
+		rag_chain = ({"context": retriever, "question": RunnablePassthrough()} | prompt | llm | StrOutputParser())
+		
+		# Querying
+		def ask_rag_system(query: str):
+			response = rag_chain.invoke(query)
+			print(f"\\nQuery: {query}\\nAnswer: {response}")
+		
+		ask_rag_system("What is 'Dissociative identity disorder'?")
+		ask_rag_system("What is the capital of France?")
+								</code></pre>
+          </section>
+        </section>
+
+        <!-- ===== WORKSHOP WRAP-UP ===== -->
+        <section>
+          <h2>Workshop Wrap-up</h2>
+          <div class="left-align">
+            <p>In this workshop, we have successfully:</p>
+            <ul>
+              <li>Set up a Python environment and secured our API keys.</li>
+              <li>
+                Loaded external knowledge from a CSV file into LangChain
+                `Documents`.
+              </li>
+              <li>
+                Generated semantic embeddings for our data using a Google AI
+                model.
+              </li>
+              <li>
+                Indexed these embeddings in a persistent ChromaDB vector store
+                for efficient search.
+              </li>
+              <li>
+                Constructed a complete RAG chain using the powerful LangChain
+                Expression Language (LCEL).
+              </li>
+              <li>
+                Queried our system to receive context-aware, accurate answers.
+              </li>
+            </ul>
+          </div>
+        </section>
+<section>
+          <section>
+            <h2>Part 5: Beyond Basics: Limitations & Next Steps</h2>
+            <p class="left-align">
+              While powerful, RAG systems are not without their challenges. Understanding
+              their limitations is key to building more robust and reliable applications.
+            </p>
+          </section>
+          <section>
+            <h3>Limitations of Basic RAG</h3>
+            <p class="left-align">
+              Our current RAG system is a solid foundation, but basic RAG can face issues:
+            </p>
+            <ul class="left-align">
+              <li class="fragment">
+                <strong>Context Window Issues:</strong> Even with splitting, very long or complex
+                retrieved contexts might still exceed LLM limits or dilute relevance.
+              </li>
+              <li class="fragment">
+                <strong>"Lost in the Middle":</strong> LLMs sometimes pay less attention to
+                information in the middle of a long context.
+              </li>
+              <li class="fragment">
+                <strong>Retrieval Quality:</strong> If the retriever doesn't find the *most*
+                relevant chunks, the LLM's answer will suffer. Semantic search isn't perfect.
+              </li>
+              <li class="fragment">
+                <strong>Hallucinations Persist:</strong> While reduced, LLMs can still
+                hallucinate if the retrieved context is ambiguous or insufficient.
+              </li>
+              <li class="fragment">
+                <strong>Data Freshness:</strong> The RAG system is only as current as its
+                knowledge base. Updating it requires re-indexing.
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>Advanced RAG Techniques</h3>
+            <p class="left-align">
+              To address these limitations, advanced RAG patterns exist:
+            </p>
+            <ul class="left-align">
+              <li class="fragment">
+                <strong>Query Transformation:</strong> Rewriting or expanding user queries
+                (e.g., adding keywords, generating multiple sub-queries) to improve retrieval.
+              </li>
+              <li class="fragment">
+                <strong>Re-ranking:</strong> After initial retrieval, use a separate
+                re-ranking model to score and reorder documents based on relevance,
+                ensuring the most pertinent ones are at the top.
+              </li>
+              <li class="fragment">
+                <strong>Hybird Search:</strong> Combining semantic search with traditional
+                keyword search (e.g., BM25) for more comprehensive retrieval.
+              </li>
+              <li class="fragment">
+                <strong>Multi-stage Retrieval:</strong> Using multiple retrieval steps,
+                perhaps first to identify broad topics, then specific details.
+              </li>
+              <li class="fragment">
+                <strong>Agentic RAG:</strong> Using an LLM to decide *how* to retrieve
+                information (e.g., searching different tools or databases).
+              </li>
+            </ul>
+          </section>
+          </section>
+        <!-- ===== FURTHER READING ===== -->
+        <section>
+          <h2>For Further Reading</h2>
+          <div class="left-align">
+            <p>
+              This workshop covered the fundamentals of building a RAG system.
+              For a deep, academic dive into the state of the art, advanced
+              techniques, and evaluation methodologies, we highly recommend the
+              following survey paper:
+            </p>
+            <ul>
+              <li>
+                <strong>Title:</strong> A survey on retrieval-augmented
+                generation for large language models
+              </li>
+              <li>
+                <strong>Source:</strong>
+                <a
+                  href="https://www.sciencedirect.com/science/article/pii/S0957417425008139?via%3Dihub"
+                  target="_blank"
+                  >ScienceDirect</a
+                >
+              </li>
+            </ul>
+            <p class="small-text">
+              This paper provides a comprehensive overview of the RAG paradigm,
+              its various components, and future research directions in the
+              field.
+            </p>
+          </div>
+        </section>
+
+        <!-- ===== Q&A ===== -->
+        <section>
+          <h2>Questions?</h2>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        view: "scroll",
+        scrollProgress: true,
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+
+      // Reset and replay title animation
+      Reveal.on('slidechanged', event => {
+        const title = event.currentSlide.querySelector('.title-animate');
+        if (title) {
+          // Get the color class from the span
+          const colorSpan = title.querySelector('span');
+          if (colorSpan) {
+            const colorClass = colorSpan.className;
+            const colorVar = `var(--${colorClass})`;
+            
+            // Update the ::after pseudo-element color
+            const style = document.createElement('style');
+            style.textContent = `
+              .title-animate::after {
+                background: linear-gradient(120deg, ${colorVar} 0%, ${colorVar} 100%) !important;
+              }
+            `;
+            document.head.appendChild(style);
+          }
+
+          // Remove the class to reset the animation
+          title.classList.remove('title-animate');
+          // Force a reflow
+          void title.offsetWidth;
+          // Add the class back to restart the animation
+          title.classList.add('title-animate');
+        }
+      });
+
+      // Add counting animation
+      function animateNumber(element, start, end, duration) {
+        let startTimestamp = null;
+        element.classList.add("active");
+        const step = (timestamp) => {
+          if (!startTimestamp) startTimestamp = timestamp;
+          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+          const current = Math.floor(progress * (end - start) + start);
+          element.textContent = current.toLocaleString();
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          } else {
+            setTimeout(() => {
+              element.classList.remove("active");
+            }, 500);
+          }
+        };
+        window.requestAnimationFrame(step);
+      }
+
+      // Start animation when the slide is shown
+      Reveal.on("slidechanged", (event) => {
+        if (event.currentSlide.querySelector("#counting-number")) {
+          const element = document.getElementById("counting-number");
+          animateNumber(element, 0, 85000, 2000); // 2 seconds duration
+        }
+      });
+    </script>
+  </body>
+</html>
