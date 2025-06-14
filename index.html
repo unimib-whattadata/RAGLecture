@@ -37,6 +37,24 @@
         font-family: monospace;
         vertical-align: middle;
       }
+      .checkpoint-animate {
+        background: linear-gradient(90deg, #ffe259, #ffa751, #ffe259);
+        background-size: 200% auto;
+        color: #222;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: checkpoint-glow 2s linear infinite;
+        font-weight: bold;
+        text-shadow: 0 0 10px #ffe25988, 0 0 20px #ffa75144;
+      }
+      @keyframes checkpoint-glow {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
+      }
     </style>
   </head>
   <body>
@@ -56,7 +74,7 @@
 
         <!-- ===== SPEAKER AND HELPERS ===== -->
         <section>
-          <h2>Speaker and Tutors</h2>
+          <h2 class="r-fit-text">Speaker and Tutors</h2>
           <div
             style="
               display: flex;
@@ -103,7 +121,7 @@
 
         <!-- ===== LAB AGENDA ===== -->
         <section>
-          <h2 class="title-animate">LAB Agenda</h2>
+          <h2 class="r-fit-text">LAB Agenda</h2>
         </section>
 
         <!-- ===== LAB AGENDA LIST ===== -->
@@ -142,13 +160,15 @@
 
         <!-- ===== WHAT IS RAG ===== -->
         <section>
-          <h2>What is <span class="gradient-title">RAG</span>?</h2>
+          <h2 class="r-fit-text">
+            What is <span class="gradient-title">RAG</span>?
+          </h2>
           <p>
             Retrieval-Augmented Generation (RAG) is an AI framework for
             improving the quality of LLM-generated responses by grounding the
             model on external sources of knowledge
           </p>
-          <p class="fragment">
+          <p>
             It combines a retriever (to find relevant information) with a
             generator (an LLM to craft an answer)
           </p>
@@ -161,7 +181,7 @@
 
         <!-- ===== WHAT IS ICD-11 ===== -->
         <section>
-          <h2>
+          <h2 class="r-fit-text">
             The Knowledge Base: <span class="gradient-title">ICD-11</span>
           </h2>
 
@@ -195,7 +215,7 @@
 
         <!-- ===== ICD-11 DATA USAGE ===== -->
         <section>
-          <h2>
+          <h2 class="r-fit-text">
             The Knowledge Base: <span class="gradient-title">ICD-11</span>
           </h2>
           <p>
@@ -213,7 +233,7 @@
 
         <!-- ===== PREREQUISITES ===== -->
         <section>
-          <h2>Prerequisites</h2>
+          <h2 class="r-fit-text">Prerequisites</h2>
           <p>To follow along, you will need:</p>
           <ul>
             <li>
@@ -245,7 +265,7 @@
 
         <!-- ===== SETUP ===== -->
         <section>
-          <h2>Setup</h2>
+          <h2 class="r-fit-text">Setup</h2>
           <p>
             We begin by setting up a
             <img
@@ -260,7 +280,7 @@
 
         <!-- ===== OUR TOOLS: THE LIBRARIES ===== -->
         <section>
-          <h2>Our Tools: The Libraries</h2>
+          <h2 class="r-fit-text">Our Tools: The Libraries</h2>
           <p>
             Python's power comes from its vast collection of
             libraries—pre-packaged code that we can use. Here are the key ones
@@ -283,7 +303,7 @@
 
         <!-- ===== OUR TOOLS: THE LIBRARIES ===== -->
         <section>
-          <h2>Our Tools: The Libraries</h2>
+          <h2 class="r-fit-text">Our Tools: The Libraries</h2>
           <ul>
             <li class="fragment">
               <strong
@@ -416,12 +436,16 @@
             is often easier to start with
           </p>
         </section>
+
+        <!-- Slide: Setup - Step 1.1: Installing Libraries -->
         <section>
-          <h3>Setup - Step 1.1: Installing Libraries</h3>
+          <h2 class="r-fit-text">Setup - Step 1.1: Installing Libraries</h2>
           <p>
             We use <code><span class="badge">>pip</span></code> to install
             LangChain and its related packages, including the integration for
-            Google's AI models and the Chroma vector store
+            Google's AI models and the Chroma
+            <img class="inline-logo" src="/imgs/logo/chroma-logo.png" alt="" />
+            vector store
           </p>
           <pre>
 				<code data-line-numbers="1|2|3|4"  data-trim data-noescape>
@@ -434,7 +458,7 @@
         </section>
 
         <section>
-          <h3>Theory: Securing Credentials</h3>
+          <h2 class="r-fit-text">Theory: Securing Credentials</h2>
           <p>
             Hard-coding sensitive information like API keys directly in the
             source code is a major security risk. A best practice is to load
@@ -449,7 +473,7 @@
           </p>
         </section>
         <section>
-          <h3>First Code: Configuring the API Key</h3>
+          <h2 class="r-fit-text">First Code: Configuring the API Key</h2>
           <p>
             It's time to write our first lines of Python. The most crucial first
             step is to authenticate our script with Google's AI services. This
@@ -472,11 +496,12 @@
           </pre>
         </section>
         <section>
-          <h3>Theory: Loading External Data</h3>
+          <h2 class="r-fit-text">Theory: Loading External Data</h2>
           <p class="fragment">
-            The first step in the <span class="gradient-title">RAG</span> process
-            is "Retrieval". This requires loading our external knowledge into a
-            format the application can use. LangChain provides
+            The first step in the
+            <span class="gradient-title">RAG</span> process is "Retrieval". This
+            requires loading our external knowledge into a format the
+            application can use. LangChain provides
             <code><span class="badge">Document</span></code> objects for this,
             which contain text
             <code><span class="badge">page_content</span></code> and associated
@@ -485,12 +510,12 @@
           <p class="fragment">
             We will write a custom function using
             <code><span class="badge">pandas</span></code> to read our specific
-            CSV file and transform each row into a <code><span class="badge">LangChain
-            Document</span></code>
+            CSV file and transform each row into a
+            <code><span class="badge">LangChain Document</span></code>
           </p>
         </section>
         <section>
-          <h3>Theory: Why Split Text for Retrieval?</h3>
+          <h2 class="r-fit-text">Theory: Why Split Text for Retrieval?</h2>
           <p class="fragment">
             Once raw documents are loaded, they often need to be broken down
             into smaller, manageable chunks. This is crucial for effective
@@ -503,12 +528,13 @@
           </p>
         </section>
         <section>
-          <h3>Theory: The Goal of Splitting</h3>
+          <h2 class="r-fit-text">Theory: The Goal of Splitting</h2>
           <ul>
             <li class="fragment">
               <strong>Relevance:</strong> LLMs have context windows. Sending too
               much irrelevant information can dilute the useful context. Smaller
-              chunks mean the retriever finds more <strong>precise</strong> relevant passages
+              chunks mean the retriever finds more
+              <strong>precise</strong> relevant passages
             </li>
             <li class="fragment">
               <strong>Efficiency:</strong> Embedding and retrieving smaller
@@ -521,7 +547,7 @@
           </ul>
         </section>
         <section>
-          <h3>Our Data Format: The CSV File</h3>
+          <h2 class="r-fit-text">Our Data Format: The CSV File</h2>
           <p>
             Our ICD-11 knowledge is stored in a
             <strong>CSV (Comma-Separated Values)</strong> file. It's one of the
@@ -535,7 +561,7 @@
           </p>
         </section>
         <section>
-          <h3>Step 1.3: Implementing the CSV Loader</h3>
+          <h2 class="r-fit-text">Step 1.3: Implementing the CSV Loader</h2>
           <p>
             The function in the next slide reads the
             <code><span class="badge">icdchapter6.csv</span></code> file,
@@ -546,7 +572,7 @@
         </section>
 
         <section>
-          <h3>Step 1.3: Implementing the CSV Loader</h3>
+          <h2 class="r-fit-text">Step 1.3: Implementing the CSV Loader</h2>
           <pre>
             <code data-line-numbers="1-3|4-14|16-18" data-trim data-noescape>
               import pandas as pd
@@ -570,86 +596,107 @@
             </code>
           </pre>
         </section>
+
+        <!-- ===== WHY THESE DATA FIELDS? STRUCTURING THE CONTEXT ===== -->
         <section>
-          <h3>Why These Data Fields? Structuring the Context</h3>
+          <h2 class="r-fit-text">
+            Why These Data Fields? Structuring the Context
+          </h2>
           <p>
             In our loader, we combined the <strong>code</strong>,
-            <strong>title</strong>, and <strong>definition</strong> for a
-            reason
+            <strong>title</strong>, and <strong>definition</strong> for a reason
           </p>
           <ul class="fragment">
             <li>
               <strong>Code & Title:</strong> These provide clear, structured
               identifiers. They are perfect for when the LLM needs to give a
-              precise, factual answer.
+              precise, factual answer
             </li>
             <li>
               <strong>Definition:</strong> This is the most important part for
               our retriever. It contains the rich, descriptive text that allows
               for effective <strong>semantic search</strong>, helping the system
               find relevant concepts even if the query doesn't use exact
-              keywords.
+              keywords
             </li>
           </ul>
         </section>
-        
+
         <section>
-          <h3>Why These Data Fields? Structuring the Context</h3>
+          <h2 class="r-fit-text">
+            Why These Data Fields? Structuring the Context
+          </h2>
           <p>
-            By combining them, we create a comprehensive `Document` that gives
-            the LLM everything it needs: a unique ID, a clear label, and a
-            detailed description to inform its answer.
+            By combining them, we create a comprehensive
+            <code><span class="badge">Document</span></code> that gives the LLM
+            everything it needs: a unique ID, a clear label, and a detailed
+            description to inform its answer
           </p>
         </section>
         <section>
-          <h2>Lab Checkpoint 1</h2>
+          <h2 class="r-fit-text checkpoint-animate">Lab Checkpoint 1</h2>
           <p>
             Your script should now handle installation, API keys, and data
             loading.
           </p>
-          <pre><code class="language-python">
-		import os, getpass
-		from dotenv import load_dotenv
-		import pandas as pd
-		from langchain_core.documents import Document
-		
-		# API KEY SETUP
-		load_dotenv()
-		if "GOOGLE_API_KEY" not in os.environ:
-			os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter Google API Key: ")
-		
-		# DATA LOADING FUNCTION
-		def load_icd11_from_csv(file_path: str) -> list[Document]:
-			try:
-				df = pd.read_csv(file_path, delimiter=';'); docs = []
-				for i, row in df.iterrows():
-					c = (f"ICD-11 Code: {row['code']}\\n"
-						 f"Title: {row['title']}\\n"
-						 f"Definition: {row['definition']}")
-					docs.append(Document(page_content=c, metadata={"code": row['code'], "title": row['title']}))
-				return docs
-			except FileNotFoundError: return []
-		
-		# EXECUTE LOADING
-		icd11_documents = load_icd11_from_csv('icdchapter6.csv')
-		if icd11_documents:
-			print(f"Loaded {len(icd11_documents)} documents.")
-			icd11_chunks = icd11_documents
-		else:
-			print("Failed to load documents.")
-								</code></pre>
+          <pre>
+            <code data-line-numbers="1-4|6-9|11-21|23-29" data-trim data-noescape>
+              import os, getpass
+              from dotenv import load_dotenv
+              import pandas as pd
+              from langchain_core.documents import Document
+              
+              # API KEY SETUP
+              load_dotenv()
+              if "GOOGLE_API_KEY" not in os.environ:
+                os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter Google API Key: ")
+              
+              # DATA LOADING FUNCTION
+              def load_icd11_from_csv(file_path: str) -> list[Document]:
+                try:
+                  df = pd.read_csv(file_path, delimiter=';'); docs = []
+                  for i, row in df.iterrows():
+                    c = (f"ICD-11 Code: {row['code']}\\n"
+                      f"Title: {row['title']}\\n"
+                      f"Definition: {row['definition']}")
+                    docs.append(Document(page_content=c, metadata={"code": row['code'], "title": row['title']}))
+                  return docs
+                except FileNotFoundError: return []
+              
+              # EXECUTE LOADING
+              icd11_documents = load_icd11_from_csv('icdchapter6.csv')
+              if icd11_documents:
+                print(f"Loaded {len(icd11_documents)} documents.")
+                icd11_chunks = icd11_documents
+              else:
+                print("Failed to load documents.")
+						  </code>
+            </pre>
         </section>
+
         <!-- ===== TITLE SLIDE ===== -->
         <section>
-          <h2>Part 3: Embeddings & Vector Stores</h2>
-          <p>
+          <h2 class="title-animate">
+            <span class="selective-yellow">Part 3</span>: Embeddings & Vector
+            Stores
+          </h2>
+        </section>
+
+        <!-- ===== EMBEDDINGS & VECTOR STORES ===== -->
+        <section>
+          <h2 class="r-fit-text">Theory: Embeddings & Vector Stores</h2>
+          <p class="fragment">
             Now that we have our data loaded, we need to make it searchable.
+          </p>
+          <p class="fragment">
             We'll do this by converting our text into numerical representations
-            and storing them in a specialized database.
+            and storing them in a specialized database
           </p>
         </section>
+
+        <!-- ===== THEORY: CREATING TEXT EMBEDDINGS ===== -->
         <section>
-          <h3>Theory: Creating Text Embeddings</h3>
+          <h2 class="r-fit-text">Theory: Creating Text Embeddings</h2>
           <p>
             To find relevant information, we can't just match keywords. We need
             to understand the <strong>meaning</strong> or
@@ -663,7 +710,7 @@
           </p>
         </section>
         <section>
-          <h3>A Note on Debugging</h3>
+          <h2 class="r-fit-text">A Note on Debugging</h2>
           <p>
             Errors are a normal part of coding! <strong>Debugging</strong> is
             the process of finding and fixing them. No one writes perfect code
@@ -671,54 +718,70 @@
           </p>
           <p class="fragment">
             The simplest yet most powerful tool in your debugging toolkit is the
-            <code>print()</code> statement. If you're not sure what a variable
-            holds or if a line of code is being reached, just print it! In
-            Colab, the output will appear right below the code cell.
+            <code><span class="badge">print()</span></code> statement. If you're
+            not sure what a variable holds or if a line of code is being
+            reached, just print it! In Colab, the output will appear right below
+            the code cell.
           </p>
         </section>
+
+        <!-- ===== A NOTE ON DEBUGGING ===== -->
         <section>
-          <h3>A Note on Debugging</h3>
+          <h2 class="r-fit-text">A Note on Debugging</h2>
           <p>You can print text, variables or both. Here are some examples:</p>
-          <pre
-            class="fragment"
-          ><code class="language-python" data-line-numbers="1|2|3">print("just a literal text")
-print(variable_name)
-print(f"String interpolation: {variable_name}")
-               </code></pre>
+          <pre class="fragment">
+          <code data-line-numbers="1|2|3" data-trim data-noescape>
+            print("just a literal text")
+            print(variable_name)
+            print(f"String interpolation: {variable_name}")
+          </code>
+        </pre>
         </section>
+
+        <!-- ===== STEP 2.1: INITIALIZING THE EMBEDDING MODEL ===== -->
         <section>
-          <h3>Step 2.1: Initializing the Embedding Model</h3>
+          <h2 class="r-fit-text">Step 2.1: Initializing the Embedding Model</h2>
           <p>
-            We'll use Google's `embedding-001` model via the
-            `GoogleGenerativeAIEmbeddings` class in LangChain to perform this
-            conversion.
+            We'll use Google's
+            <code><span class="badge">embedding-001</span></code> model via the
+            <code><span class="badge">GoogleGenerativeAIEmbeddings</span></code>
+            class in LangChain to perform this conversion
           </p>
-          <pre><code class="language-python" data-line-numbers>from langchain_google_genai import GoogleGenerativeAIEmbeddings
+          <pre>
+            <code data-line-numbers data-trim data-noescape>
+            from langchain_google_genai import GoogleGenerativeAIEmbeddings
 		
-# Initialize the embedding model
-embeddings = GoogleGenerativeAIEmbeddings(
-  model="models/embedding-001"
-)
-print("Embedding model initialized.")
-</code></pre>
+            # Initialize the embedding model
+            embeddings = GoogleGenerativeAIEmbeddings(
+              model="models/embedding-001"
+            )
+            print("Embedding model initialized.")
+            </code>
+          </pre>
         </section>
+
+        <!-- ===== THEORY: INDEXING IN A VECTOR STORE ===== -->
         <section>
-          <h3>Theory: Indexing in a Vector Store</h3>
+          <h2 class="r-fit-text">Theory: Indexing in a Vector Store</h2>
           <p>
             Searching through thousands of embeddings one-by-one would be very
             slow. A <strong>Vector Store</strong> is a specialized database
             designed to store and efficiently search these high-dimensional
             vectors using fast algorithms like Approximate Nearest Neighbor
-            (ANN) search.
+            (ANN) search
           </p>
           <p class="fragment">
-            We will use <strong>ChromaDB</strong>, a popular open-source vector
-            store that runs in memory but can be persisted to disk to avoid
-            re-processing.
+            We will use
+            <strong>Chroma</strong>
+            <img class="inline-logo" src="/imgs/logo/chroma-logo.png" alt="" />,
+            a popular open-source vector store that runs in memory but can be
+            persisted to disk to avoid re-processing
           </p>
         </section>
+
+        <!-- ===== IMPORTANT NOTES ON VECTOR STORES ===== -->
         <section>
-          <h3>Important notes on vector stores</h3>
+          <h2 class="r-fit-text">Important notes on vector stores</h2>
           <p class="fragment">
             The embedding process requires lot of computation power, and we do
             not want to repeat each time
@@ -729,127 +792,153 @@ print("Embedding model initialized.")
             the embeddings
           </p>
         </section>
+
+        <!-- ===== STEP 2.2: CREATING THE VECTOR STORE ===== -->
         <section>
-          <h3>Step 2.2: Creating the Vector Store</h3>
+          <h2 class="r-fit-text">Step 2.2: Creating the Vector Store</h2>
           <p>
             This code creates a new Chroma database from our documents and
             embeddings if one doesn't already exist, or loads the existing one
-            from disk.
+            from disk
           </p>
-          <pre><code class="language-python" data-line-numbers="1-4|6-11|12-17|19-21">from langchain_chroma import Chroma
-import os
-		
-persist_directory = "./chroma_db_workshop"
-		
-# Load from disk if it exists, otherwise create it
-if os.path.exists(persist_directory):
-	vectorstore = Chroma(
-	persist_directory=persist_directory,
-	embedding_function=embeddings
-	)
-else:
-	vectorstore = Chroma.from_documents(
-				documents=icd11_chunks,
-				embedding=embeddings,
-				persist_directory=persist_directory
-			)
-		
-# The retriever is our interface for searching
-retriever = vectorstore.as_retriever()
-print("Retriever is ready.")
-								</code></pre>
+          <pre>
+            <code data-line-numbers="1-2|4|6-11|12-17|19-21" data-trim data-noescape>
+              from langchain_chroma import Chroma
+              import os
+                  
+              persist_directory = "./chroma_db_workshop"
+                  
+              # Load from disk if it exists, otherwise create it
+              if os.path.exists(persist_directory):
+                vectorstore = Chroma(
+                persist_directory=persist_directory,
+                embedding_function=embeddings
+                )
+              else:
+                vectorstore = Chroma.from_documents(
+                      documents=icd11_chunks,
+                      embedding=embeddings,
+                      persist_directory=persist_directory
+                    )
+                  
+              # The retriever is our interface for searching
+              retriever = vectorstore.as_retriever()
+              print("Retriever is ready.")
+								</code>
+              </pre>
         </section>
+
+        <!-- ===== LAB CHECKPOINT 2 ===== -->
         <section>
-          <h2>LAB Checkpoint 2</h2>
+          <h2 class="r-fit-text checkpoint-animate">LAB Checkpoint 2</h2>
           <p>
             Your script should now include the embedding model and vector store
             creation.
           </p>
-          <pre><code class="language-python">
-		# ... (previous code from Checkpoint 1) ...
-		from langchain_google_genai import GoogleGenerativeAIEmbeddings
-		from langchain_chroma import Chroma
-		
-		# ... (API Key and Data Loading code) ...
-		icd11_chunks = load_icd11_from_csv('icdchapter6.csv')
-		print(f"Loaded {len(icd11_chunks)} chunks.")
-		
-		# EMBEDDING MODEL
-		embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-		
-		# VECTOR STORE
-		persist_directory = "./chroma_db_workshop"
-		if os.path.exists(persist_directory) and os.listdir(persist_directory):
-			vectorstore = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
-			print("Loaded existing vector store.")
-		else:
-			vectorstore = Chroma.from_documents(documents=icd11_chunks, embedding=embeddings, persist_directory=persist_directory)
-			print("Created new vector store.")
-		
-		retriever = vectorstore.as_retriever()
-		print("Retriever is ready.")
+          <pre>
+            <code data-line-numbers data-trim data-noescape>
+                # ... (previous code from Checkpoint 1) ...
+                from langchain_google_genai import GoogleGenerativeAIEmbeddings
+                from langchain_chroma import Chroma
+                
+                # ... (API Key and Data Loading code) ...
+                icd11_chunks = load_icd11_from_csv('icdchapter6.csv')
+                print(f"Loaded {len(icd11_chunks)} chunks.")
+                
+                # EMBEDDING MODEL
+                embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+                
+                # VECTOR STORE
+                persist_directory = "./chroma_db_workshop"
+                if os.path.exists(persist_directory) and os.listdir(persist_directory):
+                  vectorstore = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
+                  print("Loaded existing vector store.")
+                else:
+                  vectorstore = Chroma.from_documents(documents=icd11_chunks, embedding=embeddings, persist_directory=persist_directory)
+                  print("Created new vector store.")
+                
+                retriever = vectorstore.as_retriever()
+                print("Retriever is ready.")
 								 </code></pre>
         </section>
+
+        <section>
+          <h2 class="title-animate">
+            <span class="tangerine">Part 4</span>: Building & Querying the RAG Chain
+          </h2>
+        </section>
+        
         <!-- ===== RAG ===== -->
         <section>
-          <h2>Part 3: Building & Querying the RAG Chain</h2>
+          <h2 class="r-fit-text">Building & Querying the RAG Chain</h2>
           <p>
             Now we have all the components: a retriever to fetch data and an LLM
             to generate answers. The final step is to orchestrate them into a
-            single, cohesive application.
+            single, cohesive application
           </p>
         </section>
+        
         <section>
-          <h3>Theory: Composing with LCEL</h3>
+          <h2 class="r-fit-text">Theory: Composing with LCEL</h2>
           <p>
             <strong>LangChain Expression Language (LCEL)</strong> is a
             declarative way to compose components into chains. The pipe (`|`)
             operator connects each step, passing the output of one step as the
-            input to the next.
+            input to the next
           </p>
           <div class="fragment">
             <p>Our chain will be:</p>
             <ol>
-              <li>The user's question retrieves context.</li>
-              <li>The question and context populate a prompt.</li>
-              <li>The prompt is sent to the LLM.</li>
-              <li>The LLM's response is parsed into a clean string.</li>
+              <li>The user's question retrieves context</li>
+              <li>The question and context populate a prompt</li>
+              <li>The prompt is sent to the LLM</li>
+              <li>The LLM's response is parsed into a clean string</li>
             </ol>
           </div>
         </section>
+
+        <!-- ===== THEORY: THE ART OF THE PROMPT ===== -->
         <section>
-          <h3>The Art of the Prompt</h3>
+          <h2 class="r-fit-text">The Art of the Prompt</h2>
           <p>
             A <strong>prompt</strong> is the set of instructions we give to the
-            LLM. It's the most direct way we have to control its behavior.
+            LLM. It's the most direct way we have to control its behavior
           </p>
           <p class="fragment">
             <strong>Prompt Engineering</strong> is the skill of crafting these
             instructions to get the exact output you want. A good prompt is
             clear, specific, and provides all the necessary context for the
-            model to succeed.
+            model to succeed
           </p>
         </section>
+
+        <!-- ===== THEORY: HOW RAG USES A PROMPT TEMPLATE ===== -->
         <section>
-          <h3>How RAG Uses a Prompt Template</h3>
+          <h2 class="r-fit-text">
+            How <span class="gradient-title">RAG</span> Uses a Prompt Template
+          </h2>
           <p>
             We don't write a new prompt for every user question. Instead, we use
             a <strong>template</strong>. LangChain dynamically inserts the
             retrieved context and the user's original question into the
-            placeholders of this template.
+            placeholders of this template
           </p>
-          <pre class="fragment"><code class="language-python">
-# Our template has two placeholders: {context} and {question}
-template = """Use the retrieved context to answer the question.
+          <pre class="fragment">
+            <code data-line-numbers data-trim data-noescape>
+              # Our template has two placeholders: {context} and {question}
+              template = """Use the retrieved context to answer the question.
 
-Context: {context}
-Question: {question}"""
+              Context: {context}
+              Question: {question}"""
 
-# LangChain will automatically fill these in before sending to the LLM
-            </code></pre>
+              # LangChain will automatically fill these in before sending to the LLM
+            </code>
+            </pre>
         </section>
+
+        <!-- ===== GIVING CLEAR INSTRUCTIONS ===== -->
         <section>
-          <h3>Giving Clear Instructions</h3>
+          <h2 class="r-fit-text">Giving Clear Instructions</h2>
           <p>
             The most important part of our prompt is the instructions that guide
             the LLM's behavior. Consider this line:
@@ -864,12 +953,13 @@ Question: {question}"""
             This single instruction is critical for building a trustworthy
             system. It explicitly tells the LLM not to guess or "hallucinate" an
             answer if the information isn't in the retrieved context. This makes
-            our RAG system more reliable and factual.
+            our RAG system more reliable and factual
           </p>
         </section>
+        
         <!-- ===== Q&A ===== -->
         <section>
-          <h2>Questions?</h2>
+          <h2 class="r-fit-text">Questions?</h2>
         </section>
       </div>
     </div>
