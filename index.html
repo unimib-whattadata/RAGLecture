@@ -140,12 +140,10 @@
               Stores
             </li>
             <li class="fragment">
-              <span class="tangerine">Part 4</span>: Building & Querying the RAG
-              Chain
+              <span class="tangerine">Part 4</span>: Building the RAG Chain
             </li>
             <li class="fragment">
-              <span class="persimmon">Part 5</span>: Building a RAG System with
-              LangChain
+              <span class="persimmon">Part 5</span>: Querying the RAG System
             </li>
             <li class="fragment">Conclusion & Q&A</li>
           </ul>
@@ -864,10 +862,11 @@
 
         <section>
           <h2 class="title-animate">
-            <span class="tangerine">Part 4</span>: Building & Querying the RAG Chain
+            <span class="tangerine">Part 4</span>: Building & Querying the RAG
+            Chain
           </h2>
         </section>
-        
+
         <!-- ===== RAG ===== -->
         <section>
           <h2 class="r-fit-text">Building & Querying the RAG Chain</h2>
@@ -877,7 +876,7 @@
             single, cohesive application
           </p>
         </section>
-        
+
         <section>
           <h2 class="r-fit-text">Theory: Composing with LCEL</h2>
           <p>
@@ -956,10 +955,283 @@
             our RAG system more reliable and factual
           </p>
         </section>
-        
+
+        <!-- ===== STEP 3.1: CONSTRUCTING THE CHAIN ===== -->
+        <section>
+          <h2 class="r-fit-text">Step 3.1: Constructing the Chain</h2>
+          <p>
+            We define a prompt template and then pipe together the retriever,
+            the prompt, the LLM, and an output parser.
+          </p>
+          <pre>
+              <code data-line-numbers data-trim data-noescape>
+                  from langchain_google_genai import ChatGoogleGenerativeAI
+                  from langchain_core.prompts import ChatPromptTemplate
+                  from langchain_core.output_parsers import StrOutputParser
+                  from langchain_core.runnables import RunnablePassthrough
+                  
+                  # Initialize the Language Model (LLM)
+                  llm = ChatGoogleGenerativeAI(model="gemma-3-1b-it", temperature=0.7)
+                  
+                  # Define the prompt template
+                  template = """You are a helpful assistant for ICD-11.
+                  Use the retrieved context to answer the question.
+                  If you don't know the answer, just say that you don't know.
+                  
+                  Context: {context}
+                  Question: {question}
+                  Answer:"""
+                  prompt = ChatPromptTemplate.from_template(template)
+                  
+                  # Construct the RAG chain with LCEL
+                  rag_chain = (
+                    {"context": retriever, "question": RunnablePassthrough()}
+                    | prompt
+                    | llm
+                    | StrOutputParser()
+                  )
+                  
+                  print("RAG chain constructed.")
+								</code>
+              </pre>
+        </section>
+
+        <section>
+          <h2 class="title-animate">
+            <span class="persimmon">Part 5</span>: Querying the RAG System
+          </h2>
+        </section>
+
+        <!-- ===== THEORY: QUERYING THE SYSTEM ===== -->
+        <section>
+          <h2 class="r-fit-text">Querying the System</h2>
+          <p>
+            The <code><span class="badge">rag_chain</span></code> we created is
+            now a runnable object. We can use its
+            <code><span class="badge">invoke()</span></code> method to pass in a
+            user query. This triggers the entire sequence of operations we
+            defined, returning the final, context-aware answer from the LLM
+          </p>
+        </section>
+
+        <!-- ===== STEP 3.2: PUTTING IT TO THE TEST ===== -->
+        <section>
+          <h3>Step 3.2: Putting it to the Test</h3>
+          <p>
+            We define a helper function and then ask our RAG system a question
+            that is inside its knowledge base and one that is outside of it.
+          </p>
+          <pre>
+              <code data-line-numbers data-trim data-noescape>
+                  def ask_rag_system(query: str):
+                    print(f"\\n--- Asking: '{query}' ---")
+                    response = rag_chain.invoke(query)
+                    print(f"Answer:\\n{response}")
+                  
+                  # Query 1: Specific question
+                  ask_rag_system("What is the ICD-11 code for 'Dissociative identity disorder'?")
+                  
+                  # Query 2: Off-topic question
+                  ask_rag_system("What is the capital of France?")
+								</code>
+              </pre>
+        </section>
+
+        <section>
+          <h2 class="r-fit-text">Final Code: Complete RAG System</h2>
+          <p>
+            This is the entire script for our RAG system, from start to finish.
+          </p>
+          <pre>
+              <code data-line-numbers data-trim data-noescape>
+                  import os, getpass
+                  from dotenv import load_dotenv
+                  import pandas as pd
+                  from langchain_core.documents import Document
+                  from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
+                  from langchain_chroma import Chroma
+                  from langchain_core.prompts import ChatPromptTemplate
+                  from langchain_core.output_parsers import StrOutputParser
+                  from langchain_core.runnables import RunnablePassthrough
+                  
+                  # Setup
+                  load_dotenv()
+                  if "GOOGLE_API_KEY" not in os.environ:
+                    os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter Google API Key: ")
+                  
+                  # Data Loading ... (condensed function)
+                  def load_icd11_from_csv(file_path: str): 
+                    try:
+                      df=pd.read_csv(file_path,delimiter=';');docs=[]
+                      for i, r in df.iterrows():
+                        c = f"Code: {r['code']}\\nTitle: {r['title']}\\nDef: {r['definition']}"
+                        docs.append(Document(page_content=c, metadata={"code": r['code']}))
+                      return docs
+                    except FileNotFoundError: return []
+                  icd11_chunks = load_icd11_from_csv('icdchapter6.csv')
+                  
+                  # Embeddings & Vector Store
+                  embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+                  vectorstore = Chroma(persist_directory="./chroma_db_workshop", embedding_function=embeddings)
+                  retriever = vectorstore.as_retriever()
+                  
+                  # RAG Chain
+                  llm = ChatGoogleGenerativeAI(model="gemma-3-1b-it", temperature=0.7)
+                  template = "Context: {context}\\nQuestion: {question}\\nAnswer:"
+                  prompt = ChatPromptTemplate.from_template(template)
+                  rag_chain = ({"context": retriever, "question": RunnablePassthrough()} | prompt | llm | StrOutputParser())
+                  
+                  # Querying
+                  def ask_rag_system(query: str):
+                    response = rag_chain.invoke(query)
+                    print(f"\\nQuery: {query}\\nAnswer: {response}")
+                  
+                  ask_rag_system("What is 'Dissociative identity disorder'?")
+                  ask_rag_system("What is the capital of France?")
+								</code>
+              </pre>
+        </section>
+
+        <!-- ===== WORKSHOP WRAP-UP ===== -->
+        <section>
+          <div>
+            <ul>
+              <li>Set up a Python environment and secured our API keys.</li>
+              <li>
+                Loaded external knowledge from a CSV file into LangChain
+                <code><span class="badge">Documents</span></code
+                >
+              </li>
+              <li>
+                Generated semantic embeddings for our data using a Google AI
+                model
+              </li>
+              <li>
+                Indexed these embeddings in a persistent Chroma vector store for
+                efficient search
+              </li>
+              <li>
+                Constructed a complete RAG chain using the powerful LangChain
+                Expression Language (LCEL)
+              </li>
+              <li>
+                Queried our system to receive context-aware, accurate answers
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2>Beyond Basics: Limitations & Next Steps</h2>
+          <p>
+            While powerful, RAG systems are not without their challenges.
+            Understanding their limitations is key to building more robust and
+            reliable applications.
+          </p>
+        </section>
+
+        <section>
+          <h3>Limitations of Basic RAG</h3>
+          <p>
+            Our current RAG system is a solid foundation, but basic RAG can face
+            issues:
+          </p>
+          <ul>
+            <li class="fragment">
+              <strong>Context Window Issues:</strong> Even with splitting, very
+              long or complex retrieved contexts might still exceed LLM limits
+              or dilute relevance.
+            </li>
+            <li class="fragment">
+              <strong>"Lost in the Middle":</strong> LLMs sometimes pay less
+              attention to information in the middle of a long context.
+            </li>
+            <li class="fragment">
+              <strong>Retrieval Quality:</strong> If the retriever doesn't find
+              the *most* relevant chunks, the LLM's answer will suffer. Semantic
+              search isn't perfect.
+            </li>
+            <li class="fragment">
+              <strong>Hallucinations Persist:</strong> While reduced, LLMs can
+              still hallucinate if the retrieved context is ambiguous or
+              insufficient.
+            </li>
+            <li class="fragment">
+              <strong>Data Freshness:</strong> The RAG system is only as current
+              as its knowledge base. Updating it requires re-indexing.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Advanced RAG Techniques</h3>
+          <p>
+            To address these limitations, advanced RAG patterns exist:
+          </p>
+          <ul>
+            <li class="fragment">
+              <strong>Query Transformation:</strong> Rewriting or expanding user
+              queries (e.g., adding keywords, generating multiple sub-queries)
+              to improve retrieval.
+            </li>
+            <li class="fragment">
+              <strong>Re-ranking:</strong> After initial retrieval, use a
+              separate re-ranking model to score and reorder documents based on
+              relevance, ensuring the most pertinent ones are at the top.
+            </li>
+            <li class="fragment">
+              <strong>Hybird Search:</strong> Combining semantic search with
+              traditional keyword search (e.g., BM25) for more comprehensive
+              retrieval.
+            </li>
+            <li class="fragment">
+              <strong>Multi-stage Retrieval:</strong> Using multiple retrieval
+              steps, perhaps first to identify broad topics, then specific
+              details.
+            </li>
+            <li class="fragment">
+              <strong>Agentic RAG:</strong> Using an LLM to decide *how* to
+              retrieve information (e.g., searching different tools or
+              databases).
+            </li>
+          </ul>
+        </section>
+
+        <!-- ===== FURTHER READING ===== -->
+        <section>
+          <h2>For Further Reading</h2>
+          <div>
+            <p>
+              This workshop covered the fundamentals of building a RAG system.
+              For a deep, academic dive into the state of the art, advanced
+              techniques, and evaluation methodologies, we highly recommend the
+              following survey paper:
+            </p>
+            <ul>
+              <li>
+                <strong>Title:</strong> A survey on retrieval-augmented
+                generation for large language models
+              </li>
+              <li>
+                <strong>Source:</strong>
+                <a
+                  href="https://www.sciencedirect.com/science/article/pii/S0957417425008139?via%3Dihub"
+                  target="_blank"
+                  >ScienceDirect</a
+                >
+              </li>
+            </ul>
+            <p class="small-text">
+              This paper provides a comprehensive overview of the RAG paradigm,
+              its various components, and future research directions in the
+              field
+            </p>
+          </div>
+        </section>
+
         <!-- ===== Q&A ===== -->
         <section>
-          <h2 class="r-fit-text">Questions?</h2>
+          <h2>Questions?</h2>
         </section>
       </div>
     </div>
