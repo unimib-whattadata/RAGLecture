@@ -67,14 +67,39 @@
             Retrieval Augmented Generation, Large Language Models and Knowledge
             Bases
           </h2>
-          <p>Building a RAG System with LangChain and ICD-11 Data</p>
+          <p>Building a RAG System with LangChain and <br />ICD-11 Data</p>
 
-          <aside class="notes">Shhh, these are your private notes 📝</aside>
+          <aside class="notes">
+            Good morning everyone and welcome to our hands on workshop Building
+            a Retrieval Augmented Generation System with LangChain and ICD-11
+            Data. My name is Marco Cremaschi. I'm a researcher at the University
+            of Milano-Biccocca and teacher of a database course in the master's
+            degree in computational linguistics. Over the next two hours we'll
+            explore why RAG matters and set up the environment together.
+          </aside>
         </section>
 
-        <!-- ===== SPEAKER AND HELPERS ===== -->
+        <!-- ===== SPEAKER ===== -->
         <section>
-          <h2>Speaker and Tutors</h2>
+          <div style="text-align: center">
+            <img
+              src="imgs/speaker/mc-coloured.png"
+              alt="Marco Cremaschi"
+              style="max-width: 400px"
+            />
+            <div style="margin-top: 10px">Marco Cremaschi</div>
+          </div>
+
+          <aside class="notes">
+            My name is Marco Cremaschi. I'm a researcher at the University of
+            Milano-Biccocca and teacher of a database course in the master's
+            degree in computational linguistics.
+          </aside>
+        </section>
+
+        <!-- ===== TUTORS ===== -->
+        <section>
+          <h2>Tutors</h2>
           <div
             style="
               display: flex;
@@ -84,14 +109,6 @@
               margin-top: 40px;
             "
           >
-            <div style="text-align: center">
-              <img
-                src="imgs/speaker/mc-coloured.png"
-                alt="Marco Cremaschi"
-                style="max-width: 200px"
-              />
-              <div style="margin-top: 10px">Marco Cremaschi</div>
-            </div>
             <div style="text-align: center">
               <img
                 src="imgs/speaker/dc-coloured.png"
@@ -117,11 +134,18 @@
               <div style="margin-top: 10px">Davide Ditolve</div>
             </div>
           </div>
+          <aside class="notes">
+            David Chieregato, Fabio D’Adda, and Davide Ditolve. They’ll walk
+            around during the coding checkpoints, so if you see one of these
+            faces just raise your hand.
+          </aside>
         </section>
 
         <!-- ===== LAB AGENDA ===== -->
         <section>
-          <h2>LAB Agenda</h2>
+          <h2 class="title-animate">
+            <span class="maya-blue"></span> LAB Agenda
+          </h2>
         </section>
 
         <!-- ===== LAB AGENDA LIST ===== -->
@@ -147,34 +171,49 @@
             </li>
             <li class="fragment">Conclusion & Q&A</li>
           </ul>
+
+          <aside class="notes">
+            Everything is broken into five parts that map directly onto the code
+            checkpoints. We’ll start with the fundamentals, then move through
+            setup, embeddings, chain assembly, and finally querying. After the
+            wrap-up there’s time for Q&A.
+          </aside>
         </section>
 
         <!-- ===== PART 1: THE FUNDAMENTALS ===== -->
         <section>
           <h2 class="title-animate">
-            <span class="tekhelet">Part 1</span>: The Fundamentals
+            <span class="tekhelet">Part 1</span>: The Fundamentals (RAG &
+            ICD-11)
           </h2>
+
+          <aside class="notes">
+            This first module is purely conceptual: what RAG is and why ICD-11
+            makes a perfect demo dataset.
+          </aside>
         </section>
 
         <!-- ===== WHAT IS RAG ===== -->
         <section>
           <h2>What is RAG?</h2>
-          <div class="content">
-            <p>
-              Retrieval-Augmented Generation (RAG) is an AI framework for
-              improving the quality of LLM-generated responses by grounding the
-              model on external sources of knowledge
-            </p>
-            <p>
-              It combines a retriever (to find relevant information) with a
-              generator (an LLM to craft an answer)
-            </p>
-          </div>
-        </section>
+          <p>
+            <span class="gradient-title"
+              >Retrieval-Augmented Generation (RAG)</span
+            >
+            is an AI framework for improving the quality of LLM-generated
+            responses by grounding the model on external sources of knowledge
+          </p>
+          <p>
+            It combines a retriever (to find relevant information) with a
+            generator (an LLM to craft an answer)
+          </p>
 
-        <!-- ===== RAG ARCHITECTURE ===== -->
-        <section data-background-color="white">
-          <img src="imgs/scheme/rag_architecture.png" alt="RAG Architecture" />
+          <aside class="notes">
+            Retrieval-Augmented Generation couples a retriever with a generator
+            so the LLM is grounded in real data. Think of it as
+            ‘search‐then‐answer’ rather than ‘just answer’. We’ll build both
+            halves today.
+          </aside>
         </section>
 
         <!-- ===== WHAT IS ICD-11 ===== -->
@@ -190,7 +229,7 @@
           <p>
             The ICD-11 now catalogues roughly
             <span id="counting-number" class="highlight-number">0</span>
-            distinct pathological entities, giving health professionals an
+            distinct clinical concepts, giving health professionals an
             unprecedented breadth of diagnostic detail
           </p>
           <p>
@@ -199,16 +238,13 @@
               >official WHO site</a
             >
           </p>
-        </section>
 
-        <!-- ===== ICD-11 BROWSER ===== -->
-        <section data-background-color="white">
-          <!-- <iframe
-            src="https://icd.who.int/browse/2025-01/mms/en"
-            width="100%"
-            height="600"
-            id="icd-iframe"
-          ></iframe> -->
+          <aside class="notes">
+            Before we write a single line of code, let’s examine what we’re
+            indexing. ICD‑11 is the World Health Organization’s global standard
+            for diagnostic codes. It went live in January 2022 and now contains
+            ≈ 17 000 entities and ≈ 120 000 index terms.
+          </aside>
         </section>
 
         <!-- ===== ICD-11 DATA USAGE ===== -->
@@ -220,13 +256,33 @@
             Our RAG system will use this data from Chapter 6 to obtain
             suggestions for diagnoses
           </p>
+
+          <aside class="notes">
+            Each entity ships with: an alphanumeric code (e.g., 6B60), a
+            preferred title and synonyms, a concise definition, hierarchical
+            parents/children and explicit exclusions. For this lab we consider
+            Chapter 06 - Mental, behavioural or neurodevelopmental disorders.
+            That subset has 557 entities—big enough to stress-test retrieval.
+          </aside>
         </section>
+
+        <!-- ===== ICD-11 BROWSER ===== -->
+        <section
+          data-background-color="white"
+          data-background-iframe="https://icd.who.int/browse/2025-01/mms/en#334423054"
+          data-background-interactive
+        ></section>
 
         <!-- ===== PART 2: PROJECT SETUP ===== -->
         <section>
           <h2 class="title-animate">
             <span class="medium-slate-blue">Part 2</span>: Project Setup
           </h2>
+
+          <aside class="notes">
+            Let’s get our environment ready. We’ll start with the prerequisites
+            and then move on to the setup.
+          </aside>
         </section>
 
         <!-- ===== PREREQUISITES ===== -->
@@ -259,11 +315,21 @@
               />
             </li>
           </ul>
+
+          <aside class="notes">
+            You’ll need two things: a Google API key (grab it from AI Studio)
+            and the Chapter 6 CSV which we’ve already placed in the Google
+            Drive.
+          </aside>
+        </section>
+
+        <section>
+          <h2>RICORDARSI DI IMMAGINE CON CSV</h2>
         </section>
 
         <!-- ===== SETUP ===== -->
         <section>
-          <h2>Setup</h2>
+          <h2>Set up</h2>
           <p>
             We begin by setting up a
             <img
@@ -279,22 +345,44 @@
         <!-- ===== OUR TOOLS: THE LIBRARIES ===== -->
         <section>
           <h2>Our Tools: The Libraries</h2>
-          <div class="content">
-            <p>
-              Python's power comes from its vast collection of
-              libraries—pre-packaged code that we can use. Here are the key ones
-              for our project:
-            </p>
-            <ul class="tools-list">
-              <li class="tool-item">
-                <div class="tool-header">
-                  <strong>LangChain</strong>
-                  <img class="inline-logo" src="imgs/logo/langchain-logo.png" alt="LangChain Logo" />
-                </div>
-                <p class="tool-description">The main framework for creating applications with LLMs</p>
-              </li>
-            </ul>
-          </div>
+          <p>
+            Python's power comes from its vast collection of
+            libraries—pre-packaged code that we can use. Here are the key ones
+            for our project:
+          </p>
+          <ul>
+            <li>
+              LangChain
+              <img
+                class="inline-logo"
+                src="imgs/logo/langchain-logo.png"
+                alt="LangChain Logo"
+              />: The main framework for creating applications with LLMs
+            </li>
+          </ul>
+
+          <aside class="notes">
+            LangChain is an open-source framework designed to simplify the
+            development of applications that use large language models (LLMs).
+            It allows developers to build powerful and flexible systems that
+            combine LLMs with external data sources, APIs, and custom logic. At
+            its core, LangChain helps manage the flow of information between the
+            model and the environment. It provides modular components for key
+            functions such as prompt management, memory, chaining multiple
+            operations, and integration with tools like search engines,
+            databases, or user-defined functions. One of LangChain’s main
+            strengths is its ability to “chain” together different steps of
+            reasoning or data processing—hence the name. For example, an
+            application might retrieve relevant documents, summarise them, and
+            then answer a user’s question using the summarised content—all
+            orchestrated through LangChain. LangChain is widely used in
+            real-world applications such as intelligent agents, chatbots,
+            research assistants, and knowledge-driven interfaces. It supports
+            multiple programming environments, with Python and JavaScript being
+            the most popular. By abstracting away common challenges in working
+            with LLMs, LangChain makes it easier to prototype and deploy
+            advanced AI applications quickly and reliably.
+          </aside>
         </section>
 
         <!-- ===== OUR TOOLS: THE LIBRARIES ===== -->
@@ -604,9 +692,7 @@
 
         <!-- ===== WHY THESE DATA FIELDS? STRUCTURING THE CONTEXT ===== -->
         <section>
-          <h2>
-            Why These Data Fields? Structuring the Context
-          </h2>
+          <h2>Why These Data Fields? Structuring the Context</h2>
           <p>
             In our loader, we combined the <strong>code</strong>,
             <strong>title</strong>, and <strong>definition</strong> for a reason
@@ -628,9 +714,7 @@
         </section>
 
         <section>
-          <h2>
-            Why These Data Fields? Structuring the Context
-          </h2>
+          <h2>Why These Data Fields? Structuring the Context</h2>
           <p>
             By combining them, we create a comprehensive
             <code><span class="badge">Document</span></code> that gives the LLM
@@ -705,15 +789,15 @@
           <div class="content">
             <div class="theory-block">
               <p class="main-point">
-                To find relevant information, we can't just match keywords. We need
-                to understand the <strong>meaning</strong> or
+                To find relevant information, we can't just match keywords. We
+                need to understand the <strong>meaning</strong> or
                 <strong>semantic content</strong> of the text.
               </p>
               <p class="fragment detail-point">
                 <strong>Embeddings</strong> are numerical vectors that represent
                 this semantic meaning. An embedding model converts our text
-                documents into these vectors, placing similar concepts close to each
-                other in vector space.
+                documents into these vectors, placing similar concepts close to
+                each other in vector space.
               </p>
             </div>
           </div>
@@ -1145,8 +1229,8 @@
           <h2>Limitations of Basic RAG</h2>
           <div class="content">
             <p>
-              Our current RAG system is a solid foundation, but basic RAG can face
-              issues:
+              Our current RAG system is a solid foundation, but basic RAG can
+              face issues:
             </p>
           </div>
           <ul>
@@ -1179,9 +1263,7 @@
         <section>
           <h2>Advanced RAG Techniques</h2>
           <div class="content">
-            <p>
-              To address these limitations, advanced RAG patterns exist:
-            </p>
+            <p>To address these limitations, advanced RAG patterns exist:</p>
           </div>
           <ul>
             <li class="fragment">

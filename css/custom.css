@@ -4,10 +4,11 @@
   --selective-yellow: #ffb800;
   --tangerine: #ff9500;
   --persimmon: #ff6f3c;
+  --maya-blue: #42affa;
 }
 
 .gradient-title {
-  background: linear-gradient(120deg, var(--tekhelet), var(--medium-slate-blue), var(--selective-yellow), var(--tangerine), var(--persimmon), var(--tekhelet));
+  background: linear-gradient(120deg, var(--tekhelet), var(--medium-slate-blue), var(--selective-yellow), var(--maya-blue), var(--tangerine), var(--persimmon), var(--tekhelet));
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -39,11 +40,6 @@
   font-weight: bold;
 }
 
-.gradient-list {
-  list-style: none;
-  padding-left: 0;
-}
-
 .tekhelet {
   color: var(--tekhelet) !important;
 }
@@ -58,6 +54,9 @@
 }
 .persimmon {
   color: var(--persimmon) !important;
+}
+.maya-blue {
+  color: var(--maya-blue) !important;
 }
 
 /* Title animation */
