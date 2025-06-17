@@ -331,14 +331,59 @@
         </section>
 
         <section>
-          <h2>ICD-11 Chapter 6 Dataset</h2>
-          <p>TODO DAVIDE: immagine/tabella con campi CSV</p>
-        </section>
+					<h2>ICD-11 Chapter 6 dataset</h2>
+					<ul>
+						<li class="fragment">Total Entries: <strong>720</strong></li>
+						<li class="fragment">Most Frequent Category: <strong>6A60</strong> (appearing 18 times)</li>
+						<li class="fragment">Average Title Length: <strong>55 characters</strong></li>
+						<li class="fragment">Average Definition Length: <strong>660 characters</strong></li>
+					</ul>
+				</section>
 
-        <section>
-          <h2>ICD-11 Chapter 6 Dataset</h2>
-          <p>TODO DAVIDE: grafici/statistiche del dataset</p>
-        </section>
+                <!-- Slide 3: Category Distribution Chart -->
+                <section>
+                    <h2>Top 20 Category Codes</h2>
+                    <!-- 
+                        IMPORTANT: Please replace the 'src' attribute below with the path 
+                        to the 'category_distribution.png' file that was generated.
+                        For example, if it's in the same folder, you can just use "category_distribution.png".
+                    -->
+                    <img src="/imgs/scheme/codes_distribution.png" 
+                         alt="Top 20 Category Codes Distribution"
+                         style="max-height: 500px; width: auto;">
+                    <p class="notes">This chart shows the most common parent-level categories in the dataset.</p>
+                </section>
+
+                <!-- Slide 4: Column Definitions -->
+                <section>
+                    <h2>Column Definitions</h2>
+                    <dl>
+                        <dt class="fragment">code</dt>
+                        <dd class="fragment">The unique alphanumeric identifier for a specific disease or disorder.</dd>
+                        <dt class="fragment">title</dt>
+                        <dd class="fragment">The official, human-readable name of the condition.</dd>
+                        <dt class="fragment">definition</dt>
+                        <dd class="fragment">A detailed clinical description of the disorder.</dd>
+                    </dl>
+                </section>
+                <section>
+                    <h2>Column Definitions</h2>
+                    <dl>
+                        <dt class="fragment">inclusions</dt>
+                        <dd class="fragment">Other conditions or synonyms that are included within this diagnostic category.</dd>
+                        <dt class="fragment">exclusions</dt>
+                        <dd class="fragment">Conditions that are explicitly NOT diagnosed under this code.</dd>
+                    </dl>
+                </section>
+                <section>
+                    <h2>Column Definitions</h2>
+                    <dl>
+                        <dt class="fragment">diagnosticCriteria</dt>
+                        <dd class="fragment">The specific criteria that must be met for a definitive diagnosis.</dd>
+                        <dt class="fragment">category_code</dt>
+                        <dd class="fragment">A broader, parent-level category that groups together related codes.</dd>
+                    </dl>
+                </section>
 
         <!-- ===== SETUP ===== -->
         <section>
