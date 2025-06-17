@@ -131,8 +131,9 @@
             </div>
           </div>
           <aside class="notes">
-            For this lab we have also the help of David Chieregato, Fabio D'Adda, and Davide Ditolve. They'll walk
-            around during the coding checkpoints, so if need any help just raise your hand.
+            For this lab we have also the help of David Chieregato, Fabio
+            D'Adda, and Davide Ditolve. They'll walk around during the coding
+            checkpoints, so if need any help just raise your hand.
           </aside>
         </section>
 
@@ -205,9 +206,8 @@
 
           <aside class="notes">
             Retrieval-Augmented Generation couples a retriever with a generator
-            so the LLM is grounded in real data. Think of it as
-            'search then  answer' rather than 'just answer'. We'll build both
-            halves today.
+            so the LLM is grounded in real data. Think of it as 'search then
+            answer' rather than 'just answer'. We'll build both halves today.
           </aside>
         </section>
 
@@ -263,13 +263,13 @@
           data-background-iframe="#"
           data-background-interactive
         >
-        <aside class="notes">
-          Each entity ships with: an alphanumeric code (e.g., 6B60), a
-          preferred title and synonyms, a concise definition, hierarchical
-          parents/children and explicit exclusions. For this lab we consider
-          That subset has 557 entities—big enough to stress-test retrieval.
-        </aside>
-      </section>
+          <aside class="notes">
+            Each entity ships with: an alphanumeric code (e.g., 6B60), a
+            preferred title and synonyms, a concise definition, hierarchical
+            parents/children and explicit exclusions. For this lab we consider
+            That subset has 557 entities—big enough to stress-test retrieval.
+          </aside>
+        </section>
 
         <!-- ===== PART 2: PROJECT SETUP ===== -->
         <section>
@@ -283,9 +283,69 @@
           </aside>
         </section>
 
+        <!-- ===== LOCAL ENVIRONMENT VS. GOOGLE COLAB ===== -->
+        <section>
+          <h2>Local Environment vs. Google Colab</h2>
+          <p>You can run Python code in different places:</p>
+          <div style="display: flex; gap: 20px">
+            <div
+              class="fragment"
+              style="
+                flex: 1;
+                background: rgba(255, 255, 255, 0.1);
+                padding: 15px;
+                border-radius: 10px;
+              "
+            >
+              <h4>Your PC</h4>
+              <ul>
+                <li>
+                  <strong>Setup:</strong> You install Python and libraries
+                  yourself
+                </li>
+                <li><strong>Control:</strong> You have full control</li>
+                <li><strong>Offline:</strong> Works without internet</li>
+              </ul>
+            </div>
+            <div
+              class="fragment"
+              style="
+                flex: 1;
+                background: rgba(255, 255, 255, 0.1);
+                padding: 15px;
+                border-radius: 10px;
+              "
+            >
+              <h4>
+                Google Colab
+                <img
+                  class="inline-logo"
+                  src="imgs/logo/colab-logo.png"
+                  alt="Colab Logo"
+                />
+              </h4>
+              <ul>
+                <li><strong>Setup:</strong> No setup needed!</li>
+                <li>
+                  <strong>Pre-installed:</strong> Many libraries are already
+                  available
+                </li>
+                <li>
+                  <strong>Hardware:</strong> Free access to powerful hardware
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Google Colab</h2>
+          <p>TODO DAVIDE: link a colab senza codice?</p>
+        </section>
+
         <!-- ===== PREREQUISITES ===== -->
         <section>
-          <h2>Prerequisites</h2>
+          <h2>2.1 Prerequisites</h2>
           <p>To follow along, you will need:</p>
           <ul>
             <li>
@@ -321,16 +381,21 @@
           </aside>
         </section>
 
-        <section>
-          <h2>Google API Key <img
-            class="inline-logo"
-            src="imgs/logo/aistudio-logo.png"
-            alt="AI Studio Logo"
-          /></h2>
-          <p>TODO DAVIDE: video o screenshot della creazione della chiave</p>
+        <section data-background-video="https://www.youtube.com/watch?v=T1BTyo1A4Ww" data-background-video-loop data-background-video-muted>
+          <h2>
+            Google API Key
+            <img
+              class="inline-logo"
+              src="imgs/logo/aistudio-logo.png"
+              alt="AI Studio Logo"
+            />
+          </h2>
         </section>
 
         <section>
+          <h2>ICD-11 Chapter 6 Dataset</h2>
+          <img src="imgs/screenshot.png"/>
+        </section>
 					<h2>ICD-11 Chapter 6 dataset</h2>
 					<ul>
 						<li class="fragment">Total Entries: <strong>720</strong></li>
@@ -400,6 +465,10 @@
           </p>
         </section>
 
+        <section>
+          <h2>ENV</h2>
+        </section>
+
         <!-- ===== OUR TOOLS: THE LIBRARIES ===== -->
         <section>
           <h2>Our Tools: The Libraries</h2>
@@ -447,7 +516,7 @@
         <section>
           <h2>Our Tools: The Libraries</h2>
           <ul>
-            <li class="fragment">
+            <li>
               <strong
                 >Pandas
                 <img
@@ -484,6 +553,23 @@
               models
             </li>
           </ul>
+
+          <aside class="notes">
+            Pandas is a fast, powerful, and flexible open-source data analysis
+            and manipulation library for Python. It provides easy-to-use data
+            structures, such as DataFrame and Series, which allow users to
+            clean, transform, analyse, and visualise structured data
+            efficiently. pandas is widely used in data science, machine
+            learning, and statistical analysis thanks to its intuitive syntax
+            and strong integration with other Python libraries. Chroma is a
+            vector database that allows you to store and search for text data
+            efficiently. It is designed to be used with large language models
+            (LLMs) and other AI applications that need to process and retrieve
+            text data. Google GenAI is a library that allows you to connect to
+            and use Google's powerful AI models. It provides a simple interface
+            for interacting with these models, making it easy to build and
+            deploy AI applications.
+          </aside>
         </section>
 
         <section>
@@ -496,72 +582,17 @@
             tell Python to open a toolbox and take out a specific tool to use
           </p>
           <pre class="fragment">
-                <code data-trim data-line-numbers="1-2|4-5">
-                  # This line says: "From the langchain toolbox, get me the 'Document' tool."
-                  from langchain_core.documents import Document
-
-                  # Now we can use the 'Document' tool in our code.
-                  my_doc = Document(page_content="This is a sample document.")
-              </code>
-            </pre>
+                      <code data-trim data-line-numbers="1-2|4-5">
+                        # This line says: "From the langchain toolbox, get me the 'Document' tool."
+                        from langchain_core.documents import Document
+      
+                        # Now we can use the 'Document' tool in our code.
+                        my_doc = Document(page_content="This is a sample document.")
+                    </code>
+                  </pre>
           <p class="fragment">
             Without importing, Python wouldn't know what a Document is
           </p>
-        </section>
-
-        <!-- ===== LOCAL ENVIRONMENT VS. GOOGLE COLAB ===== -->
-        <section>
-          <h2>Local Environment vs. Google Colab</h2>
-          <p>You can run Python code in different places:</p>
-          <div style="display: flex; gap: 20px">
-            <div
-              class="fragment"
-              style="
-                flex: 1;
-                background: rgba(255, 255, 255, 0.1);
-                padding: 15px;
-                border-radius: 10px;
-              "
-            >
-              <h4>Your PC</h4>
-              <ul>
-                <li>
-                  <strong>Setup:</strong> You install Python and libraries
-                  yourself
-                </li>
-                <li><strong>Control:</strong> You have full control</li>
-                <li><strong>Offline:</strong> Works without internet</li>
-              </ul>
-            </div>
-            <div
-              class="fragment"
-              style="
-                flex: 1;
-                background: rgba(255, 255, 255, 0.1);
-                padding: 15px;
-                border-radius: 10px;
-              "
-            >
-              <h4>
-                Google Colab
-                <img
-                  class="inline-logo"
-                  src="imgs/logo/colab-logo.png"
-                  alt="Colab Logo"
-                />
-              </h4>
-              <ul>
-                <li><strong>Setup:</strong> No setup needed!</li>
-                <li>
-                  <strong>Pre-installed:</strong> Many libraries are already
-                  available
-                </li>
-                <li>
-                  <strong>Hardware:</strong> Free access to powerful hardware
-                </li>
-              </ul>
-            </div>
-          </div>
         </section>
 
         <!-- ===== INSTALLING LIBRARIES ===== -->
