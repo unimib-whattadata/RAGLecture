@@ -131,9 +131,8 @@
             </div>
           </div>
           <aside class="notes">
-            David Chieregato, Fabio D'Adda, and Davide Ditolve. They'll walk
-            around during the coding checkpoints, so if you see one of these
-            faces just raise your hand.
+            For this lab we have also the help of David Chieregato, Fabio D'Adda, and Davide Ditolve. They'll walk
+            around during the coding checkpoints, so if need any help just raise your hand.
           </aside>
         </section>
 
@@ -177,7 +176,7 @@
         </section>
 
         <!-- ===== PART 1: THE FUNDAMENTALS ===== -->
-        <section>
+        <section id="part-1">
           <h2 class="title-animate">
             <span class="tekhelet">Part 1</span>: The Fundamentals (RAG &
             ICD-11)
@@ -207,7 +206,7 @@
           <aside class="notes">
             Retrieval-Augmented Generation couples a retriever with a generator
             so the LLM is grounded in real data. Think of it as
-            'search‐then‐answer' rather than 'just answer'. We'll build both
+            'search then  answer' rather than 'just answer'. We'll build both
             halves today.
           </aside>
         </section>
@@ -237,9 +236,9 @@
 
           <aside class="notes">
             Before we write a single line of code, let's examine what we're
-            indexing. ICD‑11 is the World Health Organization's global standard
-            for diagnostic codes. It went live in January 2022 and now contains
-            ≈ 17 000 entities and ≈ 120 000 index terms.
+            indexing. ICD-11 is the World Health Organization's global standard
+            for diagnostic codes. It went live in January 2022 and now contains
+            ≈17000 entities and ≈120000 index terms.
           </aside>
         </section>
 
@@ -254,20 +253,23 @@
           </p>
 
           <aside class="notes">
-            Each entity ships with: an alphanumeric code (e.g., 6B60), a
-            preferred title and synonyms, a concise definition, hierarchical
-            parents/children and explicit exclusions. For this lab we consider
             Chapter 06 - Mental, behavioural or neurodevelopmental disorders.
-            That subset has 557 entities—big enough to stress-test retrieval.
           </aside>
         </section>
 
         <!-- ===== ICD-11 BROWSER ===== -->
         <section
           data-background-color="white"
-          data-background-iframe="https://icd.who.int/browse/2025-01/mms/en#334423054"
+          data-background-iframe="#"
           data-background-interactive
-        ></section>
+        >
+        <aside class="notes">
+          Each entity ships with: an alphanumeric code (e.g., 6B60), a
+          preferred title and synonyms, a concise definition, hierarchical
+          parents/children and explicit exclusions. For this lab we consider
+          That subset has 557 entities—big enough to stress-test retrieval.
+        </aside>
+      </section>
 
         <!-- ===== PART 2: PROJECT SETUP ===== -->
         <section>
@@ -320,7 +322,22 @@
         </section>
 
         <section>
-          <h2>RICORDARSI DI IMMAGINE CON CSV</h2>
+          <h2>Google API Key <img
+            class="inline-logo"
+            src="imgs/logo/aistudio-logo.png"
+            alt="AI Studio Logo"
+          /></h2>
+          <p>TODO DAVIDE: video o screenshot della creazione della chiave</p>
+        </section>
+
+        <section>
+          <h2>ICD-11 Chapter 6 Dataset</h2>
+          <p>TODO DAVIDE: immagine/tabella con campi CSV</p>
+        </section>
+
+        <section>
+          <h2>ICD-11 Chapter 6 Dataset</h2>
+          <p>TODO DAVIDE: grafici/statistiche del dataset</p>
         </section>
 
         <!-- ===== SETUP ===== -->
@@ -333,7 +350,7 @@
               src="imgs/logo/python-logo.png"
               alt="Python Logo"
             />
-            environment This involves installing all the necessary libraries
+            environment. This involves installing all the necessary libraries
             that form the building blocks of our application
           </p>
         </section>
