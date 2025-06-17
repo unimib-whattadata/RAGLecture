@@ -13,19 +13,15 @@
     <link rel="stylesheet" href="dist/reset.css" />
     <link rel="stylesheet" href="dist/reveal.css" />
     <link rel="stylesheet" href="dist/theme/black.css" />
-
-    <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="plugin/highlight/monokai.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
     <style>
       .inline-logo {
         height: 1em;
         vertical-align: middle;
         margin-left: 0.3em;
         position: relative;
-        top: -1px; /* regola fine per centrare meglio */
+        top: -1px;
       }
       .badge {
         display: inline-block;
@@ -135,7 +131,7 @@
             </div>
           </div>
           <aside class="notes">
-            David Chieregato, Fabio D’Adda, and Davide Ditolve. They’ll walk
+            David Chieregato, Fabio D'Adda, and Davide Ditolve. They'll walk
             around during the coding checkpoints, so if you see one of these
             faces just raise your hand.
           </aside>
@@ -174,9 +170,9 @@
 
           <aside class="notes">
             Everything is broken into five parts that map directly onto the code
-            checkpoints. We’ll start with the fundamentals, then move through
+            checkpoints. We'll start with the fundamentals, then move through
             setup, embeddings, chain assembly, and finally querying. After the
-            wrap-up there’s time for Q&A.
+            wrap-up there's time for Q&A.
           </aside>
         </section>
 
@@ -211,7 +207,7 @@
           <aside class="notes">
             Retrieval-Augmented Generation couples a retriever with a generator
             so the LLM is grounded in real data. Think of it as
-            ‘search‐then‐answer’ rather than ‘just answer’. We’ll build both
+            'search‐then‐answer' rather than 'just answer'. We'll build both
             halves today.
           </aside>
         </section>
@@ -240,8 +236,8 @@
           </p>
 
           <aside class="notes">
-            Before we write a single line of code, let’s examine what we’re
-            indexing. ICD‑11 is the World Health Organization’s global standard
+            Before we write a single line of code, let's examine what we're
+            indexing. ICD‑11 is the World Health Organization's global standard
             for diagnostic codes. It went live in January 2022 and now contains
             ≈ 17 000 entities and ≈ 120 000 index terms.
           </aside>
@@ -280,7 +276,7 @@
           </h2>
 
           <aside class="notes">
-            Let’s get our environment ready. We’ll start with the prerequisites
+            Let's get our environment ready. We'll start with the prerequisites
             and then move on to the setup.
           </aside>
         </section>
@@ -317,8 +313,8 @@
           </ul>
 
           <aside class="notes">
-            You’ll need two things: a Google API key (grab it from AI Studio)
-            and the Chapter 6 CSV which we’ve already placed in the Google
+            You'll need two things: a Google API key (grab it from AI Studio)
+            and the Chapter 6 CSV which we've already placed in the Google
             Drive.
           </aside>
         </section>
@@ -370,11 +366,11 @@
             model and the environment. It provides modular components for key
             functions such as prompt management, memory, chaining multiple
             operations, and integration with tools like search engines,
-            databases, or user-defined functions. One of LangChain’s main
-            strengths is its ability to “chain” together different steps of
+            databases, or user-defined functions. One of LangChain's main
+            strengths is its ability to "chain" together different steps of
             reasoning or data processing—hence the name. For example, an
             application might retrieve relevant documents, summarise them, and
-            then answer a user’s question using the summarised content—all
+            then answer a user's question using the summarised content—all
             orchestrated through LangChain. LangChain is widely used in
             real-world applications such as intelligent agents, chatbots,
             research assistants, and knowledge-driven interfaces. It supports
@@ -1337,11 +1333,7 @@
     <script src="plugin/notes/notes.js"></script>
     <script src="plugin/markdown/markdown.js"></script>
     <script src="plugin/highlight/highlight.js"></script>
-    <script src="plugin/notes/notes.js"></script>
     <script>
-      // More info about initialization & config:
-      // - https://revealjs.com/initialization/
-      // - https://revealjs.com/config/
       Reveal.initialize({
         view: "scroll",
         scrollProgress: true,
@@ -1352,13 +1344,11 @@
       Reveal.on("slidechanged", (event) => {
         const title = event.currentSlide.querySelector(".title-animate");
         if (title) {
-          // Get the color class from the span
           const colorSpan = title.querySelector("span");
           if (colorSpan) {
             const colorClass = colorSpan.className;
             const colorVar = `var(--${colorClass})`;
 
-            // Update the ::after pseudo-element color
             const style = document.createElement("style");
             style.textContent = `
               .title-animate::after {
@@ -1368,11 +1358,8 @@
             document.head.appendChild(style);
           }
 
-          // Remove the class to reset the animation
           title.classList.remove("title-animate");
-          // Force a reflow
           void title.offsetWidth;
-          // Add the class back to restart the animation
           title.classList.add("title-animate");
         }
       });
@@ -1401,17 +1388,7 @@
       Reveal.on("slidechanged", (event) => {
         if (event.currentSlide.querySelector("#counting-number")) {
           const element = document.getElementById("counting-number");
-          animateNumber(element, 0, 85000, 2000); // 2 seconds duration
-        }
-      });
-
-      Reveal.addEventListener("slidechanged", function (event) {
-        // Check if the current slide contains the iframe
-        if (event.currentSlide.querySelector("#icd-iframe")) {
-          // Briefly delay and then blur the iframe to prevent immediate refocus
-          setTimeout(function () {
-            document.getElementById("icd-iframe").blur();
-          }, 100);
+          animateNumber(element, 0, 85000, 2000);
         }
       });
     </script>
