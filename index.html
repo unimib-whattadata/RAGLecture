@@ -451,28 +451,9 @@
                     </dl>
                 </section>
 
-        <!-- ===== SETUP ===== -->
-        <section>
-          <h2>Set up</h2>
-          <p>
-            We begin by setting up a
-            <img
-              class="inline-logo"
-              src="imgs/logo/python-logo.png"
-              alt="Python Logo"
-            />
-            environment. This involves installing all the necessary libraries
-            that form the building blocks of our application
-          </p>
-        </section>
-
-        <section>
-          <h2>ENV</h2>
-        </section>
-
         <!-- ===== OUR TOOLS: THE LIBRARIES ===== -->
         <section>
-          <h2>Our Tools: The Libraries</h2>
+          <h2>Step2.2: Setting up libraries</h2>
           <p>
             Python's power comes from its vast collection of
             libraries—pre-packaged code that we can use. Here are the key ones
@@ -515,7 +496,7 @@
 
         <!-- ===== OUR TOOLS: THE LIBRARIES ===== -->
         <section>
-          <h2>Our Tools: The Libraries</h2>
+          <h2>Step 2.2: Setting up libraries</h2>
           <ul>
             <li>
               <strong
@@ -573,6 +554,27 @@
           </aside>
         </section>
 
+                <!-- Slide: Setup - Step 1.1: Installing Libraries -->
+                <section>
+                  <h2>Step 2.2: Setting up libraries</h2>
+                  <p>
+                    We use <code><span class="badge">>pip</span></code> to install
+                    LangChain and its related packages, including the integration for
+                    Google's AI models and the Chroma
+                    <img class="inline-logo" src="imgs/logo/chroma-logo.png" alt="" />
+                    vector store
+                  </p>
+                  <pre>
+                <code data-line-numbers="1|2|3|4"  data-trim data-noescape>
+                  pip install -qU requests
+                  pip install -qU langchain langchain-community 
+                  pip install -qU pandas
+                  pip install -qU langchain-chroma
+                  pip install -qU langchain-google-genai
+                </code>
+              </pre>
+                </section>
+
         <section>
           <h2>
             What is an <code><span class="badge">import</span></code> Statement?
@@ -611,25 +613,7 @@
           </p>
         </section>
 
-        <!-- Slide: Setup - Step 1.1: Installing Libraries -->
-        <section>
-          <h2>Setup - Step 1.1: Installing Libraries</h2>
-          <p>
-            We use <code><span class="badge">>pip</span></code> to install
-            LangChain and its related packages, including the integration for
-            Google's AI models and the Chroma
-            <img class="inline-logo" src="imgs/logo/chroma-logo.png" alt="" />
-            vector store
-          </p>
-          <pre>
-				<code data-line-numbers="1|2|3|4"  data-trim data-noescape>
-          pip install -qU python-dotenv requests pandas
-          pip install -qU langchain langchain-community
-          pip install -qU langchain-google-genai
-          pip install -qU langchain-chroma
-				</code>
-			</pre>
-        </section>
+
 
         <section>
           <h2>Theory: Securing Credentials</h2>
@@ -639,15 +623,10 @@
             them from environment variables, which keeps them separate from the
             code
           </p>
-          <p class="fragment">
-            The <code><span class="badge">python-dotenv</span></code> library
-            helps manage this by loading variables from a
-            <code><span class="badge">.env</span></code> file for local
-            development
-          </p>
         </section>
+
         <section>
-          <h2>First Code: Configuring the API Key</h2>
+          <h2>Configuring the API Key</h2>
           <p>
             It's time to write our first lines of Python. The most crucial first
             step is to authenticate our script with Google's AI services. This
@@ -658,19 +637,14 @@
             <code data-line-numbers="1-3|5-6|8-10" data-trim data-noescape>
               import os
               import getpass
-              from dotenv import load_dotenv
-              
-              # Load environment variables from .env file (optional)
-              load_dotenv()
-              
-              # Get Google API Key
-              if "GOOGLE_API_KEY" not in os.environ:
-                os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter your Google API Key: ")
+            
+              os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter your Google API Key: ")
             </code>
           </pre>
         </section>
+
         <section>
-          <h2>Theory: Loading External Data</h2>
+          <h2>Step 2.3: Loading External Data</h2>
           <p class="fragment">
             The first step in the
             <span class="gradient-title">RAG</span> process is "Retrieval". This
@@ -688,8 +662,9 @@
             <code><span class="badge">LangChain Document</span></code>
           </p>
         </section>
+
         <section>
-          <h2>Theory: Why Split Text for Retrieval?</h2>
+          <h2>Why Split Text for Retrieval?</h2>
           <p class="fragment">
             Once raw documents are loaded, they often need to be broken down
             into smaller, manageable chunks. This is crucial for effective
@@ -701,8 +676,9 @@
             cut off mid-sentence or mid-paragraph
           </p>
         </section>
+
         <section>
-          <h2>Theory: The Goal of Splitting</h2>
+          <h2>The Goal of Splitting</h2>
           <ul>
             <li class="fragment">
               <strong>Relevance:</strong> LLMs have context windows. Sending too
@@ -720,8 +696,9 @@
             </li>
           </ul>
         </section>
+
         <section>
-          <h2>Our Data Format: The CSV File</h2>
+          <h2>The CSV File</h2>
           <p>
             Our ICD-11 knowledge is stored in a
             <strong>CSV (Comma-Separated Values)</strong> file. It's one of the
@@ -734,8 +711,9 @@
             and work with
           </p>
         </section>
+
         <section>
-          <h2>Step 1.3: Implementing the CSV Loader</h2>
+          <h2>Step 2.3: Implementing the CSV Loader</h2>
           <p>
             The function in the next slide reads the
             <code><span class="badge">icdchapter6.csv</span></code> file,
@@ -747,15 +725,13 @@
 
         <section>
           <h2>Step 1.3: Implementing the CSV Loader</h2>
-          <div class="content">
-            <p class="description">
+            <p>
               The function in the next slide reads the
               <code><span class="badge">icdchapter6.csv</span></code> file,
               iterates through each row, and creates a
               <code><span class="badge">Document</span></code> object with
               formatted content and metadata
             </p>
-            <div class="code-block">
               <pre><code data-line-numbers data-trim data-noescape>
                 import pandas as pd
                 from langchain_core.documents import Document
@@ -776,8 +752,6 @@
                 icd11_documents = load_icd11_from_csv('icdchapter6.csv')
                 print(f"Loaded {len(icd11_documents)} documents.")
               </code></pre>
-            </div>
-          </div>
         </section>
 
         <!-- ===== WHY THESE DATA FIELDS? STRUCTURING THE CONTEXT ===== -->
