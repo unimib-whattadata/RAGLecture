@@ -970,11 +970,11 @@
               <strong>retrieval</strong>, which involves bringing external
               knowledge into a usable format. <strong>LangChain</strong> handles
               this using <strong>Document objects</strong>, which store the
-              content we want to use—in our case, typically text from a CSV
+              content we want to use, in our case, the text from a CSV
               file—in the <strong>page_content</strong> field, along with any
               necessary metadata. We'll use <strong>pandas</strong> to read our
               CSV and write a function that converts each row into a
-              <strong>Document</strong>. This prepares our data so it can be
+              <strong>LAngChain Document</strong>. This prepares our data so it can be
               indexed and retrieved when the language model needs it during a
               query.
             </p>
@@ -1057,6 +1057,19 @@
             formatted content and metadata
           </p>
           <p>Follow the bluprint in the Jupyter</p>
+        </section>
+
+        <section data-background-image="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHR5eGJoN2g4OTdvaTZ4ZzZ3OWh6ZmQ0aWo5Mmw3aTh0dWgxempyaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VekcnHOwOI5So/giphy.gif">
+          <h2>TIMER</h2>
+          <div id="countdown-timer" class="countdown-animated">05:00</div>
+          <div id="timer-end-message" style="display:none; font-size:2em; color:#e74c3c; text-align:center; margin-top:20px; font-weight:bold;">Tempo scaduto!</div>
+          <aside class="notes">
+            We leave you 5 minutes to implement the code.
+          </aside>
+        </section>
+
+        <section>
+          <h2>CODE 2 - Implementing the CSV Loader</h2>
         </section>
 
         <section>
@@ -1858,74 +1871,84 @@
         }
       });
     </script>
-    // ... existing code ...
-    <section>
-      <h2>TIMER</h2>
-      <div id="countdown-timer" class="countdown-animated">05:00</div>
-      <div id="timer-end-message" style="display:none; font-size:2em; color:#e74c3c; text-align:center; margin-top:20px; font-weight:bold;">Tempo scaduto!</div>
-      <aside class="notes">
-        We leave you 5 minutes to obtain the API key and download the dataset.
-      </aside>
-    </section>
-    // ... existing code ...
     <script>
-    // ... existing Reveal.initialize and other scripts ...
 
-    // TIMER RESETTABLE ON SLIDE SHOW
+    // TIMER MULTIPLI RESETTABILI SU SLIDE SHOW, CON DURATA PERSONALIZZABILE
     (function() {
-      let timerInterval = null;
-      const TIMER_DURATION = 5 * 60; // 5 minutes in seconds
-      function startCountdown() {
-        let timer = TIMER_DURATION;
-        const display = document.getElementById('countdown-timer');
-        const endMsg = document.getElementById('timer-end-message');
-        if (!display) return;
-        if (timerInterval) clearInterval(timerInterval);
-        display.classList.remove('timer-blink');
-        endMsg.style.display = 'none';
-        display.textContent = '05:00';
-        timerInterval = setInterval(function () {
+      // Mappa per tenere traccia degli intervalli attivi per ogni timer
+      const timerIntervals = {};
+      const DEFAULT_TIMER_DURATION = 5 * 60; // 5 minuti in secondi
+
+      function startCountdown(timerElem, endMsgElem) {
+        // Se c'è già un intervallo per questo timer, cancellalo
+        if (timerElem.dataset.timerIntervalId) {
+          clearInterval(timerIntervals[timerElem.dataset.timerIntervalId]);
+        }
+        // Leggi la durata personalizzata (in secondi) o usa default
+        let duration = DEFAULT_TIMER_DURATION;
+        if (timerElem.hasAttribute('data-timer-duration')) {
+          const custom = parseInt(timerElem.getAttribute('data-timer-duration'), 10);
+          if (!isNaN(custom) && custom > 0) duration = custom;
+        }
+        // Genera un id unico per questo timer
+        const timerId = Math.random().toString(36).substr(2, 9);
+        timerElem.dataset.timerIntervalId = timerId;
+        let timer = duration;
+        timerElem.classList.remove('timer-blink');
+        if (endMsgElem) endMsgElem.style.display = 'none';
+        // Visualizza il tempo iniziale
+        let minutes = parseInt(timer / 60, 10);
+        let seconds = parseInt(timer % 60, 10);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        timerElem.textContent = minutes + ":" + seconds;
+        timerIntervals[timerId] = setInterval(function () {
           let minutes = parseInt(timer / 60, 10);
           let seconds = parseInt(timer % 60, 10);
           minutes = minutes < 10 ? "0" + minutes : minutes;
           seconds = seconds < 10 ? "0" + seconds : seconds;
-          display.textContent = minutes + ":" + seconds;
+          timerElem.textContent = minutes + ":" + seconds;
           if (--timer < 0) {
-            clearInterval(timerInterval);
-            display.textContent = "00:00";
-            display.classList.add('timer-blink');
-            endMsg.style.display = 'block';
+            clearInterval(timerIntervals[timerId]);
+            timerElem.textContent = "00:00";
+            timerElem.classList.add('timer-blink');
+            if (endMsgElem) endMsgElem.style.display = 'block';
           }
         }, 1000);
       }
-      // Start on load if present
-      if (document.getElementById('countdown-timer')) {
-        startCountdown();
+
+      function setupTimersOnSlide(slide) {
+        // Trova tutti i timer nella slide corrente
+        const timers = slide.querySelectorAll('#countdown-timer');
+        timers.forEach(timerElem => {
+          // Trova il messaggio di fine associato (deve essere fratello o vicino)
+          let endMsgElem = timerElem.parentNode.querySelector('#timer-end-message');
+          startCountdown(timerElem, endMsgElem);
+        });
       }
-      // Reset timer when the TIMER slide is shown
+
+      // All'avvio, se c'è un timer visibile, avvialo
+      document.addEventListener('DOMContentLoaded', function() {
+        const currentSlide = document.querySelector('.slides section.present, .slides section[aria-selected="true"]');
+        if (currentSlide) setupTimersOnSlide(currentSlide);
+      });
+
+      // Ogni volta che cambia slide, avvia i timer della slide corrente
       if (window.Reveal) {
         Reveal.on('slidechanged', function(event) {
-          const slide = event.currentSlide;
-          if (slide && slide.querySelector && slide.querySelector('#countdown-timer')) {
-            startCountdown();
-          }
+          if (event.currentSlide) setupTimersOnSlide(event.currentSlide);
         });
       } else {
-        // If Reveal is not yet loaded, try again after DOMContentLoaded
         document.addEventListener('DOMContentLoaded', function() {
           if (window.Reveal) {
             Reveal.on('slidechanged', function(event) {
-              const slide = event.currentSlide;
-              if (slide && slide.querySelector && slide.querySelector('#countdown-timer')) {
-                startCountdown();
-              }
+              if (event.currentSlide) setupTimersOnSlide(event.currentSlide);
             });
           }
         });
       }
     })();
     </script>
-    // ... existing code ...
 
   </body>
 </html>
