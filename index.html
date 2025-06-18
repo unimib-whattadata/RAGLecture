@@ -356,6 +356,21 @@
           </aside>
         </section>
 
+        <!-- ===== INSTALLING LIBRARIES ===== -->
+        <section>
+          <h2>Local Environment vs. Google Colab</h2>
+          <p>For this LAB, both work perfectly fine!</p>
+          <p>
+            Colab
+            <img
+              class="inline-logo"
+              src="imgs/logo/colab-logo.png"
+              alt="Colab Logo"
+            />
+            is often easier to start with
+          </p>
+        </section>
+
         <section>
           <h2>Jupyter Notebook</h2>
           <p>TODO DAVIDE: link a colab senza codice?</p>
@@ -368,7 +383,7 @@
 
         <!-- ===== PREREQUISITES ===== -->
         <section>
-          <h2>2.1 Prerequisites</h2>
+          <h2>Prerequisites</h2>
           <p>To follow along, you will need:</p>
           <ul>
             <li>
@@ -454,11 +469,12 @@
           </ul>
 
           <aside class="notes">
-            This slide gives a quick overview of the dataset we’re working with. It contains 720 entries
-            in total. The most common category in the dataset is 6A60 (bipolar type I disorder), which
-            appears 18 times. On average, the
-            titles of the entries are about 55 characters long, while the
-            definitions are much longer, with an average of 660 characters.
+            This slide gives a quick overview of the dataset we’re working with.
+            It contains 720 entries in total. The most common category in the
+            dataset is 6A60 (bipolar type I disorder), which appears 18 times.
+            On average, the titles of the entries are about 55 characters long,
+            while the definitions are much longer, with an average of 660
+            characters.
           </aside>
         </section>
 
@@ -476,9 +492,9 @@
           </p>
         </section>
 
-        <!-- Slide 4: Column Definitions -->
         <section>
           <h2>Column Definitions</h2>
+          <h3>Core Identification Fields</h3>
           <dl>
             <dt class="fragment">code</dt>
             <dd class="fragment">
@@ -494,10 +510,20 @@
               A detailed clinical description of the disorder
             </dd>
           </dl>
+
+          <aside class="notes">
+            These are the three fundamental fields that every ICD-11 entry must
+            have. The code serves as a unique identifier for each condition,
+            while the title provides a clear and understandable name. The
+            definition provides the detailed medical description that helps
+            clinicians understand precisely what this condition entails.
+          </aside>
         </section>
 
+        <!-- Column Definitions - Part 2: Classification Fields -->
         <section>
           <h2>Column Definitions</h2>
+          <h3>Classification & Scope Fields</h3>
           <dl>
             <dt class="fragment">inclusions</dt>
             <dd class="fragment">
@@ -509,10 +535,21 @@
               Conditions that are explicitly NOT diagnosed under this code
             </dd>
           </dl>
+
+          <aside class="notes">
+            These fields help clarify the boundaries of each diagnostic
+            category. Inclusions inform us about other conditions that fall
+            under the same code - think of it as "this code also covers these
+            related conditions." Exclusions are equally important, as they
+            explicitly state what should not be diagnosed with this code,
+            helping to prevent misdiagnosis.
+          </aside>
         </section>
 
+        <!-- Column Definitions - Part 3: Diagnostic & Organizational Fields -->
         <section>
           <h2>Column Definitions</h2>
+          <h3>Diagnostic & Organisational Fields</h3>
           <dl>
             <dt class="fragment">diagnosticCriteria</dt>
             <dd class="fragment">
@@ -524,11 +561,20 @@
               codes
             </dd>
           </dl>
+
+          <aside class="notes">
+            The diagnostic criteria field is crucial for clinical practice, as
+            it provides a specific checklist that healthcare providers must
+            follow to make an accurate diagnosis. The category code helps
+            organise the vast number of conditions into logical groups, making
+            it easier to navigate and understand the relationships between
+            different disorders.
+          </aside>
         </section>
 
         <!-- ===== OUR TOOLS: THE LIBRARIES ===== -->
         <section>
-          <h2>Step2.2: Setting up libraries</h2>
+          <h2>CODE 1 - Setting up libraries</h2>
           <p>
             Python's power comes from its vast collection of
             libraries—pre-packaged code that we can use. Here are the key ones
@@ -548,19 +594,19 @@
           <aside class="notes">
             LangChain is an open-source framework designed to simplify the
             development of applications that use large language models (LLMs).
-            It allows developers to build powerful and flexible systems that
-            combine LLMs with external data sources, APIs, and custom logic. At
-            its core, LangChain helps manage the flow of information between the
-            model and the environment. It provides modular components for key
-            functions such as prompt management, memory, chaining multiple
-            operations, and integration with tools like search engines,
-            databases, or user-defined functions. One of LangChain's main
-            strengths is its ability to "chain" together different steps of
+            It enables developers to create powerful and flexible systems that
+            integrate LLMs with external data sources, APIs, and custom logic.
+            At its core, LangChain facilitates the exchange of information
+            between the model and the environment. It provides modular
+            components for key functions such as prompt management, memory,
+            chaining multiple operations, and integration with tools like search
+            engines, databases, or user-defined functions. One of LangChain's
+            main strengths is its ability to "chain" together different steps of
             reasoning or data processing—hence the name. For example, an
             application might retrieve relevant documents, summarise them, and
             then answer a user's question using the summarised content—all
-            orchestrated through LangChain. LangChain is widely used in
-            real-world applications such as intelligent agents, chatbots,
+            orchestrated through LangChain. LangChain is widely utilised in
+            real-world applications, including intelligent agents, chatbots,
             research assistants, and knowledge-driven interfaces. It supports
             multiple programming environments, with Python and JavaScript being
             the most popular.
@@ -569,7 +615,7 @@
 
         <!-- ===== OUR TOOLS: THE LIBRARIES ===== -->
         <section>
-          <h2>Step 2.2: Setting up libraries</h2>
+          <h2>Setting up libraries</h2>
           <ul>
             <li>
               <strong
@@ -614,13 +660,13 @@
             and manipulation library for Python. It provides easy-to-use data
             structures, such as DataFrame and Series, which allow users to
             clean, transform, analyse, and visualise structured data
-            efficiently. pandas is widely used in data science, machine
+            efficiently. Pandas is widely used in data science, machine
             learning, and statistical analysis thanks to its intuitive syntax
             and strong integration with other Python libraries. Chroma is a
-            vector database delveloped by langchain. Croma allows you to store
+            vector database developed by Langchain. Croma allows you to store
             and search for text data efficiently. It is designed to be used with
-            large language models (LLMs) and other AI applications that need to
-            process and retrieve text data. Google GenAI is a library that
+            large language models (LLMs) and other AI applications that require
+            processing and retrieving text data. Google GenAI is a library that
             allows you to connect to and use Google's platform as a service LLMS
             so you can query the model the cloud. It provides a simple interface
             for interacting with these models, making it easy to build and
@@ -628,9 +674,8 @@
           </aside>
         </section>
 
-        <!-- Slide: Setup - Step 1.1: Installing Libraries -->
         <section>
-          <h2>Step 2.2: Setting up libraries</h2>
+          <h2>Setting up libraries</h2>
           <p>
             We use <code><span class="badge">>pip</span></code> to install
             LangChain and its related packages, including the integration for
@@ -651,7 +696,7 @@
 
         <section>
           <h2>
-            What is an <code><span class="badge">import</span></code> Statement?
+            What is an <code><span class="badge">import</span></code> statement?
           </h2>
           <p>
             Think of libraries as toolboxes. An
@@ -670,31 +715,40 @@
           <p class="fragment">
             Without importing, Python wouldn't know what a Document is
           </p>
-        </section>
 
-        <!-- ===== INSTALLING LIBRARIES ===== -->
-        <section>
-          <h2>Local Environment vs. Google Colab</h2>
-          <p>For this LAB, both work perfectly fine!</p>
-          <p>
-            Colab
-            <img
-              class="inline-logo"
-              src="imgs/logo/colab-logo.png"
-              alt="Colab Logo"
-            />
-            is often easier to start with
-          </p>
+          <aside class="notes">
+            This slide explains one of the most basic but essential concepts in
+            Python: the import statement. You can think of libraries as
+            toolboxes—collections of useful tools that aren’t built into the
+            core language. When we write an import statement, we’re telling
+            Python which toolbox to open and which specific tool we want to use.
+            For example, in the code shown here, we're importing the Document
+            class from the langchain_core.documents module. Once imported, we
+            can use it to create a new document, like in the line my_doc =
+            Document(...). This is the foundation for using any external library
+            in Python.
+          </aside>
         </section>
 
         <section>
-          <h2>Theory: Securing Credentials</h2>
+          <h2>Securing Credentials</h2>
           <p>
             Hard-coding sensitive information like API keys directly in the
             source code is a major security risk. A best practice is to load
             them from environment variables, which keeps them separate from the
             code
           </p>
+
+          <aside class="notes">
+            This slide highlights a very important security practice. When
+            working with APIs, it might seem convenient to paste your API key
+            directly into the code, but that's actually a serious
+            risk—especially if the code is ever shared or uploaded to a public
+            repository. Instead, we should store credentials in environment
+            variables. This keeps sensitive data out of the codebase and makes
+            our projects much safer and easier to manage across different
+            environments.
+          </aside>
         </section>
 
         <section>
@@ -716,7 +770,7 @@
         </section>
 
         <section>
-          <h2>Step 2.3: Loading External Data</h2>
+          <h2>Loading External Data</h2>
           <p class="fragment">
             The first step in the
             <span class="gradient-title">RAG</span> process is "Retrieval". This
@@ -733,6 +787,17 @@
             CSV file and transform each row into a
             <code><span class="badge">LangChain Document</span></code>
           </p>
+
+          <aside class="notes">
+            The first step in the RAG pipeline is retrieval, which involves
+            bringing external knowledge into a usable format. LangChain handles
+            this using Document objects, which store the content we want to
+            use—in our case, typically text from a CSV file—in the page_content
+            field, along with any necessary metadata. We'll use pandas to read
+            our CSV and write a function that converts each row into a Document.
+            This prepares our data so it can be indexed and retrieved when the
+            language model needs it during a query.
+          </aside>
         </section>
 
         <section>
@@ -747,6 +812,18 @@
             coherence within each chunk while ensuring no crucial information is
             cut off mid-sentence or mid-paragraph
           </p>
+
+          <aside class="notes">
+            Once we've loaded our data into Document objects, we usually need to
+            split the text into smaller pieces. This is essential for making
+            retrieval more efficient and accurate. Long documents can be
+            difficult for the model to process as a whole, so chunking helps.
+            But it’s not just about cutting the text at fixed intervals—what we
+            really want is to split it in a smart way that keeps each chunk
+            meaningful. Ideally, we avoid breaking sentences or paragraphs so
+            the model can work with complete, coherent bits of information
+            during retrieval.
+          </aside>
         </section>
 
         <section>
@@ -767,47 +844,36 @@
               is at the right level of detail for the LLM to synthesize
             </li>
           </ul>
+
+          <aside class="notes">
+            Splitting text isn't just about making things smaller—it’s about
+            improving the overall performance of the retrieval system. First,
+            there's relevance: LLMs have limited context windows, so we want to
+            avoid flooding them with unnecessary content. Smaller, well-focused
+            chunks help retrieve only the most relevant pieces. Next is
+            efficiency: Working with smaller chunks speeds up embedding and
+            retrieval processes and reduces memory usage. And finally,
+            granularity: Properly sized chunks ensure the information passed to
+            the model is at the right level of detail—not too broad, not too
+            narrow—making it easier for the model to generate meaningful and
+            accurate responses.
+          </aside>
         </section>
 
         <section>
-          <h2>The CSV File</h2>
+          <h2>CODE 2 - Implementing the CSV Loader</h2>
           <p>
-            Our ICD-11 knowledge is stored in a
-            <strong>CSV (Comma-Separated Values)</strong> file. It's one of the
-            simplest and most common ways to store tabular data
-          </p>
-          <p class="fragment">
-            Think of it as a plain text spreadsheet. Each line is a row, and
-            commas separate the columns. Because it's so simple, it's incredibly
-            easy for almost any programming language, including Python, to read
-            and work with
-          </p>
-        </section>
-
-        <section>
-          <h2>Step 2.3: Implementing the CSV Loader</h2>
-          <p>
-            The function in the next slide reads the
+            Now implement a function that reads the
             <code><span class="badge">icdchapter6.csv</span></code> file,
             iterates through each row, and creates a
             <code><span class="badge">Document</span></code> object with
             formatted content and metadata
           </p>
+          <p>Follow the bluprint in the Jupyter</p>
         </section>
 
         <section>
-          <h2>Step 1.3: Implementing the CSV Loader</h2>
-          <p>
-            The function in the next slide reads the
-            <code><span class="badge">icdchapter6.csv</span></code> file,
-            iterates through each row, and creates a
-            <code><span class="badge">Document</span></code> object with
-            formatted content and metadata
-          </p>
-        </section>
-
-        <section>
-          <pre><code data-line-numbers data-trim data-noescape>
+          <pre><code data-line-numbers="1-2|4-14|16-18" data-trim data-noescape>
                 import pandas as pd
                 from langchain_core.documents import Document
 
@@ -829,7 +895,6 @@
               </code></pre>
         </section>
 
-        <!-- ===== WHY THESE DATA FIELDS? STRUCTURING THE CONTEXT ===== -->
         <section>
           <h2>Why These Data Fields? Structuring the Context</h2>
           <p>
@@ -842,6 +907,24 @@
               identifiers. They are perfect for when the LLM needs to give a
               precise, factual answer
             </li>
+          </ul>
+
+          <aside class="notes">
+            When preparing our data for retrieval, we deliberately chose to
+            combine the code, title, and definition fields. This wasn’t
+            random—each part plays a key role. The code and title serve as
+            strong identifiers. They’re concise, structured, and ideal when the
+            model needs to respond with factual information—like recognising a
+            diagnostic label. Including them helps the LLM quickly anchor the
+            context and deliver accurate answers, especially when precision
+            matters. In short, this structure helps us balance clarity,
+            structure, and richness of information.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Why These Data Fields? Structuring the Context</h2>
+          <ul class="fragment">
             <li>
               <strong>Definition:</strong> This is the most important part for
               our retriever. It contains the rich, descriptive text that allows
@@ -850,6 +933,17 @@
               keywords
             </li>
           </ul>
+          <aside class="notes">
+            The definition is by far the most valuable part of each entry when
+            it comes to retrieval. It’s where the real descriptive content
+            lives—rich enough to carry the meaning of the concept. This is
+            crucial for semantic search, where we rely on meaning rather than
+            exact words. Even if the user’s query is phrased differently, the
+            system can still retrieve the right content because it’s matching
+            based on meaning, not just keywords. That’s why including
+            definitions is essential for making our retrieval accurate and
+            flexible.
+          </aside>
         </section>
 
         <section>
@@ -860,7 +954,13 @@
             everything it needs: a unique ID, a clear label, and a detailed
             description to inform its answer
           </p>
+          <aside class="notes">
+            By combining them, we produce a comprehensive document that provides
+            the LLM with everything it requires: a unique ID, a clear label, and
+            a detailed description to inform its answer.
+          </aside>
         </section>
+
         <section>
           <h2 class="r-fit-text checkpoint-animate">Lab Checkpoint 1</h2>
           <pre>
@@ -906,11 +1006,10 @@
           </h2>
         </section>
 
-        <!-- ===== EMBEDDINGS & VECTOR STORES ===== -->
         <section>
-          <h2>Theory: Embeddings & Vector Stores</h2>
+          <h2>Embeddings & Vector Stores</h2>
           <p class="fragment">
-            Now that we have our data loaded, we need to make it searchable.
+            Now that we have our data loaded, we need to make it searchable
           </p>
           <p class="fragment">
             We'll do this by converting our text into numerical representations
@@ -918,9 +1017,8 @@
           </p>
         </section>
 
-        <!-- ===== THEORY: CREATING TEXT EMBEDDINGS ===== -->
         <section>
-          <h2>Theory: Creating Text Embeddings</h2>
+          <h2>Creating Text Embeddings</h2>
           <div class="content">
             <div class="theory-block">
               <p class="main-point">
@@ -966,9 +1064,8 @@
         </pre>
         </section>
 
-        <!-- ===== STEP 2.1: INITIALIZING THE EMBEDDING MODEL ===== -->
         <section>
-          <h2>Step 2.1: Initializing the Embedding Model</h2>
+          <h2>Initializing the Embedding Model</h2>
           <p>
             We'll use Google's
             <code><span class="badge">embedding-001</span></code> model via the
@@ -1022,9 +1119,8 @@
           </p>
         </section>
 
-        <!-- ===== STEP 2.2: CREATING THE VECTOR STORE ===== -->
         <section>
-          <h2>Step 2.2: Creating the Vector Store</h2>
+          <h2>Creating the Vector Store</h2>
           <p>
             This code creates a new Chroma database from our documents and
             embeddings if one doesn't already exist, or loads the existing one
@@ -1191,16 +1287,14 @@
           </p>
         </section>
 
-        <!-- ===== STEP 3.1: CONSTRUCTING THE CHAIN ===== -->
         <section>
-          <h2>Step 3.1: Constructing the Chain</h2>
+          <h2>Constructing the Chain</h2>
           <p>
             We define a prompt template and then pipe together the retriever,
             the prompt, the LLM, and an output parser.
           </p>
         </section>
 
-        <!-- ===== STEP 3.1: CONSTRUCTING THE CHAIN ===== -->
         <section>
           <pre>
               <code data-line-numbers="1-4|6-7|9-16|17 |20-25|27 " data-line-numbers data-trim data-noescape>
@@ -1253,18 +1347,16 @@
           </p>
         </section>
 
-        <!-- ===== STEP 3.2: PUTTING IT TO THE TEST ===== -->
         <section>
-          <h3>Step 3.2: Putting it to the Test</h3>
+          <h3>Putting it to the Test</h3>
           <p>
             We define a helper function and then ask our RAG system a question
             that is inside its knowledge base and one that is outside of it.
           </p>
         </section>
 
-        <!-- ===== STEP 3.2: PUTTING IT TO THE TEST ===== -->
         <section>
-          <h3>Step 3.2: Putting it to the Test</h3>
+          <h3>Putting it to the Test</h3>
           <pre>
                       <code data-line-numbers="1|2|3 -4|6-7|9-10" data-trim data-noescape>
                           def ask_rag_system(query: str):

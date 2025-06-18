@@ -122,4 +122,35 @@
 
 .highlight-number.active {
   background-size: 100% 100%;
+}
+
+/* Definition terms coloring */
+dt {
+  font-weight: bold;
+  margin-top: 1em;
+}
+
+/* Rotating color scheme for dt elements */
+dt:nth-child(6n+1) {
+  color: var(--tekhelet);
+}
+
+dt:nth-child(6n+2) {
+  color: var(--medium-slate-blue);
+}
+
+dt:nth-child(6n+3) {
+  color: var(--selective-yellow);
+}
+
+dt:nth-child(6n+4) {
+  color: var(--tangerine);
+}
+
+dt:nth-child(6n+5) {
+  color: var(--persimmon);
+}
+
+dt:nth-child(6n+6) {
+  color: var(--maya-blue);
 } 
