@@ -68,10 +68,16 @@
           </p>
 
           <aside class="notes">
-            Good morning, everyone. Welcome to our lab, 'Building a Retrieval
-            Augmented Generation System with LangChain and ICD-11 Data.' Over
-            the next two hours, we'll explore why RAG matters and set up the
-            environment together.
+            <p>
+              <strong>Good morning, everyone.</strong> Welcome to our lab,
+              <strong
+                >'Building a Retrieval Augmented Generation System with
+                LangChain and ICD-11 Data.'</strong
+              >
+              Over the next two hours, we'll explore
+              <strong>why RAG matters</strong> and set up the environment
+              together.
+            </p>
           </aside>
         </section>
 
@@ -83,13 +89,20 @@
               alt="Marco Cremaschi"
               style="max-width: 400px"
             />
-            <div style="margin-top: 10px"><a href="https://www.linkedin.com/in/marco-cremaschi/">Marco Cremaschi</a></div>
+            <div style="margin-top: 10px">
+              <a href="https://www.linkedin.com/in/marco-cremaschi/"
+                >Marco Cremaschi</a
+              >
+            </div>
           </div>
 
           <aside class="notes">
-            My name is Marco Cremaschi. I'm a researcher at the University of
-            Milan-Bicocca and a lecturer in a database course for the master's
-            degree in Computational Linguistics.
+            <p>
+              My name is <strong>Marco Cremaschi</strong>. I'm a
+              <strong>researcher</strong> at the University of Milan-Bicocca and
+              a <strong>lecturer</strong> in a database course for the master's
+              degree in <strong>Computational Linguistics</strong>.
+            </p>
           </aside>
         </section>
 
@@ -111,7 +124,14 @@
                 alt="David Chieregato"
                 style="max-width: 200px"
               />
-              <div style="margin-top: 10px"><a href=""><a href="https://www.linkedin.com/in/david-chieregato-8110b6b4/">David Chieregato</a></a></div>
+              <div style="margin-top: 10px">
+                <a href=""
+                  ><a
+                    href="https://www.linkedin.com/in/david-chieregato-8110b6b4/"
+                    >David Chieregato</a
+                  ></a
+                >
+              </div>
             </div>
             <div style="text-align: center">
               <img
@@ -119,7 +139,11 @@
                 alt="Fabio D'Adda"
                 style="max-width: 200px"
               />
-              <div style="margin-top: 10px"><a href="https://www.linkedin.com/in/fabio-d-adda5/">Fabio D'Adda</a></div>
+              <div style="margin-top: 10px">
+                <a href="https://www.linkedin.com/in/fabio-d-adda5/"
+                  >Fabio D'Adda</a
+                >
+              </div>
             </div>
             <div style="text-align: center">
               <img
@@ -127,13 +151,20 @@
                 alt="Davide Ditolve"
                 style="max-width: 200px"
               />
-              <div style="margin-top: 10px"><a href="https://www.linkedin.com/in/davide-ditolve/">Davide Ditolve</a></div>
+              <div style="margin-top: 10px">
+                <a href="https://www.linkedin.com/in/davide-ditolve/"
+                  >Davide Ditolve</a
+                >
+              </div>
             </div>
           </div>
           <aside class="notes">
-            For this lab, we also have the help of David, Fabio, and Davide.
-            We'll walk around during the coding checkpoints, so if you need any
-            help, just raise your hand.
+            <p>
+              For this lab, we also have the help of <strong>David</strong>,
+              <strong>Fabio</strong>, and <strong>Davide</strong>. We'll walk
+              around during the <strong>coding checkpoints</strong>, so if you
+              need any help, just raise your hand.
+            </p>
           </aside>
         </section>
 
@@ -151,28 +182,56 @@
               <span class="tekhelet">Part 1</span>: The Fundamentals (RAG &
               ICD-11)
             </li>
-            <li class="fragment">
+            <li>
               <span class="medium-slate-blue">Part 2</span>: Prerequisites,
               Setup, Data Loading & Processing
             </li>
-            <li class="fragment">
+            <li>
               <span class="selective-yellow">Part 3</span>: Embeddings & Vector
               Stores
             </li>
-            <li class="fragment">
+            <li>
               <span class="tangerine">Part 4</span>: Building the RAG Chain
             </li>
-            <li class="fragment">
+            <li>
               <span class="persimmon">Part 5</span>: Querying the RAG System
             </li>
-            <li class="fragment">Conclusion & Q&A</li>
+            <li>>Conclusion & Q&A</li>
           </ul>
 
           <aside class="notes">
-            Everything is broken into five parts that map directly onto the code
-            checkpoints. We'll start with the fundamentals, then move on to
-            setup, embeddings, chain assembly, and finally, querying. After the
-            Wrap-up, there's time for a Q&A session.
+            Here’s an overview of today’s lab. We’ve divided the session into
+            five parts, each one directly aligned with a code checkpoint:
+
+            <ul>
+              <li>
+                In Part 1, we'll cover the conceptual foundations, looking at
+                what RAG is and how ICD-11 serves as our structured knowledge
+                base.
+              </li>
+
+              <li>
+                In Part 2, we'll move to the technical setup, including
+                prerequisites, Colab configuration, and data loading.
+              </li>
+
+              <li>
+                Part 3 introduces embeddings and vector stores—this is how we
+                make our text searchable and retrievable.
+              </li>
+
+              <li>
+                In Part 4, we'll see how to build the actual RAG chain,
+                connecting retrieval and generation components using LangChain.
+              </li>
+
+              <li>
+                And in Part 5, we'll query the system interactively and observe
+                how it returns grounded responses.
+              </li>
+            </ul>
+
+            We’ll end with a wrap-up and Q&A session.
           </aside>
         </section>
 
@@ -184,8 +243,12 @@
           </h2>
 
           <aside class="notes">
-            For the first part, we'll examine the conceptual side, covering what
-            RAG is and why ICD-11 makes a suitable demonstration dataset.
+            <p>
+              For the first part, we'll examine the
+              <strong>conceptual side</strong>, covering what
+              <strong>RAG</strong> is and why <strong>ICD-11</strong> makes a
+              suitable demonstration dataset.
+            </p>
           </aside>
         </section>
 
@@ -205,9 +268,13 @@
           </p>
 
           <aside class="notes">
-            Retrieval-Augmented Generation couples a retriever with a generator
-            so the LLM is grounded in real data. Think of it as 'search then
-            answer' rather than 'just answer'.
+            <p>
+              <strong>Retrieval-Augmented Generation</strong> couples a
+              <strong>retriever</strong> with a <strong>generator</strong> so
+              the LLM is grounded in real data. Think of it as '<strong
+                >search then answer</strong
+              >' rather than '<strong>just answer</strong>'.
+            </p>
           </aside>
         </section>
 
@@ -235,11 +302,16 @@
           </p>
 
           <aside class="notes">
-            Before we write a single line of code, let's examine what we're
-            indexing. ICD-11 is the World Health Organization's global standard
-            for diagnostic codes. It went live in January 2022 and now contains
-            approximately 17,000 entities and approximately 120,000 index terms.
-            <strong>Does someone knows ICD-11?</strong>
+            <p>
+              Before we write a single line of code, let's examine what we're
+              indexing. <strong>ICD-11</strong> is the
+              <strong>World Health Organization's global standard</strong> for
+              diagnostic codes. It went live in January 2022 and now contains
+              approximately <strong>17,000 entities</strong> and approximately
+              <strong>120,000 index terms</strong>.<br /><strong
+                >Does someone knows ICD-11?</strong
+              >
+            </p>
           </aside>
         </section>
 
@@ -254,26 +326,45 @@
           </p>
 
           <aside class="notes">
-            Our work focuses specifically on Chapter 6, which addresses mental,
-            behavioural, and neurodevelopmental disorders. This chapter includes
-            all the conditions typically encountered in psychiatric and
-            psychological practice, and forms the foundation of the dataset used
-            to train our model.
+            <p>
+              Our work focuses specifically on <strong>Chapter 6</strong>, which
+              addresses
+              <strong
+                >mental, behavioural, and neurodevelopmental disorders</strong
+              >. This chapter includes all the conditions typically encountered
+              in <strong>psychiatric and psychological practice</strong>, and
+              forms the foundation of the dataset used to train our model.
+            </p>
           </aside>
         </section>
 
         <!-- ===== ICD-11 BROWSER ===== -->
-        <section
-          data-background-iframe="https://icd.who.int/browse/2025-01/mms/en#334423054"
-          data-background-interactive
-          data-background-color="#FFF"
-        >
+        <section>
+          <p>
+            <img src="imgs/icd-11-screen.png" />
+            <a href="https://icd.who.int/browse/2025-01/mms/en#334423054"
+              >ICD-11 Browser</a
+            >
+          </p>
           <aside class="notes">
-            Each entity ships with an alphanumeric code (e.g., 6B60), a
-            preferred title and synonyms, a concise definition, hierarchical
-            parents and children, and explicit exclusions. or this lab, we
-            consider a subset of 557 entities—big enough to stress-test
-            retrieval.
+            <p>
+              Each ICD-11 entity comes with a unique
+              <strong>alphanumeric code</strong> (e.g., 6B60) that serves as a
+              identifier across systems. It includes a
+              <strong>preferred title</strong> that reflects the official
+              diagnostic label, as well as a set of <strong>synonyms</strong> to
+              capture alternate or commonly used terms. A
+              <strong>concise definition</strong> provides a clear and
+              consistent explanation of the condition, ensuring semantic
+              interoperability across clinical and research contexts. Entities
+              are also organised into a <strong>hierarchical structure</strong>,
+              with <strong>parent-child relationships</strong> that define
+              broader or narrower diagnostic categories. This makes it easier to
+              model clinical reasoning and support structured queries. In
+              addition, each entry lists <strong>explicit exclusions</strong>,
+              which specify what the diagnosis should <em>not</em> be confused
+              with.
+            </p>
           </aside>
         </section>
 
@@ -284,8 +375,11 @@
           </h2>
 
           <aside class="notes">
-            Let's get our environment ready. We'll begin with the requirements
-            and then proceed to the setup.
+            <p>
+              Let's get our environment ready. We'll begin with the
+              <strong>requirements</strong> and then proceed to the
+              <strong>setup</strong>.
+            </p>
           </aside>
         </section>
 
@@ -344,15 +438,16 @@
           </div>
 
           <aside class="notes">
-            This slide compares running Python code locally versus using Google
-            Colab. When working on your PC, you have complete control and can
-            work offline; however, you need to install Python and any required
-            libraries manually. On the other hand, Google Colab requires no
-            setup, comes with many libraries pre-installed, and provides free
-            access to powerful hardware like GPUs. However, it does require an
-            internet connection. Choosing between the two depends on your
-            project's needs, the level of control you require, and the available
-            resources.
+            <p>
+              For the lab you can use a jupter notebook that runs on yout pc o
+              google colab. compares running Python code If you prefer to work
+              on your PC, you need to install Python and any required libraries
+              manually. On the other hand,
+              <strong>Google Colab</strong> requires <strong>no setup</strong>,
+              comes with many libraries <strong>pre-installed</strong>, and, as
+              we will descrive, provides
+              <strong>free access to powerful hardware</strong> like GPUs.
+            </p>
           </aside>
         </section>
 
@@ -361,29 +456,31 @@
           <h2>Local Environment vs. Google Colab</h2>
           <p>For this LAB, both work perfectly fine!</p>
           <p>
-            Colab
+            The code will be discussed on Google Colab
             <img
               class="inline-logo"
               src="imgs/logo/colab-logo.png"
               alt="Colab Logo"
             />
-            is often easier to start with
           </p>
         </section>
 
         <section>
           <h2>Jupyter Notebook</h2>
-          <p>TODO DAVIDE: link a colab senza codice?</p>
+          <p>LINK</p>
 
           <aside class="notes">
-            You can download a Jupyter Notebooks blueprint at this link. After
-            the download, you can import it into your Jupyter instance or Colab.
+            <p>
+              At this link you can download a <strong>Jupyter Notebooks blueprint</strong> at
+              this link. After the download, you can import it into your Jupyter
+              instance or on Google Colab.
+            </p>
           </aside>
         </section>
 
         <!-- ===== PREREQUISITES ===== -->
         <section>
-          <h2>Prerequisites</h2>
+          <h2>Requirements</h2>
           <p>To follow along, you will need:</p>
           <ul>
             <li>
@@ -398,7 +495,10 @@
               />
             </li>
             <ul>
-              <li>*Google AI Studio is free of charge and do not require a valid credit card for the free tier</li>
+              <li>
+                *Google AI Studio is free of charge and do not require a valid
+                credit card for the free tier
+              </li>
             </ul>
             <li>
               <strong>ICD-11 Chapter 6 Dataset:</strong> get from
@@ -416,11 +516,14 @@
           </ul>
 
           <aside class="notes">
-            Concerning the prerequisites, you'll need two things: a Google API
-            key for the model, which will be used, is free of charge. I don't
-            need a subscription or a valid credit card. (Grab it from AI
-            Studio.) and the Chapter 6 CSV, which we've already placed in the
-            Google Drive.
+            <p>
+              Concerning the <strong>requirements</strong>, you'll need two
+              things: a <strong>Google API key</strong> for the models, which
+              will be used. The models are free of charge. You don't need a subscription or a
+              valid credit card. (Grab it from AI Studio.) and the
+              <strong>Chapter 6 CSV</strong>, which we've already placed in the
+              Google Drive.
+            </p>
           </aside>
         </section>
 
@@ -436,7 +539,7 @@
           <iframe
             width="560"
             height="315"
-            src="https://www.youtube.com/embed/T1BTyo1A4Ww"
+            src="https://www.youtube.com/embed/T1BTyo1A4Ww?end=37"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -444,8 +547,11 @@
           ></iframe>
 
           <aside class="notes">
-            I want to underline that the API key is free of charge. You don't
-            need a subscription or a valid credit card to use our service.
+            <p>
+              I want to underline that the
+              <strong>API key is free of charge</strong>. You don't need a
+              subscription or a valid credit card to use our service.
+            </p>
           </aside>
         </section>
 
@@ -453,7 +559,9 @@
           <h2>ICD-11 Chapter 6 Dataset</h2>
           <img src="imgs/screenshot.png" />
 
-          <aside class="notes"></aside>
+          <aside class="notes">
+            You also have to download the ICD-11 Chapter 6 dataset from the drive.
+          </aside>
         </section>
 
         <section>
@@ -472,54 +580,46 @@
           </ul>
 
           <aside class="notes">
-            This slide gives a quick overview of the dataset we’re working with.
-            It contains 720 entries in total. The most common category in the
-            dataset is 6A60 (bipolar type I disorder), which appears 18 times.
-            On average, the titles of the entries are about 55 characters long,
-            while the definitions are much longer, with an average of 660
-            characters.
+            <p>
+              This slide gives a quick overview of the
+              <strong>dataset</strong>. It contains
+              <strong>720 entries</strong> in total. On average, the <strong>titles</strong> of
+              the entries are about <strong>55 characters</strong> long, while
+              the <strong>definitions</strong> are much longer, with an average
+              of <strong>660 characters</strong>.
+            </p>
           </aside>
-        </section>
-
-        <!-- Slide 3: Category Distribution Chart -->
-        <section>
-          <h2>Top 20 Category Codes</h2>
-          <img
-            src="imgs/scheme/codes_distribution.png"
-            alt="Top 20 Category Codes Distribution"
-            style="max-height: 500px; width: auto"
-          />
-          <p class="notes">
-            This chart shows the most common parent-level categories in the
-            dataset
-          </p>
         </section>
 
         <section>
           <h2>Column Definitions</h2>
           <h3>Core Identification Fields</h3>
           <dl>
-            <dt class="fragment">code</dt>
-            <dd class="fragment">
+            <dt>code</dt>
+            <dd>
               The unique alphanumeric identifier for a specific disease or
               disorder
             </dd>
-            <dt class="fragment">title</dt>
-            <dd class="fragment">
+            <dt>title</dt>
+            <dd>
               The official, human-readable name of the condition
             </dd>
-            <dt class="fragment">definition</dt>
-            <dd class="fragment">
+            <dt>definition</dt>
+            <dd>
               A detailed clinical description of the disorder
             </dd>
           </dl>
 
           <aside class="notes">
-            These are the three fundamental fields that every ICD-11 entry must
-            have. The code serves as a unique identifier for each condition,
-            while the title provides a clear and understandable name. The
-            definition provides the detailed medical description that helps
-            clinicians understand precisely what this condition entails.
+            <p>
+              These are the three fundamental fields that every
+              <strong>ICD-11 entry</strong> must have. The
+              <strong>code</strong> serves as a unique identifier for each
+              condition, while the <strong>title</strong> provides a clear and
+              understandable name. The <strong>definition</strong> provides the
+              detailed medical description that helps clinicians understand
+              precisely what this condition entails.
+            </p>
           </aside>
         </section>
 
@@ -528,24 +628,26 @@
           <h2>Column Definitions</h2>
           <h3>Classification & Scope Fields</h3>
           <dl>
-            <dt class="fragment">inclusions</dt>
-            <dd class="fragment">
+            <dt>inclusions</dt>
+            <dd>
               Other conditions or synonyms that are included within this
               diagnostic category
             </dd>
-            <dt class="fragment">exclusions</dt>
-            <dd class="fragment">
+            <dt>exclusions</dt>
+            <dd>
               Conditions that are explicitly NOT diagnosed under this code
             </dd>
           </dl>
 
           <aside class="notes">
-            These fields help clarify the boundaries of each diagnostic
-            category. Inclusions inform us about other conditions that fall
-            under the same code - think of it as "this code also covers these
-            related conditions." Exclusions are equally important, as they
-            explicitly state what should not be diagnosed with this code,
-            helping to prevent misdiagnosis.
+            <p>
+              These fields help clarify the <strong>boundaries</strong> of each
+              diagnostic category. <strong>Inclusions</strong> inform us about
+              other conditions that fall under the same code.
+              <strong>Exclusions</strong> are equally important, as they
+              explicitly state what should not be diagnosed with this code,
+              helping to prevent misdiagnosis.
+            </p>
           </aside>
         </section>
 
@@ -554,24 +656,34 @@
           <h2>Column Definitions</h2>
           <h3>Diagnostic & Organisational Fields</h3>
           <dl>
-            <dt class="fragment">diagnosticCriteria</dt>
-            <dd class="fragment">
+            <dt>diagnosticCriteria</dt>
+            <dd>
               The specific criteria that must be met for a definitive diagnosis
             </dd>
-            <dt class="fragment">category_code</dt>
-            <dd class="fragment">
+            <dt>category_code</dt>
+            <dd>
               A broader, parent-level category that groups together related
               codes
             </dd>
           </dl>
 
           <aside class="notes">
-            The diagnostic criteria field is crucial for clinical practice, as
-            it provides a specific checklist that healthcare providers must
-            follow to make an accurate diagnosis. The category code helps
-            organise the vast number of conditions into logical groups, making
-            it easier to navigate and understand the relationships between
-            different disorders.
+            <p>
+              The <strong>diagnostic criteria</strong> field is crucial for
+              clinical practice, as it provides a specific checklist that
+              healthcare providers must follow to make an accurate diagnosis.
+              The <strong>category code</strong> helps organise the vast number
+              of conditions into logical groups, making it easier to navigate
+              and understand the relationships between different disorders.
+            </p>
+          </aside>
+        </section>
+
+        <section>
+          <h2>TIMER</h2>
+
+          <aside class="notes">
+            We leave you 5 minutes to obtain the API key and download the dataset.
           </aside>
         </section>
 
@@ -595,24 +707,30 @@
           </ul>
 
           <aside class="notes">
-            LangChain is an open-source framework designed to simplify the
-            development of applications that use large language models (LLMs).
-            It enables developers to create powerful and flexible systems that
-            integrate LLMs with external data sources, APIs, and custom logic.
-            At its core, LangChain facilitates the exchange of information
-            between the model and the environment. It provides modular
-            components for key functions such as prompt management, memory,
-            chaining multiple operations, and integration with tools like search
-            engines, databases, or user-defined functions. One of LangChain's
-            main strengths is its ability to "chain" together different steps of
-            reasoning or data processing—hence the name. For example, an
-            application might retrieve relevant documents, summarise them, and
-            then answer a user's question using the summarised content—all
-            orchestrated through LangChain. LangChain is widely utilised in
-            real-world applications, including intelligent agents, chatbots,
-            research assistants, and knowledge-driven interfaces. It supports
-            multiple programming environments, with Python and JavaScript being
-            the most popular.
+            <p>
+              <strong>LangChain</strong> is an open-source framework designed to
+              simplify the development of applications that use
+              <strong>large language models (LLMs)</strong>. It enables
+              developers to create powerful and flexible systems that integrate
+              LLMs with external data sources, APIs, and custom logic. At its
+              core, LangChain facilitates the exchange of information between
+              the model and the environment. It provides modular components for
+              key functions such as <strong>prompt management</strong>,
+              <strong>memory</strong>,
+              <strong>chaining multiple operations</strong>, and integration
+              with tools like search engines, databases, or user-defined
+              functions. One of LangChain's main strengths is its ability to
+              "chain" together different steps of reasoning or data
+              processing—hence the name. For example, an application might
+              retrieve relevant documents, summarise them, and then answer a
+              user's question using the summarised content—all orchestrated
+              through LangChain. LangChain is widely utilised in real-world
+              applications, including <strong>intelligent agents</strong>,
+              <strong>chatbots</strong>, <strong>research assistants</strong>,
+              and <strong>knowledge-driven interfaces</strong>. It supports
+              multiple programming environments, with Python and JavaScript
+              being the most popular.
+            </p>
           </aside>
         </section>
 
@@ -659,21 +777,26 @@
           </ul>
 
           <aside class="notes">
-            Pandas is a fast, powerful, and flexible open-source data analysis
-            and manipulation library for Python. It provides easy-to-use data
-            structures, such as DataFrame and Series, which allow users to
-            clean, transform, analyse, and visualise structured data
-            efficiently. Pandas is widely used in data science, machine
-            learning, and statistical analysis thanks to its intuitive syntax
-            and strong integration with other Python libraries. Chroma is a
-            vector database developed by Langchain. Croma allows you to store
-            and search for text data efficiently. It is designed to be used with
-            large language models (LLMs) and other AI applications that require
-            processing and retrieving text data. Google GenAI is a library that
-            allows you to connect to and use Google's platform as a service LLMS
-            so you can query the model the cloud. It provides a simple interface
-            for interacting with these models, making it easy to build and
-            deploy AI applications.
+            <p>
+              <strong>Pandas</strong> is a fast, powerful, and flexible
+              open-source data analysis and manipulation library for Python. It
+              provides easy-to-use data structures, such as
+              <strong>DataFrame</strong> and <strong>Series</strong>, which
+              allow users to clean, transform, analyse, and visualise structured
+              data efficiently. Pandas is widely used in
+              <strong>data science</strong>, <strong>machine learning</strong>,
+              and <strong>statistical analysis</strong> thanks to its intuitive
+              syntax and strong integration with other Python libraries.
+              <strong>Chroma</strong> is a vector database developed by
+              Langchain. Chroma allows you to store and search for text data
+              efficiently. It is designed to be used with large language models
+              (LLMs) and other AI applications that require processing and
+              retrieving text data. <strong>Google GenAI</strong> is a library
+              that allows you to connect to and use Google's platform as a
+              service LLMs so you can query the model in the cloud. It provides
+              a simple interface for interacting with these models, making it
+              easy to build and deploy AI applications.
+            </p>
           </aside>
         </section>
 
@@ -716,20 +839,25 @@
                     </code>
                   </pre>
           <p class="fragment">
-            Without importing, Python wouldn't know what a <code><span class="badge">Document</span></code> is
+            Without importing, Python wouldn't know what a
+            <code><span class="badge">Document</span></code> is
           </p>
 
           <aside class="notes">
-            This slide explains one of the most basic but essential concepts in
-            Python: the import statement. You can think of libraries as
-            toolboxes—collections of useful tools that aren’t built into the
-            core language. When we write an import statement, we’re telling
-            Python which toolbox to open and which specific tool we want to use.
-            For example, in the code shown here, we're importing the Document
-            class from the langchain_core.documents module. Once imported, we
-            can use it to create a new document, like in the line my_doc =
-            Document(...). This is the foundation for using any external library
-            in Python.
+            <p>
+              This slide explains one of the most basic but essential concepts
+              in Python: the <strong>import statement</strong>. You can think of
+              libraries as <strong>toolboxes</strong>—collections of useful
+              tools that aren't built into the core language. When we write an
+              <strong>import statement</strong>, we're telling Python which
+              toolbox to open and which specific tool we want to use. For
+              example, in the code shown here, we're importing the
+              <strong>Document</strong> class from the
+              <strong>langchain_core.documents</strong> module. Once imported,
+              we can use it to create a new document, like in the line
+              <strong>my_doc = Document(...)</strong>. This is the foundation
+              for using any external library in Python.
+            </p>
           </aside>
         </section>
 
@@ -743,14 +871,16 @@
           </p>
 
           <aside class="notes">
-            This slide highlights a very important security practice. When
-            working with APIs, it might seem convenient to paste your API key
-            directly into the code, but that's actually a serious
-            risk—especially if the code is ever shared or uploaded to a public
-            repository. Instead, we should store credentials in environment
-            variables. This keeps sensitive data out of the codebase and makes
-            our projects much safer and easier to manage across different
-            environments.
+            <p>
+              This slide highlights a very important
+              <strong>security practice</strong>. When working with APIs, it
+              might seem convenient to paste your API key directly into the
+              code, but that's actually a serious risk—especially if the code is
+              ever shared or uploaded to a public repository. Instead, we should
+              store credentials in <strong>environment variables</strong>. This
+              keeps sensitive data out of the codebase and makes our projects
+              much safer and easier to manage across different environments.
+            </p>
           </aside>
         </section>
 
@@ -792,14 +922,19 @@
           </p>
 
           <aside class="notes">
-            The first step in the RAG pipeline is retrieval, which involves
-            bringing external knowledge into a usable format. LangChain handles
-            this using Document objects, which store the content we want to
-            use—in our case, typically text from a CSV file—in the page_content
-            field, along with any necessary metadata. We'll use pandas to read
-            our CSV and write a function that converts each row into a Document.
-            This prepares our data so it can be indexed and retrieved when the
-            language model needs it during a query.
+            <p>
+              The first step in the <strong>RAG pipeline</strong> is
+              <strong>retrieval</strong>, which involves bringing external
+              knowledge into a usable format. <strong>LangChain</strong> handles
+              this using <strong>Document objects</strong>, which store the
+              content we want to use—in our case, typically text from a CSV
+              file—in the <strong>page_content</strong> field, along with any
+              necessary metadata. We'll use <strong>pandas</strong> to read our
+              CSV and write a function that converts each row into a
+              <strong>Document</strong>. This prepares our data so it can be
+              indexed and retrieved when the language model needs it during a
+              query.
+            </p>
           </aside>
         </section>
 
@@ -817,15 +952,18 @@
           </p>
 
           <aside class="notes">
-            Once we've loaded our data into Document objects, we usually need to
-            split the text into smaller pieces. This is essential for making
-            retrieval more efficient and accurate. Long documents can be
-            difficult for the model to process as a whole, so chunking helps.
-            But it’s not just about cutting the text at fixed intervals—what we
-            really want is to split it in a smart way that keeps each chunk
-            meaningful. Ideally, we avoid breaking sentences or paragraphs so
-            the model can work with complete, coherent bits of information
-            during retrieval.
+            <p>
+              Once we've loaded our data into <strong>Document objects</strong>,
+              we usually need to split the text into smaller pieces. This is
+              essential for making <strong>retrieval</strong> more efficient and
+              accurate. Long documents can be difficult for the model to process
+              as a whole, so <strong>chunking</strong> helps. But it's not just
+              about cutting the text at fixed intervals—what we really want is
+              to split it in a smart way that keeps each chunk meaningful.
+              Ideally, we avoid breaking sentences or paragraphs so the model
+              can work with complete, coherent bits of information during
+              retrieval.
+            </p>
           </aside>
         </section>
 
@@ -849,17 +987,20 @@
           </ul>
 
           <aside class="notes">
-            Splitting text isn't just about making things smaller—it’s about
-            improving the overall performance of the retrieval system. First,
-            there's relevance: LLMs have limited context windows, so we want to
-            avoid flooding them with unnecessary content. Smaller, well-focused
-            chunks help retrieve only the most relevant pieces. Next is
-            efficiency: Working with smaller chunks speeds up embedding and
-            retrieval processes and reduces memory usage. And finally,
-            granularity: Properly sized chunks ensure the information passed to
-            the model is at the right level of detail—not too broad, not too
-            narrow—making it easier for the model to generate meaningful and
-            accurate responses.
+            <p>
+              Splitting text isn't just about making things smaller—it's about
+              improving the overall performance of the
+              <strong>retrieval system</strong>. First, there's
+              <strong>relevance</strong>: LLMs have limited context windows, so
+              we want to avoid flooding them with unnecessary content. Smaller,
+              well-focused chunks help retrieve only the most relevant pieces.
+              Next is <strong>efficiency</strong>: Working with smaller chunks
+              speeds up embedding and retrieval processes and reduces memory
+              usage. And finally, <strong>granularity</strong>: Properly sized
+              chunks ensure the information passed to the model is at the right
+              level of detail—not too broad, not too narrow—making it easier for
+              the model to generate meaningful and accurate responses.
+            </p>
           </aside>
         </section>
 
@@ -913,15 +1054,17 @@
           </ul>
 
           <aside class="notes">
-            When preparing our data for retrieval, we deliberately chose to
-            combine the code, title, and definition fields. This wasn’t
-            random—each part plays a key role. The code and title serve as
-            strong identifiers. They’re concise, structured, and ideal when the
-            model needs to respond with factual information—like recognising a
-            diagnostic label. Including them helps the LLM quickly anchor the
-            context and deliver accurate answers, especially when precision
-            matters. In short, this structure helps us balance clarity,
-            structure, and richness of information.
+            <p>
+              When preparing our data for retrieval, we deliberately chose to
+              combine the <strong>code</strong>, <strong>title</strong>, and
+              <strong>definition</strong> fields. This wasn't random—each part
+              plays a key role. The <strong>code and title</strong> serve as
+              strong identifiers. They're concise, structured, and ideal when
+              the model needs to respond with factual information—like
+              recognising a diagnostic label. Including them helps the LLM
+              quickly anchor the context and deliver accurate answers,
+              especially when precision matters.
+            </p>
           </aside>
         </section>
 
@@ -937,15 +1080,17 @@
             </li>
           </ul>
           <aside class="notes">
-            The definition is by far the most valuable part of each entry when
-            it comes to retrieval. It’s where the real descriptive content
-            lives—rich enough to carry the meaning of the concept. This is
-            crucial for semantic search, where we rely on meaning rather than
-            exact words. Even if the user’s query is phrased differently, the
-            system can still retrieve the right content because it’s matching
-            based on meaning, not just keywords. That’s why including
-            definitions is essential for making our retrieval accurate and
-            flexible.
+            <p>
+              The <strong>definition</strong> is by far the most valuable part
+              of each entry when it comes to retrieval. It's where the real
+              descriptive content lives—rich enough to carry the meaning of the
+              concept. This is crucial for <strong>semantic search</strong>,
+              where we rely on meaning rather than exact words. Even if the
+              user's query is phrased differently, the system can still retrieve
+              the right content because it's matching based on meaning, not just
+              keywords. That's why including <strong>definitions</strong> is
+              essential for making our retrieval accurate and flexible.
+            </p>
           </aside>
         </section>
 
@@ -958,9 +1103,12 @@
             description to inform its answer
           </p>
           <aside class="notes">
-            By combining them, we produce a comprehensive document that provides
-            the LLM with everything it requires: a unique ID, a clear label, and
-            a detailed description to inform its answer.
+            <p>
+              By combining them, we produce a comprehensive document that
+              provides the LLM with everything it requires: a
+              <strong>unique ID</strong>, a <strong>clear label</strong>, and a
+              <strong>detailed description</strong> to inform its answer.
+            </p>
           </aside>
         </section>
 
@@ -1008,8 +1156,10 @@
           </h2>
 
           <aside class="notes">
-            In this section, we’ll move from raw data to a format that can be
-            efficiently searched.
+            <p>
+              In this section, we'll move from <strong>raw data</strong> to a
+              format that can be <strong>efficiently searched</strong>.
+            </p>
           </aside>
         </section>
 
@@ -1024,8 +1174,11 @@
           </p>
 
           <aside class="notes">
-            At this point, we’ve loaded and structured our data, but it's still
-            just plain text. Now we need to make it searchable.
+            <p>
+              At this point, we've loaded and structured our data, but it's
+              still just <strong>plain text</strong>. Now we need to make it
+              <strong>searchable</strong>.
+            </p>
           </aside>
         </section>
 
@@ -1048,15 +1201,19 @@
           </div>
 
           <aside class="notes">
-            Keyword matching isn’t enough. We need the system to understand the
-            meaning—the semantic content—of a question and find texts that are
-            conceptually related, even if the wording is different. That’s where
-            embeddings come in. These are numerical vectors that capture the
-            semantic meaning of a text. An embedding model transforms each chunk
-            of text into a vector, and similar meanings end up close together in
-            vector space. So instead of searching by words, we’re searching by
-            meaning—which makes the retrieval process much more powerful and
-            flexible.
+            <p>
+              <strong>Keyword matching</strong> isn't enough. We need the system
+              to understand the <strong>meaning</strong>—the
+              <strong>semantic content</strong>—of a question and find texts
+              that are conceptually related, even if the wording is different.
+              That's where <strong>embeddings</strong> come in. These are
+              numerical vectors that capture the semantic meaning of a text. An
+              <strong>embedding model</strong> transforms each chunk of text
+              into a vector, and similar meanings end up close together in
+              vector space. So instead of searching by words, we're searching by
+              <strong>meaning</strong>—which makes the retrieval process much
+              more powerful and flexible.
+            </p>
           </aside>
         </section>
 
@@ -1131,15 +1288,19 @@
           </p>
 
           <aside class="notes">
-            Once we’ve created our embeddings, we need an efficient way to
-            search through them. Doing a linear search over thousands of vectors
-            would be too slow, especially in real-time applications. That’s why
-            we use a Vector Store—a specialised database optimised for handling
-            high-dimensional vectors. It uses fast algorithms like Approximate
-            Nearest Neighbor (ANN) search to quickly find vectors that are close
-            in meaning to a query. In this lab, we’ll use Chroma, an open-source
-            vector store that works in memory for speed but can also be saved to
-            disk to avoid recalculating embeddings every time.
+            <p>
+              Once we've created our <strong>embeddings</strong>, we need an
+              efficient way to search through them. Doing a linear search over
+              thousands of vectors would be too slow, especially in real-time
+              applications. That's why we use a <strong>Vector Store</strong>—a
+              specialised database optimised for handling high-dimensional
+              vectors. It uses fast algorithms like
+              <strong>Approximate Nearest Neighbor (ANN) search</strong> to
+              quickly find vectors that are close in meaning to a query. In this
+              lab, we'll use <strong>Chroma</strong>, an open-source vector
+              store that works in memory for speed but can also be saved to disk
+              to avoid recalculating embeddings every time.
+            </p>
           </aside>
         </section>
 
@@ -1234,13 +1395,18 @@
           </p>
 
           <aside class="notes">
-            Now that we’ve built all the components—the retriever for fetching
-            relevant chunks and the LLM for generating answers—the final step is
-            to combine them into a single pipeline. This is what we call the RAG
-            chain: it orchestrates the interaction between retrieval and
-            generation, allowing us to ask natural-language questions and
-            receive answers that are grounded in our indexed knowledge base.
-            This step transforms our setup into a fully functional application.
+            <p>
+              Now that we've built all the components—the
+              <strong>retriever</strong> for fetching relevant chunks and the
+              <strong>LLM</strong> for generating answers—the final step is to
+              combine them into a single pipeline. This is what we call the
+              <strong>RAG chain</strong>: it orchestrates the interaction
+              between <strong>retrieval</strong> and
+              <strong>generation</strong>, allowing us to ask natural-language
+              questions and receive answers that are grounded in our indexed
+              knowledge base. This step transforms our setup into a fully
+              functional application.
+            </p>
           </aside>
         </section>
 
@@ -1263,16 +1429,21 @@
           </div>
 
           <aside class="notes">
-            To build the RAG chain, we’ll use LangChain Expression Language, or
-            LCEL. It’s a declarative syntax that lets us compose chains using
-            the | operator—just like a pipeline. This makes it easy to connect
-            components, where the output of one step becomes the input of the
-            next. In our case, the chain is made of four parts: The user’s
-            question triggers the retriever, The question and retrieved context
-            are combined into a prompt, The prompt is passed to the LLM, And the
-            LLM’s response is parsed into a clean string that we can show back
-            to the user. LCEL makes this structure simple and readable, which is
-            great for rapid development and debugging.
+            <p>
+              To build the <strong>RAG chain</strong>, we'll use
+              <strong>LangChain Expression Language (LCEL)</strong>. It's a
+              declarative syntax that lets us compose chains using the
+              <strong>| operator</strong>—just like a pipeline. This makes it
+              easy to connect components, where the output of one step becomes
+              the input of the next. In our case, the chain is made of four
+              parts: The user's question triggers the
+              <strong>retriever</strong>, The question and retrieved context are
+              combined into a <strong>prompt</strong>, The prompt is passed to
+              the <strong>LLM</strong>, And the LLM's response is parsed into a
+              clean string that we can show back to the user.
+              <strong>LCEL</strong> makes this structure simple and readable,
+              which is great for rapid development and debugging.
+            </p>
           </aside>
         </section>
 
@@ -1299,13 +1470,19 @@
             </pre>
 
           <aside class="notes">
-            We don’t write a new prompt every time a user asks a question.
-            Instead, we define a template with placeholders—in our case,
-            {context} and {question}. LangChain automatically fills in those
-            placeholders at runtime: it inserts the retrieved text and the
-            user’s query, then sends the full prompt to the LLM. This approach
-            ensures consistency, makes the chain easier to maintain, and lets us
-            easily tweak or improve the prompt without rewriting our logic.
+            <p>
+              We don't write a new prompt every time a user asks a question.
+              Instead, we define a <strong>template</strong> with
+              placeholders—in our case, <strong>{context}</strong> and
+              <strong>{question}</strong>.
+              <strong>LangChain</strong> automatically fills in those
+              placeholders at runtime: it inserts the retrieved text and the
+              user's query, then sends the full prompt to the
+              <strong>LLM</strong>. This approach ensures
+              <strong>consistency</strong>, makes the chain easier to maintain,
+              and lets us easily tweak or improve the prompt without rewriting
+              our logic.
+            </p>
           </aside>
         </section>
 
@@ -1330,15 +1507,23 @@
           </p>
 
           <aside class="notes">
-            The most important part of our prompt isn’t the context or the
-            question—it’s the instructions we give to the LLM. These guide how
-            it should behave. A great example is the line: “If you don’t know
-            the answer, just say that you don’t know.” This simple instruction
-            is crucial. It prevents the model from guessing or hallucinating
-            answers when it doesn’t have enough information. Instead, we force
-            it to stay grounded in the retrieved content. Adding this makes our
-            system more reliable, transparent, and trustworthy, which is
-            essential when working with sensitive data like medical knowledge.
+            <p>
+              The most important part of our prompt isn't the context or the
+              question—it's the <strong>instructions</strong> we give to the
+              LLM. These guide how it should behave. A great example is the
+              line:
+              <strong
+                >"If you don't know the answer, just say that you don't
+                know."</strong
+              >
+              This simple instruction is crucial. It prevents the model from
+              guessing or hallucinating answers when it doesn't have enough
+              information. Instead, we force it to stay grounded in the
+              retrieved content. Adding this makes our system more
+              <strong>reliable</strong>, <strong>transparent</strong>, and
+              <strong>trustworthy</strong>, which is essential when working with
+              sensitive data like medical knowledge.
+            </p>
           </aside>
         </section>
 
@@ -1430,7 +1615,7 @@
         </section>
 
         <section
-          data-background-image="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2hwZ2o2cGo5bWh2cGVlaHE1M3d0azM5YzJxMDE3cm84YzF3ZnhnaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ebFG4jcnC1Ny8/giphy.gif"
+          data-background-image="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmI0aTYxenRoM2xhZXhkMG4wNzgzaG83Nnh4NXA1NzJ5eGc4bTNsMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ebFG4jcnC1Ny8/giphy.gif"
         >
           <h2 class="r-fit-text">Final Code: <br />Complete RAG System</h2>
         </section>
@@ -1514,22 +1699,34 @@
 
         <section data-background-color="#fff">
           <h2>LLMind</h2>
-          <img src="imgs/scheme/rag_pipeline.png" style="max-width: 80%; height: auto; margin: 20px auto; display: block;">
+          <img
+            src="imgs/scheme/rag_pipeline.png"
+            style="
+              max-width: 80%;
+              height: auto;
+              margin: 20px auto;
+              display: block;
+            "
+          />
 
           <aside class="notes">
-            The pipeline we just explored has also been used to build a tool
-            called LLMind—a system designed to suggest psychiatric diagnoses
-            based on clinical case descriptions. This kind of tool is
-            particularly valuable given the complexity and nuance involved in
-            psychiatric and psychological assessment. Diagnoses often rely on
-            overlapping symptoms, contextual factors, and evolving criteria,
-            which makes decision-making both delicate and cognitively demanding.
-            By integrating structured knowledge from ICD-11 with the flexibility
-            of language models, LLMind helps clinicians navigate this
-            complexity, offering consistent, transparent, and evidence-based
-            support. In expert evaluations, LLMind reached a diagnostic accuracy
-            of 76.1%, showing promising results as a clinical decision support
-            system—not as a replacement, but as a smart assistant.
+            <p>
+              The pipeline we just explored has also been used to build a tool
+              called <strong>LLMind</strong>—a system designed to suggest
+              psychiatric diagnoses based on clinical case descriptions. This
+              kind of tool is particularly valuable given the complexity and
+              nuance involved in psychiatric and psychological assessment.
+              Diagnoses often rely on overlapping symptoms, contextual factors,
+              and evolving criteria, which makes decision-making both delicate
+              and cognitively demanding. By integrating structured knowledge
+              from <strong>ICD-11</strong> with the flexibility of language
+              models, <strong>LLMind</strong> helps clinicians navigate this
+              complexity, offering consistent, transparent, and evidence-based
+              support. In expert evaluations, LLMind reached a
+              <strong>diagnostic accuracy of 76.1%</strong>, showing promising
+              results as a clinical decision support system—not as a
+              replacement, but as a smart assistant.
+            </p>
           </aside>
         </section>
 
