@@ -53,52 +53,72 @@
       }
 
       #countdown-timer {
-              font-size: 5em;
-              background: linear-gradient(90deg, #00c3ff, #ffff1c, #ff5e62, #00c3ff);
-              background-size: 400% 400%;
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              margin: 40px auto 0 auto;
-              width: fit-content;
-              animation: gradient-move 3s ease-in-out infinite, text-shadow-pulse 2s ease-in-out infinite;
-              letter-spacing: 0.1em;
-              text-shadow: 0 0 10px rgba(0, 195, 255, 0.5),
-                          0 0 20px rgba(255, 94, 98, 0.3),
-                          0 0 30px rgba(255, 255, 28, 0.2);
-            }
-            @keyframes gradient-move {
-              0% {background-position:0% 50%}
-              50% {background-position:100% 50%}
-              100% {background-position:0% 50%}
-            }
-            @keyframes pulse-timer {
-              0% { box-shadow: 0 0 40px #00c3ff55, 0 0 40px #ff5e6255; }
-              50% { box-shadow: 0 0 80px #00c3ff99, 0 0 80px #ff5e6299; }
-              100% { box-shadow: 0 0 40px #00c3ff55, 0 0 40px #ff5e6255; }
-            }
-            .timer-blink {
-              animation: blink-timer 0.7s steps(1) infinite;
-            }
-            @keyframes blink-timer {
-              0%, 100% { color: #fff; background: #e74c3c; }
-              50% { color: #e74c3c; background: #fff; }
-            }
+        font-size: 5em;
+        background: linear-gradient(90deg, #00c3ff, #ffff1c, #ff5e62, #00c3ff);
+        background-size: 400% 400%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 40px auto 0 auto;
+        width: fit-content;
+        animation: gradient-move 3s ease-in-out infinite,
+          text-shadow-pulse 2s ease-in-out infinite;
+        letter-spacing: 0.1em;
+        text-shadow: 0 0 10px rgba(0, 195, 255, 0.5),
+          0 0 20px rgba(255, 94, 98, 0.3), 0 0 30px rgba(255, 255, 28, 0.2);
+      }
+      @keyframes gradient-move {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      @keyframes pulse-timer {
+        0% {
+          box-shadow: 0 0 40px #00c3ff55, 0 0 40px #ff5e6255;
+        }
+        50% {
+          box-shadow: 0 0 80px #00c3ff99, 0 0 80px #ff5e6299;
+        }
+        100% {
+          box-shadow: 0 0 40px #00c3ff55, 0 0 40px #ff5e6255;
+        }
+      }
+      .timer-blink {
+        animation: blink-timer 0.7s steps(1) infinite;
+      }
+      @keyframes blink-timer {
+        0%,
+        100% {
+          color: #fff;
+          background: #e74c3c;
+        }
+        50% {
+          color: #e74c3c;
+          background: #fff;
+        }
+      }
     </style>
   </head>
   <body>
     <div class="reveal">
       <div class="slides">
-
         <section>
           <h2 class="gradient-title">
             Building a RAG System with LangChain and <br />ICD-11 Data
           </h2>
           <img src="imgs/qr-code.png" />
           <p>
-            <a href="https://unimib-whattadata.github.io/RAGLecture/">https://unimib-whattadata.github.io/RAGLecture/</a>
+            <a href="https://unimib-whattadata.github.io/RAGLecture/"
+              >https://unimib-whattadata.github.io/RAGLecture/</a
+            >
           </p>
         </section>
-      
+
         <section>
           <img class="r-stretch" src="imgs/AILC_Logo.png" />
           <h2 class="gradient-title">
@@ -431,7 +451,6 @@
           <p>You can run Python code in different places:</p>
           <div style="display: flex; gap: 20px">
             <div
-              class="fragment"
               style="
                 flex: 1;
                 background: rgba(255, 255, 255, 0.1);
@@ -450,7 +469,6 @@
               </ul>
             </div>
             <div
-              class="fragment"
               style="
                 flex: 1;
                 background: rgba(255, 255, 255, 0.1);
@@ -513,9 +531,10 @@
 
           <aside class="notes">
             <p>
-              At this link you can download a <strong>Jupyter Notebooks blueprint</strong> at
-              this link. After the download, you can import it into your Jupyter
-              instance or on Google Colab.
+              At this link you can download a
+              <strong>Jupyter Notebooks blueprint</strong> at this link. After
+              the download, you can import it into your Jupyter instance or on
+              Google Colab.
             </p>
           </aside>
         </section>
@@ -561,10 +580,10 @@
             <p>
               Concerning the <strong>requirements</strong>, you'll need two
               things: a <strong>Google API key</strong> for the models, which
-              will be used. The models are free of charge. You don't need a subscription or a
-              valid credit card. (Grab it from AI Studio.) and the
-              <strong>Chapter 6 CSV</strong>, which we've already placed in the
-              Google Drive.
+              will be used. The models are free of charge. You don't need a
+              subscription or a valid credit card. (Grab it from AI Studio.) and
+              the <strong>Chapter 6 CSV</strong>, which we've already placed in
+              the Google Drive.
             </p>
           </aside>
         </section>
@@ -602,33 +621,31 @@
           <img src="imgs/screenshot.png" />
 
           <aside class="notes">
-            You also have to download the ICD-11 Chapter 6 dataset from the drive.
+            You also have to download the ICD-11 Chapter 6 dataset from the
+            drive.
           </aside>
         </section>
 
         <section>
           <h2>ICD-11 Chapter 6 dataset</h2>
           <ul>
-            <li class="fragment">Total Entries: <strong>720</strong></li>
-            <li class="fragment">
+            <li>Total Entries: <strong>720</strong></li>
+            <li>
               Most Frequent Category: <strong>6A60</strong> (appearing 18 times)
             </li>
-            <li class="fragment">
-              Average Title Length: <strong>55 characters</strong>
-            </li>
-            <li class="fragment">
-              Average Definition Length: <strong>660 characters</strong>
-            </li>
+            <li>Average Title Length: <strong>55 characters</strong></li>
+            <li>Average Definition Length: <strong>660 characters</strong></li>
           </ul>
 
           <aside class="notes">
             <p>
               This slide gives a quick overview of the
               <strong>dataset</strong>. It contains
-              <strong>720 entries</strong> in total. On average, the <strong>titles</strong> of
-              the entries are about <strong>55 characters</strong> long, while
-              the <strong>definitions</strong> are much longer, with an average
-              of <strong>660 characters</strong>.
+              <strong>720 entries</strong> in total. On average, the
+              <strong>titles</strong> of the entries are about
+              <strong>55 characters</strong> long, while the
+              <strong>definitions</strong> are much longer, with an average of
+              <strong>660 characters</strong>.
             </p>
           </aside>
         </section>
@@ -643,13 +660,9 @@
               disorder
             </dd>
             <dt>title</dt>
-            <dd>
-              The official, human-readable name of the condition
-            </dd>
+            <dd>The official, human-readable name of the condition</dd>
             <dt>definition</dt>
-            <dd>
-              A detailed clinical description of the disorder
-            </dd>
+            <dd>A detailed clinical description of the disorder</dd>
           </dl>
 
           <aside class="notes">
@@ -724,9 +737,22 @@
         <section>
           <h2>TIMER</h2>
           <div id="countdown-timer" class="countdown-animated">05:00</div>
-          <div id="timer-end-message" style="display:none; font-size:2em; color:#e74c3c; text-align:center; margin-top:20px; font-weight:bold;">Tempo scaduto!</div>
+          <div
+            id="timer-end-message"
+            style="
+              display: none;
+              font-size: 2em;
+              color: #e74c3c;
+              text-align: center;
+              margin-top: 20px;
+              font-weight: bold;
+            "
+          >
+            Tempo scaduto!
+          </div>
           <aside class="notes">
-            We leave you 5 minutes to obtain the API key and download the dataset.
+            We leave you 5 minutes to obtain the API key and download the
+            dataset.
           </aside>
         </section>
 
@@ -793,7 +819,7 @@
               A powerful tool for reading and manipulating data, like our CSV
               file
             </li>
-            <li class="fragment">
+            <li>
               <strong
                 >Chroma
                 <img
@@ -805,12 +831,12 @@
               A special database (vector store) for storing and searching our
               text data efficiently
             </li>
-            <li class="fragment">
+            <li>
               <strong
                 >Google GenAI
                 <img
                   class="inline-logo"
-                  src="imgs/logo/google-icon.png"
+                  src="imgs/logo/google-logo.png"
                   alt=""
                 />:</strong
               >
@@ -872,7 +898,7 @@
             <code><span class="badge">import</span></code> statement is how we
             tell Python to open a toolbox and take out a specific tool to use
           </p>
-          <pre class="fragment">
+          <pre>
                       <code data-trim data-line-numbers="1-2|4-5">
                         # This line says: "From the langchain toolbox, get me the 'Document' tool."
                         from langchain_core.documents import Document
@@ -881,7 +907,7 @@
                         my_doc = Document(page_content="This is a sample document.")
                     </code>
                   </pre>
-          <p class="fragment">
+          <p>
             Without importing, Python wouldn't know what a
             <code><span class="badge">Document</span></code> is
           </p>
@@ -947,7 +973,7 @@
 
         <section>
           <h2>Loading External Data</h2>
-          <p class="fragment">
+          <p>
             The first step in the
             <span class="gradient-title">RAG</span> process is "Retrieval". This
             requires loading our external knowledge into a format the
@@ -957,7 +983,7 @@
             <code><span class="badge">page_content</span></code> and associated
             metadata
           </p>
-          <p class="fragment">
+          <p>
             We will write a custom function using
             <code><span class="badge">pandas</span></code> to read our specific
             CSV file and transform each row into a
@@ -970,25 +996,25 @@
               <strong>retrieval</strong>, which involves bringing external
               knowledge into a usable format. <strong>LangChain</strong> handles
               this using <strong>Document objects</strong>, which store the
-              content we want to use, in our case, the text from a CSV
-              file—in the <strong>page_content</strong> field, along with any
-              necessary metadata. We'll use <strong>pandas</strong> to read our
-              CSV and write a function that converts each row into a
-              <strong>LAngChain Document</strong>. This prepares our data so it can be
-              indexed and retrieved when the language model needs it during a
-              query.
+              content we want to use, in our case, the text from a CSV file—in
+              the <strong>page_content</strong> field, along with any necessary
+              metadata. We'll use <strong>pandas</strong> to read our CSV and
+              write a function that converts each row into a
+              <strong>LAngChain Document</strong>. This prepares our data so it
+              can be indexed and retrieved when the language model needs it
+              during a query.
             </p>
           </aside>
         </section>
 
         <section>
           <h2>Why Split Text for Retrieval?</h2>
-          <p class="fragment">
+          <p>
             Once raw documents are loaded, they often need to be broken down
             into smaller, manageable chunks. This is crucial for effective
             retrieval because:
           </p>
-          <p class="fragment">
+          <p>
             The goal is to split text intelligently, maintaining semantic
             coherence within each chunk while ensuring no crucial information is
             cut off mid-sentence or mid-paragraph
@@ -1013,17 +1039,17 @@
         <section>
           <h2>The Goal of Splitting</h2>
           <ul>
-            <li class="fragment">
+            <li>
               <strong>Relevance:</strong> LLMs have context windows. Sending too
               much irrelevant information can dilute the useful context. Smaller
               chunks mean the retriever finds more
               <strong>precise</strong> relevant passages
             </li>
-            <li class="fragment">
+            <li>
               <strong>Efficiency:</strong> Embedding and retrieving smaller
               chunks is faster and uses less memory
             </li>
-            <li class="fragment">
+            <li>
               <strong>Granularity:</strong> Ensures that retrieved information
               is at the right level of detail for the LLM to synthesize
             </li>
@@ -1059,10 +1085,24 @@
           <p>Follow the bluprint in the Jupyter</p>
         </section>
 
-        <section data-background-image="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHR5eGJoN2g4OTdvaTZ4ZzZ3OWh6ZmQ0aWo5Mmw3aTh0dWgxempyaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VekcnHOwOI5So/giphy.gif">
+        <section
+          data-background-image="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHR5eGJoN2g4OTdvaTZ4ZzZ3OWh6ZmQ0aWo5Mmw3aTh0dWgxempyaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VekcnHOwOI5So/giphy.gif"
+        >
           <h2>TIMER</h2>
           <div id="countdown-timer" class="countdown-animated">05:00</div>
-          <div id="timer-end-message" style="display:none; font-size:2em; color:#e74c3c; text-align:center; margin-top:20px; font-weight:bold;">Tempo scaduto!</div>
+          <div
+            id="timer-end-message"
+            style="
+              display: none;
+              font-size: 2em;
+              color: #e74c3c;
+              text-align: center;
+              margin-top: 20px;
+              font-weight: bold;
+            "
+          >
+            Tempo scaduto!
+          </div>
           <aside class="notes">
             We leave you 5 minutes to implement the code.
           </aside>
@@ -1101,7 +1141,7 @@
             In our loader, we combined the <strong>code</strong>,
             <strong>title</strong>, and <strong>definition</strong> for a reason
           </p>
-          <ul class="fragment">
+          <ul>
             <li>
               <strong>Code & Title:</strong> These provide clear, structured
               identifiers. They are perfect for when the LLM needs to give a
@@ -1126,7 +1166,7 @@
 
         <section>
           <h2>Why These Data Fields? Structuring the Context</h2>
-          <ul class="fragment">
+          <ul>
             <li>
               <strong>Definition:</strong> This is the most important part for
               our retriever. It contains the rich, descriptive text that allows
@@ -1221,10 +1261,8 @@
 
         <section>
           <h2>Embeddings & Vector Stores</h2>
-          <p class="fragment">
-            Now that we have our data loaded, we need to make it searchable
-          </p>
-          <p class="fragment">
+          <p>Now that we have our data loaded, we need to make it searchable</p>
+          <p>
             We'll do this by converting our text into numerical representations
             and storing them in a specialized database
           </p>
@@ -1247,7 +1285,7 @@
                 need to understand the <strong>meaning</strong> or
                 <strong>semantic content</strong> of the text
               </p>
-              <p class="fragment detail-point">
+              <p class="detail-point">
                 <strong>Embeddings</strong> are numerical vectors that represent
                 this semantic meaning. An embedding model converts our text
                 documents into these vectors, placing similar concepts close to
@@ -1280,7 +1318,7 @@
             the process of finding and fixing them. No one writes perfect code
             on the first try.
           </p>
-          <p class="fragment">
+          <p>
             The simplest yet most powerful tool in your debugging toolkit is the
             <code><span class="badge">print()</span></code> statement. If you're
             not sure what a variable holds or if a line of code is being
@@ -1293,7 +1331,7 @@
         <section>
           <h2>A Note on Debugging</h2>
           <p>You can print text, variables or both. Here are some examples:</p>
-          <pre class="fragment">
+          <pre>
           <code data-line-numbers="1|2|3" data-trim data-noescape>
             print("just a literal text")
             print(variable_name)
@@ -1335,7 +1373,7 @@
             vectors using fast algorithms like Approximate Nearest Neighbor
             (ANN) search
           </p>
-          <p class="fragment">
+          <p>
             We will use
             <strong>Chroma</strong>
             <img class="inline-logo" src="imgs/logo/chroma-logo.png" alt="" />,
@@ -1474,7 +1512,7 @@
             operator connects each step, passing the output of one step as the
             input to the next
           </p>
-          <div class="fragment">
+          <div>
             <p>Our chain will be:</p>
             <ol>
               <li>The user's question retrieves context</li>
@@ -1513,7 +1551,7 @@
             retrieved context and the user's original question into the
             placeholders of this template
           </p>
-          <pre class="fragment">
+          <pre>
             <code data-line-numbers data-trim data-noescape>
               # Our template has two placeholders: {context} and {question}
               template = """Use the retrieved context to answer the question.
@@ -1549,13 +1587,10 @@
             The most important part of our prompt is the instructions that guide
             the LLM's behavior. Consider this line:
           </p>
-          <p
-            class="fragment highlight-red"
-            style="text-align: center; margin: 20px 0; font-style: italic"
-          >
+          <p style="text-align: center; margin: 20px 0; font-style: italic">
             "If you don't know the answer, just say that you don't know."
           </p>
-          <p class="fragment">
+          <p>
             This single instruction is critical for building a trustworthy
             system. It explicitly tells the LLM not to guess or "hallucinate" an
             answer if the information isn't in the retrieved context. This makes
@@ -1872,83 +1907,87 @@
       });
     </script>
     <script>
+      // TIMER MULTIPLI RESETTABILI SU SLIDE SHOW, CON DURATA PERSONALIZZABILE
+      (function () {
+        // Mappa per tenere traccia degli intervalli attivi per ogni timer
+        const timerIntervals = {};
+        const DEFAULT_TIMER_DURATION = 5 * 60; // 5 minuti in secondi
 
-    // TIMER MULTIPLI RESETTABILI SU SLIDE SHOW, CON DURATA PERSONALIZZABILE
-    (function() {
-      // Mappa per tenere traccia degli intervalli attivi per ogni timer
-      const timerIntervals = {};
-      const DEFAULT_TIMER_DURATION = 5 * 60; // 5 minuti in secondi
-
-      function startCountdown(timerElem, endMsgElem) {
-        // Se c'è già un intervallo per questo timer, cancellalo
-        if (timerElem.dataset.timerIntervalId) {
-          clearInterval(timerIntervals[timerElem.dataset.timerIntervalId]);
-        }
-        // Leggi la durata personalizzata (in secondi) o usa default
-        let duration = DEFAULT_TIMER_DURATION;
-        if (timerElem.hasAttribute('data-timer-duration')) {
-          const custom = parseInt(timerElem.getAttribute('data-timer-duration'), 10);
-          if (!isNaN(custom) && custom > 0) duration = custom;
-        }
-        // Genera un id unico per questo timer
-        const timerId = Math.random().toString(36).substr(2, 9);
-        timerElem.dataset.timerIntervalId = timerId;
-        let timer = duration;
-        timerElem.classList.remove('timer-blink');
-        if (endMsgElem) endMsgElem.style.display = 'none';
-        // Visualizza il tempo iniziale
-        let minutes = parseInt(timer / 60, 10);
-        let seconds = parseInt(timer % 60, 10);
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-        timerElem.textContent = minutes + ":" + seconds;
-        timerIntervals[timerId] = setInterval(function () {
+        function startCountdown(timerElem, endMsgElem) {
+          // Se c'è già un intervallo per questo timer, cancellalo
+          if (timerElem.dataset.timerIntervalId) {
+            clearInterval(timerIntervals[timerElem.dataset.timerIntervalId]);
+          }
+          // Leggi la durata personalizzata (in secondi) o usa default
+          let duration = DEFAULT_TIMER_DURATION;
+          if (timerElem.hasAttribute("data-timer-duration")) {
+            const custom = parseInt(
+              timerElem.getAttribute("data-timer-duration"),
+              10
+            );
+            if (!isNaN(custom) && custom > 0) duration = custom;
+          }
+          // Genera un id unico per questo timer
+          const timerId = Math.random().toString(36).substr(2, 9);
+          timerElem.dataset.timerIntervalId = timerId;
+          let timer = duration;
+          timerElem.classList.remove("timer-blink");
+          if (endMsgElem) endMsgElem.style.display = "none";
+          // Visualizza il tempo iniziale
           let minutes = parseInt(timer / 60, 10);
           let seconds = parseInt(timer % 60, 10);
           minutes = minutes < 10 ? "0" + minutes : minutes;
           seconds = seconds < 10 ? "0" + seconds : seconds;
           timerElem.textContent = minutes + ":" + seconds;
-          if (--timer < 0) {
-            clearInterval(timerIntervals[timerId]);
-            timerElem.textContent = "00:00";
-            timerElem.classList.add('timer-blink');
-            if (endMsgElem) endMsgElem.style.display = 'block';
-          }
-        }, 1000);
-      }
+          timerIntervals[timerId] = setInterval(function () {
+            let minutes = parseInt(timer / 60, 10);
+            let seconds = parseInt(timer % 60, 10);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            timerElem.textContent = minutes + ":" + seconds;
+            if (--timer < 0) {
+              clearInterval(timerIntervals[timerId]);
+              timerElem.textContent = "00:00";
+              timerElem.classList.add("timer-blink");
+              if (endMsgElem) endMsgElem.style.display = "block";
+            }
+          }, 1000);
+        }
 
-      function setupTimersOnSlide(slide) {
-        // Trova tutti i timer nella slide corrente
-        const timers = slide.querySelectorAll('#countdown-timer');
-        timers.forEach(timerElem => {
-          // Trova il messaggio di fine associato (deve essere fratello o vicino)
-          let endMsgElem = timerElem.parentNode.querySelector('#timer-end-message');
-          startCountdown(timerElem, endMsgElem);
-        });
-      }
+        function setupTimersOnSlide(slide) {
+          // Trova tutti i timer nella slide corrente
+          const timers = slide.querySelectorAll("#countdown-timer");
+          timers.forEach((timerElem) => {
+            // Trova il messaggio di fine associato (deve essere fratello o vicino)
+            let endMsgElem =
+              timerElem.parentNode.querySelector("#timer-end-message");
+            startCountdown(timerElem, endMsgElem);
+          });
+        }
 
-      // All'avvio, se c'è un timer visibile, avvialo
-      document.addEventListener('DOMContentLoaded', function() {
-        const currentSlide = document.querySelector('.slides section.present, .slides section[aria-selected="true"]');
-        if (currentSlide) setupTimersOnSlide(currentSlide);
-      });
+        // All'avvio, se c'è un timer visibile, avvialo
+        document.addEventListener("DOMContentLoaded", function () {
+          const currentSlide = document.querySelector(
+            '.slides section.present, .slides section[aria-selected="true"]'
+          );
+          if (currentSlide) setupTimersOnSlide(currentSlide);
+        });
 
-      // Ogni volta che cambia slide, avvia i timer della slide corrente
-      if (window.Reveal) {
-        Reveal.on('slidechanged', function(event) {
-          if (event.currentSlide) setupTimersOnSlide(event.currentSlide);
-        });
-      } else {
-        document.addEventListener('DOMContentLoaded', function() {
-          if (window.Reveal) {
-            Reveal.on('slidechanged', function(event) {
-              if (event.currentSlide) setupTimersOnSlide(event.currentSlide);
-            });
-          }
-        });
-      }
-    })();
+        // Ogni volta che cambia slide, avvia i timer della slide corrente
+        if (window.Reveal) {
+          Reveal.on("slidechanged", function (event) {
+            if (event.currentSlide) setupTimersOnSlide(event.currentSlide);
+          });
+        } else {
+          document.addEventListener("DOMContentLoaded", function () {
+            if (window.Reveal) {
+              Reveal.on("slidechanged", function (event) {
+                if (event.currentSlide) setupTimersOnSlide(event.currentSlide);
+              });
+            }
+          });
+        }
+      })();
     </script>
-
   </body>
 </html>
