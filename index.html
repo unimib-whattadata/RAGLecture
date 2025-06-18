@@ -722,9 +722,9 @@
         </section>
 
         <section>
+          <h2>TIMER</h2>
           <div id="countdown-timer" class="countdown-animated">05:00</div>
           <div id="timer-end-message" style="display:none; font-size:2em; color:#e74c3c; text-align:center; margin-top:20px; font-weight:bold;">Tempo scaduto!</div>
-
           <aside class="notes">
             We leave you 5 minutes to obtain the API key and download the dataset.
           </aside>
@@ -1858,26 +1858,74 @@
         }
       });
     </script>
-              <script>
-                (function() {
-                  let duration = 5 * 60; // 5 minutes in seconds
-                  let display = document.getElementById('countdown-timer');
-                  let endMsg = document.getElementById('timer-end-message');
-                  let timer = duration, minutes, seconds;
-                  let interval = setInterval(function () {
-                    minutes = parseInt(timer / 60, 10);
-                    seconds = parseInt(timer % 60, 10);
-                    minutes = minutes < 10 ? "0" + minutes : minutes;
-                    seconds = seconds < 10 ? "0" + seconds : seconds;
-                    display.textContent = minutes + ":" + seconds;
-                    if (--timer < 0) {
-                      clearInterval(interval);
-                      display.textContent = "00:00";
-                      display.classList.add('timer-blink');
-                      endMsg.style.display = 'block';
-                    }
-                  }, 1000);
-                })();
-              </script>
+    // ... existing code ...
+    <section>
+      <h2>TIMER</h2>
+      <div id="countdown-timer" class="countdown-animated">05:00</div>
+      <div id="timer-end-message" style="display:none; font-size:2em; color:#e74c3c; text-align:center; margin-top:20px; font-weight:bold;">Tempo scaduto!</div>
+      <aside class="notes">
+        We leave you 5 minutes to obtain the API key and download the dataset.
+      </aside>
+    </section>
+    // ... existing code ...
+    <script>
+    // ... existing Reveal.initialize and other scripts ...
+
+    // TIMER RESETTABLE ON SLIDE SHOW
+    (function() {
+      let timerInterval = null;
+      const TIMER_DURATION = 5 * 60; // 5 minutes in seconds
+      function startCountdown() {
+        let timer = TIMER_DURATION;
+        const display = document.getElementById('countdown-timer');
+        const endMsg = document.getElementById('timer-end-message');
+        if (!display) return;
+        if (timerInterval) clearInterval(timerInterval);
+        display.classList.remove('timer-blink');
+        endMsg.style.display = 'none';
+        display.textContent = '05:00';
+        timerInterval = setInterval(function () {
+          let minutes = parseInt(timer / 60, 10);
+          let seconds = parseInt(timer % 60, 10);
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+          display.textContent = minutes + ":" + seconds;
+          if (--timer < 0) {
+            clearInterval(timerInterval);
+            display.textContent = "00:00";
+            display.classList.add('timer-blink');
+            endMsg.style.display = 'block';
+          }
+        }, 1000);
+      }
+      // Start on load if present
+      if (document.getElementById('countdown-timer')) {
+        startCountdown();
+      }
+      // Reset timer when the TIMER slide is shown
+      if (window.Reveal) {
+        Reveal.on('slidechanged', function(event) {
+          const slide = event.currentSlide;
+          if (slide && slide.querySelector && slide.querySelector('#countdown-timer')) {
+            startCountdown();
+          }
+        });
+      } else {
+        // If Reveal is not yet loaded, try again after DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function() {
+          if (window.Reveal) {
+            Reveal.on('slidechanged', function(event) {
+              const slide = event.currentSlide;
+              if (slide && slide.querySelector && slide.querySelector('#countdown-timer')) {
+                startCountdown();
+              }
+            });
+          }
+        });
+      }
+    })();
+    </script>
+    // ... existing code ...
+
   </body>
 </html>
