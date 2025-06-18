@@ -998,12 +998,16 @@
             </pre>
         </section>
 
-        <!-- ===== TITLE SLIDE ===== -->
         <section>
           <h2 class="title-animate">
             <span class="selective-yellow">Part 3</span>: Embeddings & Vector
             Stores
           </h2>
+
+          <aside class="notes">
+            In this section, we’ll move from raw data to a format that can be
+            efficiently searched.
+          </aside>
         </section>
 
         <section>
@@ -1015,6 +1019,11 @@
             We'll do this by converting our text into numerical representations
             and storing them in a specialized database
           </p>
+
+          <aside class="notes">
+            At this point, we’ve loaded and structured our data, but it's still
+            just plain text. Now we need to make it searchable.
+          </aside>
         </section>
 
         <section>
@@ -1024,17 +1033,30 @@
               <p class="main-point">
                 To find relevant information, we can't just match keywords. We
                 need to understand the <strong>meaning</strong> or
-                <strong>semantic content</strong> of the text.
+                <strong>semantic content</strong> of the text
               </p>
               <p class="fragment detail-point">
                 <strong>Embeddings</strong> are numerical vectors that represent
                 this semantic meaning. An embedding model converts our text
                 documents into these vectors, placing similar concepts close to
-                each other in vector space.
+                each other in vector space
               </p>
             </div>
           </div>
+
+          <aside class="notes">
+            Keyword matching isn’t enough. We need the system to understand the
+            meaning—the semantic content—of a question and find texts that are
+            conceptually related, even if the wording is different. That’s where
+            embeddings come in. These are numerical vectors that capture the
+            semantic meaning of a text. An embedding model transforms each chunk
+            of text into a vector, and similar meanings end up close together in
+            vector space. So instead of searching by words, we’re searching by
+            meaning—which makes the retrieval process much more powerful and
+            flexible.
+          </aside>
         </section>
+
         <section>
           <h2>A Note on Debugging</h2>
           <p>
@@ -1065,7 +1087,7 @@
         </section>
 
         <section>
-          <h2>Initializing the Embedding Model</h2>
+          <h2>CODE 3 - Generating Embeddings</h2>
           <p>
             We'll use Google's
             <code><span class="badge">embedding-001</span></code> model via the
@@ -1083,12 +1105,13 @@
             print("Embedding model initialized.")
             </code>
           </pre>
-          <aside class="note">trycatch</aside>
+
+          <aside class="notes">CITE TRY CATCH</aside>
         </section>
 
         <!-- ===== THEORY: INDEXING IN A VECTOR STORE ===== -->
         <section>
-          <h2>Theory: Indexing in a Vector Store</h2>
+          <h2>Indexing in a Vector Store</h2>
           <p>
             Searching through thousands of embeddings one-by-one would be very
             slow. A <strong>Vector Store</strong> is a specialized database
@@ -1103,20 +1126,18 @@
             a popular open-source vector store that runs in memory but can be
             persisted to disk to avoid re-processing
           </p>
-        </section>
 
-        <!-- ===== IMPORTANT NOTES ON VECTOR STORES ===== -->
-        <section>
-          <h2>Important notes on vector stores</h2>
-          <p class="fragment">
-            The embedding process requires lot of computation power, and we do
-            not want to repeat each time
-          </p>
-          <p class="fragment">
-            For this example we are going to store on a local disk the
-            vectorstore, so we can retrieve multiples times without reprocessing
-            the embeddings
-          </p>
+          <aside class="notes">
+            Once we’ve created our embeddings, we need an efficient way to
+            search through them. Doing a linear search over thousands of vectors
+            would be too slow, especially in real-time applications. That’s why
+            we use a Vector Store—a specialised database optimised for handling
+            high-dimensional vectors. It uses fast algorithms like Approximate
+            Nearest Neighbor (ANN) search to quickly find vectors that are close
+            in meaning to a query. In this lab, we’ll use Chroma, an open-source
+            vector store that works in memory for speed but can also be saved to
+            disk to avoid recalculating embeddings every time.
+          </aside>
         </section>
 
         <section>
@@ -1189,7 +1210,9 @@
         <!-- ===== LAB CHECKPOINT 2 ===== -->
         <section
           data-background-image="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG05dW83bTF5MXMxMGo3YjFncWd4dmdkaHgzendnZWxza3Y1M2x1YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/oYQ9HRm5Mo7VXeMNVR/giphy.gif"
-        ></section>
+        >
+          <h2>BREAK</h2>
+        </section>
 
         <section>
           <h2 class="title-animate">
@@ -1206,10 +1229,20 @@
             to generate answers. The final step is to orchestrate them into a
             single, cohesive application
           </p>
+
+          <aside class="notes">
+            Now that we’ve built all the components—the retriever for fetching
+            relevant chunks and the LLM for generating answers—the final step is
+            to combine them into a single pipeline. This is what we call the RAG
+            chain: it orchestrates the interaction between retrieval and
+            generation, allowing us to ask natural-language questions and
+            receive answers that are grounded in our indexed knowledge base.
+            This step transforms our setup into a fully functional application.
+          </aside>
         </section>
 
         <section>
-          <h2>Theory: Composing with LCEL</h2>
+          <h2>Composing with LCEL</h2>
           <p>
             <strong>LangChain Expression Language (LCEL)</strong> is a
             declarative way to compose components into chains. The pipe (`|`)
@@ -1225,24 +1258,21 @@
               <li>The LLM's response is parsed into a clean string</li>
             </ol>
           </div>
+
+          <aside class="notes">
+            To build the RAG chain, we’ll use LangChain Expression Language, or
+            LCEL. It’s a declarative syntax that lets us compose chains using
+            the | operator—just like a pipeline. This makes it easy to connect
+            components, where the output of one step becomes the input of the
+            next. In our case, the chain is made of four parts: The user’s
+            question triggers the retriever, The question and retrieved context
+            are combined into a prompt, The prompt is passed to the LLM, And the
+            LLM’s response is parsed into a clean string that we can show back
+            to the user. LCEL makes this structure simple and readable, which is
+            great for rapid development and debugging.
+          </aside>
         </section>
 
-        <!-- ===== THEORY: THE ART OF THE PROMPT ===== -->
-        <section>
-          <h2>The Art of the Prompt</h2>
-          <p>
-            A <strong>prompt</strong> is the set of instructions we give to the
-            LLM. It's the most direct way we have to control its behavior
-          </p>
-          <p class="fragment">
-            <strong>Prompt Engineering</strong> is the skill of crafting these
-            instructions to get the exact output you want. A good prompt is
-            clear, specific, and provides all the necessary context for the
-            model to succeed
-          </p>
-        </section>
-
-        <!-- ===== THEORY: HOW RAG USES A PROMPT TEMPLATE ===== -->
         <section>
           <h2>
             How <span class="gradient-title">RAG</span> Uses a Prompt Template
@@ -1264,6 +1294,16 @@
               # LangChain will automatically fill these in before sending to the LLM
             </code>
             </pre>
+
+          <aside class="notes">
+            We don’t write a new prompt every time a user asks a question.
+            Instead, we define a template with placeholders—in our case,
+            {context} and {question}. LangChain automatically fills in those
+            placeholders at runtime: it inserts the retrieved text and the
+            user’s query, then sends the full prompt to the LLM. This approach
+            ensures consistency, makes the chain easier to maintain, and lets us
+            easily tweak or improve the prompt without rewriting our logic.
+          </aside>
         </section>
 
         <!-- ===== GIVING CLEAR INSTRUCTIONS ===== -->
@@ -1285,6 +1325,18 @@
             answer if the information isn't in the retrieved context. This makes
             our RAG system more reliable and factual
           </p>
+
+          <aside class="notes">
+            The most important part of our prompt isn’t the context or the
+            question—it’s the instructions we give to the LLM. These guide how
+            it should behave. A great example is the line: “If you don’t know
+            the answer, just say that you don’t know.” This simple instruction
+            is crucial. It prevents the model from guessing or hallucinating
+            answers when it doesn’t have enough information. Instead, we force
+            it to stay grounded in the retrieved content. Adding this makes our
+            system more reliable, transparent, and trustworthy, which is
+            essential when working with sensitive data like medical knowledge.
+          </aside>
         </section>
 
         <section>
@@ -1345,6 +1397,10 @@
             user query. This triggers the entire sequence of operations we
             defined, returning the final, context-aware answer from the LLM
           </p>
+
+          <aside class="notes">
+
+          </aside>
         </section>
 
         <section>
@@ -1356,7 +1412,6 @@
         </section>
 
         <section>
-          <h3>Putting it to the Test</h3>
           <pre>
                       <code data-line-numbers="1|2|3 -4|6-7|9-10" data-trim data-noescape>
                           def ask_rag_system(query: str):
@@ -1373,13 +1428,13 @@
                       </pre>
         </section>
 
+        <section data-background-image="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2hwZ2o2cGo5bWh2cGVlaHE1M3d0azM5YzJxMDE3cm84YzF3ZnhnaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ebFG4jcnC1Ny8/giphy.gif">
+          <h2 class="r-fit-text">Final Code: <br />Complete RAG System</b></h2>
+        </section>
+
         <section>
-          <h2 class="r-fit-text">Final Code: Complete RAG System</h2>
-          <p>
-            This is the entire script for our RAG system, from start to finish.
-          </p>
           <pre>
-              <code data-line-numbers data-trim data-noescape>
+              <code data-line-numbers="1-9|11-12|14-23|25-28|30-34|36-39|41-42" data-trim data-noescape>
                   import os, getpass
                   from dotenv import load_dotenv
                   import pandas as pd
@@ -1390,8 +1445,6 @@
                   from langchain_core.output_parsers import StrOutputParser
                   from langchain_core.runnables import RunnablePassthrough
                   
-                  # Setup
-                  load_dotenv()
                   if "GOOGLE_API_KEY" not in os.environ:
                     os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter Google API Key: ")
                   
@@ -1430,146 +1483,35 @@
 
         <!-- ===== WORKSHOP WRAP-UP ===== -->
         <section>
+          <h2>Summary</h2>
           <div>
             <ul class="content-list">
               <li class="list-item">
-                <span class="text">Set up a Python environment...</span>
+                <span class="text">Set up a Python environment</span>
               </li>
               <li class="list-item">
-                <span class="text">Loaded external knowledge...</span>
+                <span class="text">Loaded external knowledge</span>
                 <code><span class="badge">Documents</span></code>
               </li>
               <li class="list-item">
-                <span class="text">Generated semantic embeddings...</span>
+                <span class="text">Generated semantic embeddings</span>
               </li>
               <li class="list-item">
-                <span class="text">Indexed these embeddings...</span>
+                <span class="text">Indexed these embeddings</span>
               </li>
               <li class="list-item">
-                <span class="text">Constructed a complete RAG chain...</span>
+                <span class="text">Constructed a complete RAG chain</span>
               </li>
               <li class="list-item">
-                <span class="text">Queried our system...</span>
+                <span class="text">Queried our system</span>
               </li>
             </ul>
-          </div>
-        </section>
-
-        <section>
-          <h2>Beyond Basics: Limitations & Next Steps</h2>
-          <div class="content">
-            <p>
-              While powerful, RAG systems are not without their challenges.
-              Understanding their limitations is key to building more robust and
-              reliable applications.
-            </p>
-          </div>
-        </section>
-
-        <section>
-          <h2>Limitations of Basic RAG</h2>
-          <div class="content">
-            <p>
-              Our current RAG system is a solid foundation, but basic RAG can
-              face issues:
-            </p>
-          </div>
-          <ul>
-            <li class="fragment">
-              <strong>Context Window Issues:</strong> Even with splitting, very
-              long or complex retrieved contexts might still exceed LLM limits
-              or dilute relevance.
-            </li>
-            <li class="fragment">
-              <strong>"Lost in the Middle":</strong> LLMs sometimes pay less
-              attention to information in the middle of a long context.
-            </li>
-            <li class="fragment">
-              <strong>Retrieval Quality:</strong> If the retriever doesn't find
-              the *most* relevant chunks, the LLM's answer will suffer. Semantic
-              search isn't perfect.
-            </li>
-            <li class="fragment">
-              <strong>Hallucinations Persist:</strong> While reduced, LLMs can
-              still hallucinate if the retrieved context is ambiguous or
-              insufficient.
-            </li>
-            <li class="fragment">
-              <strong>Data Freshness:</strong> The RAG system is only as current
-              as its knowledge base. Updating it requires re-indexing.
-            </li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>Advanced RAG Techniques</h2>
-          <div class="content">
-            <p>To address these limitations, advanced RAG patterns exist:</p>
-          </div>
-          <ul>
-            <li class="fragment">
-              <strong>Query Transformation:</strong> Rewriting or expanding user
-              queries (e.g., adding keywords, generating multiple sub-queries)
-              to improve retrieval.
-            </li>
-            <li class="fragment">
-              <strong>Re-ranking:</strong> After initial retrieval, use a
-              separate re-ranking model to score and reorder documents based on
-              relevance, ensuring the most pertinent ones are at the top.
-            </li>
-            <li class="fragment">
-              <strong>Hybird Search:</strong> Combining semantic search with
-              traditional keyword search (e.g., BM25) for more comprehensive
-              retrieval.
-            </li>
-            <li class="fragment">
-              <strong>Multi-stage Retrieval:</strong> Using multiple retrieval
-              steps, perhaps first to identify broad topics, then specific
-              details.
-            </li>
-            <li class="fragment">
-              <strong>Agentic RAG:</strong> Using an LLM to decide *how* to
-              retrieve information (e.g., searching different tools or
-              databases).
-            </li>
-          </ul>
-        </section>
-
-        <!-- ===== FURTHER READING ===== -->
-        <section>
-          <h2>For Further Reading</h2>
-          <div>
-            <p>
-              This workshop covered the fundamentals of building a RAG system.
-              For a deep, academic dive into the state of the art, advanced
-              techniques, and evaluation methodologies, we highly recommend the
-              following survey paper:
-            </p>
-            <ul>
-              <li>
-                <strong>Title:</strong> A survey on retrieval-augmented
-                generation for large language models
-              </li>
-              <li>
-                <strong>Source:</strong>
-                <a
-                  href="https://www.sciencedirect.com/science/article/pii/S0957417425008139?via%3Dihub"
-                  target="_blank"
-                  >ScienceDirect</a
-                >
-              </li>
-            </ul>
-            <p class="small-text">
-              This paper provides a comprehensive overview of the RAG paradigm,
-              its various components, and future research directions in the
-              field
-            </p>
           </div>
         </section>
 
         <!-- ===== Q&A ===== -->
-        <section>
-          <h2>Questions?</h2>
+        <section  data-background-image="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmI0aTYxenRoM2xhZXhkMG4wNzgzaG83Nnh4NXA1NzJ5eGc4bTNsMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tU2mV8ALzJEdXAAwRo/giphy.gif">
+          <h2>Questions&nbsp&nbsp&nbsp&nbsp&nbsp;</h2>
         </section>
       </div>
     </div>
