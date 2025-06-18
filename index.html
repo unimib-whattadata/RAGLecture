@@ -1358,17 +1358,17 @@
           </p>
 
           <aside class="notes">
-              Once we've created our <strong>embeddings</strong>, we need an
-              efficient way to search through them. Doing a linear search over
-              thousands of vectors would be too slow, especially in real-time
-              applications. That's why we use a <strong>Vector Store</strong>—a
-              specialised database optimised for handling high-dimensional
-              vectors. It uses fast algorithms like
-              <strong>Approximate Nearest Neighbor (ANN) search</strong> to
-              quickly find vectors that are close in meaning to a query. In this
-              lab, we'll use <strong>Chroma</strong>, an open-source vector
-              store that works in memory for speed but can also be saved to disk
-              to avoid recalculating embeddings every time.
+            Once we've created our <strong>embeddings</strong>, we need an
+            efficient way to search through them. Doing a linear search over
+            thousands of vectors would be too slow, especially in real-time
+            applications. That's why we use a <strong>Vector Store</strong>—a
+            specialised database optimised for handling high-dimensional
+            vectors. It uses fast algorithms like
+            <strong>Approximate Nearest Neighbor (ANN) search</strong> to
+            quickly find vectors that are close in meaning to a query. In this
+            lab, we'll use <strong>Chroma</strong>, an open-source vector store
+            that works in memory for speed but can also be saved to disk to
+            avoid recalculating embeddings every time.
           </aside>
         </section>
 
@@ -1477,16 +1477,15 @@
           </p>
 
           <aside class="notes">
-              Now that we've built all the components—the
-              <strong>retriever</strong> for fetching relevant chunks and the
-              <strong>LLM</strong> for generating answers—the final step is to
-              combine them into a single pipeline. This is what we call the
-              <strong>RAG chain</strong>: it orchestrates the interaction
-              between <strong>retrieval</strong> and
-              <strong>generation</strong>, allowing us to ask natural-language
-              questions and receive answers that are grounded in our indexed
-              knowledge base. This step transforms our setup into a fully
-              functional application.
+            Now that we've built all the components—the
+            <strong>retriever</strong> for fetching relevant chunks and the
+            <strong>LLM</strong> for generating answers—the final step is to
+            combine them into a single pipeline. This is what we call the
+            <strong>RAG chain</strong>: it orchestrates the interaction between
+            <strong>retrieval</strong> and <strong>generation</strong>, allowing
+            us to ask natural-language questions and receive answers that are
+            grounded in our indexed knowledge base. This step transforms our
+            setup into a fully functional application.
           </aside>
         </section>
 
@@ -1683,9 +1682,7 @@
                       </pre>
         </section>
 
-        <section
-          data-background-image="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmI0aTYxenRoM2xhZXhkMG4wNzgzaG83Nnh4NXA1NzJ5eGc4bTNsMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ebFG4jcnC1Ny8/giphy.gif"
-        >
+        <section>
           <h2 class="r-fit-text">Final Code: <br />Complete RAG System</h2>
         </section>
 
@@ -1751,29 +1748,27 @@
         <!-- ===== WORKSHOP WRAP-UP ===== -->
         <section>
           <h2>Summary</h2>
-          <div>
-            <ul class="content-list">
-              <li class="list-item">
-                <span class="text">Set up a Python environment</span>
-              </li>
-              <li class="list-item">
-                <span class="text">Loaded external knowledge</span>
-                <code><span class="badge">Documents</span></code>
-              </li>
-              <li class="list-item">
-                <span class="text">Generated semantic embeddings</span>
-              </li>
-              <li class="list-item">
-                <span class="text">Indexed these embeddings</span>
-              </li>
-              <li class="list-item">
-                <span class="text">Constructed a complete RAG chain</span>
-              </li>
-              <li class="list-item">
-                <span class="text">Queried our system</span>
-              </li>
-            </ul>
-          </div>
+          <ul>
+            <li>
+              <span>Set up a Python environment</span>
+            </li>
+            <li>
+              <span>Loaded external knowledge</span>
+              <code><span>Documents</span></code>
+            </li>
+            <li>
+              <span>Generated semantic embeddings</span>
+            </li>
+            <li>
+              <span>Indexed these embeddings</span>
+            </li>
+            <li>
+              <span>Constructed a complete RAG chain</span>
+            </li>
+            <li>
+              <span>Queried our system</span>
+            </li>
+          </ul>
         </section>
 
         <section data-background-color="#fff">
@@ -1806,10 +1801,6 @@
             but as a smart assistant.
           </aside>
         </section>
-
-        <section
-          data-background-iframe="https://llmind.datai.disco.unimib.it/"
-        ></section>
 
         <section
           data-background-image="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmI0aTYxenRoM2xhZXhkMG4wNzgzaG83Nnh4NXA1NzJ5eGc4bTNsMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tU2mV8ALzJEdXAAwRo/giphy.gif"
