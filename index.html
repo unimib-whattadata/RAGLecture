@@ -51,12 +51,54 @@
           background-position: 100% 50%;
         }
       }
+
+      #countdown-timer {
+              font-size: 5em;
+              background: linear-gradient(90deg, #00c3ff, #ffff1c, #ff5e62, #00c3ff);
+              background-size: 400% 400%;
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              margin: 40px auto 0 auto;
+              width: fit-content;
+              animation: gradient-move 3s ease-in-out infinite, text-shadow-pulse 2s ease-in-out infinite;
+              letter-spacing: 0.1em;
+              text-shadow: 0 0 10px rgba(0, 195, 255, 0.5),
+                          0 0 20px rgba(255, 94, 98, 0.3),
+                          0 0 30px rgba(255, 255, 28, 0.2);
+            }
+            @keyframes gradient-move {
+              0% {background-position:0% 50%}
+              50% {background-position:100% 50%}
+              100% {background-position:0% 50%}
+            }
+            @keyframes pulse-timer {
+              0% { box-shadow: 0 0 40px #00c3ff55, 0 0 40px #ff5e6255; }
+              50% { box-shadow: 0 0 80px #00c3ff99, 0 0 80px #ff5e6299; }
+              100% { box-shadow: 0 0 40px #00c3ff55, 0 0 40px #ff5e6255; }
+            }
+            .timer-blink {
+              animation: blink-timer 0.7s steps(1) infinite;
+            }
+            @keyframes blink-timer {
+              0%, 100% { color: #fff; background: #e74c3c; }
+              50% { color: #e74c3c; background: #fff; }
+            }
     </style>
   </head>
   <body>
     <div class="reveal">
       <div class="slides">
-        <!-- Slide: Retrieval Augmented Generation, Large Language Models and Knowledge Bases -->
+
+        <section>
+          <h2 class="gradient-title">
+            Building a RAG System with LangChain and <br />ICD-11 Data
+          </h2>
+          <img src="imgs/qr-code.png" />
+          <p>
+            <a href="https://unimib-whattadata.github.io/RAGLecture/">https://unimib-whattadata.github.io/RAGLecture/</a>
+          </p>
+        </section>
+      
         <section>
           <img class="r-stretch" src="imgs/AILC_Logo.png" />
           <h2 class="gradient-title">
@@ -200,7 +242,7 @@
           </ul>
 
           <aside class="notes">
-            Here’s an overview of today’s lab. We’ve divided the session into
+            Here's an overview of today's lab. We've divided the session into
             five parts, each one directly aligned with a code checkpoint:
 
             <ul>
@@ -231,7 +273,7 @@
               </li>
             </ul>
 
-            We’ll end with a wrap-up and Q&A session.
+            We'll end with a wrap-up and Q&A session.
           </aside>
         </section>
 
@@ -680,7 +722,8 @@
         </section>
 
         <section>
-          <h2>TIMER</h2>
+          <div id="countdown-timer" class="countdown-animated">05:00</div>
+          <div id="timer-end-message" style="display:none; font-size:2em; color:#e74c3c; text-align:center; margin-top:20px; font-weight:bold;">Tempo scaduto!</div>
 
           <aside class="notes">
             We leave you 5 minutes to obtain the API key and download the dataset.
@@ -1373,7 +1416,7 @@
 
         <!-- ===== LAB CHECKPOINT 2 ===== -->
         <section
-          data-background-image="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG05dW83bTF5MXMxMGo3YjFncWd4dmdkaHgzendnZWxza3Y1M2x1YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/oYQ9HRm5Mo7VXeMNVR/giphy.gif"
+          data-background-image="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmI0aTYxenRoM2xhZXhkMG4wNzgzaG83Nnh4NXA1NzJ5eGc4bTNsMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/oYQ9HRm5Mo7VXeMNVR/giphy.gif"
         >
           <h2>BREAK</h2>
         </section>
@@ -1649,8 +1692,18 @@
                   
                   # Embeddings & Vector Store
                   embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-                  vectorstore = Chroma(persist_directory="./chroma_db_workshop", embedding_function=embeddings)
+                  
+                  # VECTOR STORE
+                  persist_directory = "./chroma_db_workshop"
+                  if os.path.exists(persist_directory) and os.listdir(persist_directory):
+                    vectorstore = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
+                    print("Loaded existing vector store.")
+                  else:
+                    vectorstore = Chroma.from_documents(documents=icd11_chunks, embedding=embeddings, persist_directory=persist_directory)
+                    print("Created new vector store.")
+                  
                   retriever = vectorstore.as_retriever()
+                  print("Retriever is ready.")
                   
                   # RAG Chain
                   llm = ChatGoogleGenerativeAI(model="gemma-3-1b-it", temperature=0.7)
@@ -1805,5 +1858,26 @@
         }
       });
     </script>
+              <script>
+                (function() {
+                  let duration = 5 * 60; // 5 minutes in seconds
+                  let display = document.getElementById('countdown-timer');
+                  let endMsg = document.getElementById('timer-end-message');
+                  let timer = duration, minutes, seconds;
+                  let interval = setInterval(function () {
+                    minutes = parseInt(timer / 60, 10);
+                    seconds = parseInt(timer % 60, 10);
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+                    display.textContent = minutes + ":" + seconds;
+                    if (--timer < 0) {
+                      clearInterval(interval);
+                      display.textContent = "00:00";
+                      display.classList.add('timer-blink');
+                      endMsg.style.display = 'block';
+                    }
+                  }, 1000);
+                })();
+              </script>
   </body>
 </html>
