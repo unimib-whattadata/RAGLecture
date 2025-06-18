@@ -128,7 +128,6 @@
           </p>
 
           <aside class="notes">
-            <p>
               <strong>Good morning, everyone.</strong> Welcome to our lab,
               <strong
                 >'Building a Retrieval Augmented Generation System with
@@ -137,7 +136,6 @@
               Over the next two hours, we'll explore
               <strong>why RAG matters</strong> and set up the environment
               together.
-            </p>
           </aside>
         </section>
 
@@ -157,12 +155,10 @@
           </div>
 
           <aside class="notes">
-            <p>
               My name is <strong>Marco Cremaschi</strong>. I'm a
               <strong>researcher</strong> at the University of Milan-Bicocca and
               a <strong>lecturer</strong> in a database course for the master's
               degree in <strong>Computational Linguistics</strong>.
-            </p>
           </aside>
         </section>
 
@@ -219,12 +215,10 @@
             </div>
           </div>
           <aside class="notes">
-            <p>
               For this lab, we also have the help of <strong>David</strong>,
               <strong>Fabio</strong>, and <strong>Davide</strong>. We'll walk
               around during the <strong>coding checkpoints</strong>, so if you
               need any help, just raise your hand.
-            </p>
           </aside>
         </section>
 
@@ -1318,7 +1312,6 @@
           </p>
         </section>
 
-        <!-- ===== A NOTE ON DEBUGGING ===== -->
         <section>
           <h2>A Note on Debugging</h2>
           <p>You can print text, variables or both. Here are some examples:</p>
@@ -1327,8 +1320,9 @@
             print("just a literal text")
             print(variable_name)
             print(f"String interpolation: {variable_name}")
-          </code>
-        </pre>
+          </code></pre>
+
+        <aside class="notes">note</aside>
         </section>
 
         <section>
@@ -1528,7 +1522,6 @@
           </div>
 
           <aside class="notes">
-            <p>
               To build the <strong>RAG chain</strong>, we'll use
               <strong>LangChain Expression Language (LCEL)</strong>. It's a
               declarative syntax that lets us compose chains using the
@@ -1542,7 +1535,6 @@
               clean string that we can show back to the user.
               <strong>LCEL</strong> makes this structure simple and readable,
               which is great for rapid development and debugging.
-            </p>
           </aside>
         </section>
 
@@ -1569,7 +1561,6 @@
             </pre>
 
           <aside class="notes">
-            <p>
               We don't write a new prompt every time a user asks a question.
               Instead, we define a <strong>template</strong> with
               placeholders—in our case, <strong>{context}</strong> and
@@ -1581,7 +1572,6 @@
               <strong>consistency</strong>, makes the chain easier to maintain,
               and lets us easily tweak or improve the prompt without rewriting
               our logic.
-            </p>
           </aside>
         </section>
 
@@ -1603,15 +1593,12 @@
           </p>
 
           <aside class="notes">
-            <p>
               The most important part of our prompt isn't the context or the
               question—it's the <strong>instructions</strong> we give to the
               LLM. These guide how it should behave. A great example is the
               line:
-              <strong
-                >"If you don't know the answer, just say that you don't
-                know."</strong
-              >
+              <strong>"If you don't know the answer, just say that you don't
+                know."</strong>
               This simple instruction is crucial. It prevents the model from
               guessing or hallucinating answers when it doesn't have enough
               information. Instead, we force it to stay grounded in the
@@ -1619,7 +1606,6 @@
               <strong>reliable</strong>, <strong>transparent</strong>, and
               <strong>trustworthy</strong>, which is essential when working with
               sensitive data like medical knowledge.
-            </p>
           </aside>
         </section>
 
@@ -1816,7 +1802,6 @@
           />
 
           <aside class="notes">
-            <p>
               The pipeline we just explored has also been used to build a tool
               called <strong>LLMind</strong>—a system designed to suggest
               psychiatric diagnoses based on clinical case descriptions. This
@@ -1832,7 +1817,6 @@
               <strong>diagnostic accuracy of 76.1%</strong>, showing promising
               results as a clinical decision support system—not as a
               replacement, but as a smart assistant.
-            </p>
           </aside>
         </section>
 
