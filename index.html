@@ -83,7 +83,7 @@
               alt="Marco Cremaschi"
               style="max-width: 400px"
             />
-            <div style="margin-top: 10px">Marco Cremaschi</div>
+            <div style="margin-top: 10px"><a href="https://www.linkedin.com/in/marco-cremaschi/">Marco Cremaschi</a></div>
           </div>
 
           <aside class="notes">
@@ -111,7 +111,7 @@
                 alt="David Chieregato"
                 style="max-width: 200px"
               />
-              <div style="margin-top: 10px">David Chieregato</div>
+              <div style="margin-top: 10px"><a href=""><a href="https://www.linkedin.com/in/david-chieregato-8110b6b4/">David Chieregato</a></a></div>
             </div>
             <div style="text-align: center">
               <img
@@ -119,7 +119,7 @@
                 alt="Fabio D'Adda"
                 style="max-width: 200px"
               />
-              <div style="margin-top: 10px">Fabio D'Adda</div>
+              <div style="margin-top: 10px"><a href="https://www.linkedin.com/in/fabio-d-adda5/">Fabio D'Adda</a></div>
             </div>
             <div style="text-align: center">
               <img
@@ -127,7 +127,7 @@
                 alt="Davide Ditolve"
                 style="max-width: 200px"
               />
-              <div style="margin-top: 10px">Davide Ditolve</div>
+              <div style="margin-top: 10px"><a href="https://www.linkedin.com/in/davide-ditolve/">Davide Ditolve</a></div>
             </div>
           </div>
           <aside class="notes">
@@ -389,7 +389,7 @@
             <li>
               <strong>Google API Key:</strong> get one from
               <a href="https://aistudio.google.com/app/apikey" target="_blank"
-                >Google AI Studio</a
+                >Google AI Studio*</a
               >
               <img
                 class="inline-logo"
@@ -397,6 +397,9 @@
                 alt="AI Studio Logo"
               />
             </li>
+            <ul>
+              <li>*Google AI Studio is free of charge and do not require a valid credit card for the free tier</li>
+            </ul>
             <li>
               <strong>ICD-11 Chapter 6 Dataset:</strong> get from
               <a
@@ -684,7 +687,7 @@
             vector store
           </p>
           <pre>
-                <code data-line-numbers="1|2|3|4"  data-trim data-noescape>
+                <code data-line-numbers="1|2|3|4|5"  data-trim data-noescape>
                   pip install requests
                   pip install langchain langchain-community 
                   pip install pandas
@@ -713,7 +716,7 @@
                     </code>
                   </pre>
           <p class="fragment">
-            Without importing, Python wouldn't know what a Document is
+            Without importing, Python wouldn't know what a <code><span class="badge">Document</span></code> is
           </p>
 
           <aside class="notes">
@@ -760,7 +763,7 @@
             like a password for our program
           </p>
           <pre>
-            <code data-line-numbers="1-3|5-6|8-10" data-trim data-noescape>
+            <code data-line-numbers="1-3|4" data-trim data-noescape>
               import os
               import getpass
             
