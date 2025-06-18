@@ -361,7 +361,8 @@
           <p>TODO DAVIDE: link a colab senza codice?</p>
 
           <aside class="notes">
-            You can download a Jupyter Notebooks blueprint at this link. After the download, you can import it into your Jupyter instance or Colab.
+            You can download a Jupyter Notebooks blueprint at this link. After
+            the download, you can import it into your Jupyter instance or Colab.
           </aside>
         </section>
 
@@ -397,15 +398,15 @@
           </ul>
 
           <aside class="notes">
-            Concerning the prerequisites, you'll need two things: a Google API key for the model, which will be used, is free of charge. I don't need a subscription or a valid credit card. (Grab it from AI Studio.) and the Chapter 6 CSV, which we've already placed in the Google Drive.
+            Concerning the prerequisites, you'll need two things: a Google API
+            key for the model, which will be used, is free of charge. I don't
+            need a subscription or a valid credit card. (Grab it from AI
+            Studio.) and the Chapter 6 CSV, which we've already placed in the
+            Google Drive.
           </aside>
         </section>
 
-        <section
-          data-background-video="https://www.youtube.com/watch?v=T1BTyo1A4Ww"
-          data-background-video-loop
-          data-background-video-muted
-        >
+        <section>
           <h2>
             Google API Key
             <img
@@ -414,12 +415,29 @@
               alt="AI Studio Logo"
             />
           </h2>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/T1BTyo1A4Ww"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+
+          <aside class="notes">
+            I want to underline that the API key is free of charge. You don't
+            need a subscription or a valid credit card to use our service.
+          </aside>
         </section>
 
         <section>
           <h2>ICD-11 Chapter 6 Dataset</h2>
           <img src="imgs/screenshot.png" />
+
+          <aside class="notes"></aside>
         </section>
+
         <section>
           <h2>ICD-11 Chapter 6 dataset</h2>
           <ul>
@@ -434,16 +452,19 @@
               Average Definition Length: <strong>660 characters</strong>
             </li>
           </ul>
+
+          <aside class="notes">
+            This slide gives a quick overview of the dataset we’re working with. It contains 720 entries
+            in total. The most common category in the dataset is 6A60 (bipolar type I disorder), which
+            appears 18 times. On average, the
+            titles of the entries are about 55 characters long, while the
+            definitions are much longer, with an average of 660 characters.
+          </aside>
         </section>
 
         <!-- Slide 3: Category Distribution Chart -->
         <section>
           <h2>Top 20 Category Codes</h2>
-          <!-- 
-                        IMPORTANT: Please replace the 'src' attribute below with the path 
-                        to the 'category_distribution.png' file that was generated.
-                        For example, if it's in the same folder, you can just use "category_distribution.png".
-                    -->
           <img
             src="imgs/scheme/codes_distribution.png"
             alt="Top 20 Category Codes Distribution"
@@ -451,7 +472,7 @@
           />
           <p class="notes">
             This chart shows the most common parent-level categories in the
-            dataset.
+            dataset
           </p>
         </section>
 
@@ -462,43 +483,45 @@
             <dt class="fragment">code</dt>
             <dd class="fragment">
               The unique alphanumeric identifier for a specific disease or
-              disorder.
+              disorder
             </dd>
             <dt class="fragment">title</dt>
             <dd class="fragment">
-              The official, human-readable name of the condition.
+              The official, human-readable name of the condition
             </dd>
             <dt class="fragment">definition</dt>
             <dd class="fragment">
-              A detailed clinical description of the disorder.
+              A detailed clinical description of the disorder
             </dd>
           </dl>
         </section>
+
         <section>
           <h2>Column Definitions</h2>
           <dl>
             <dt class="fragment">inclusions</dt>
             <dd class="fragment">
               Other conditions or synonyms that are included within this
-              diagnostic category.
+              diagnostic category
             </dd>
             <dt class="fragment">exclusions</dt>
             <dd class="fragment">
-              Conditions that are explicitly NOT diagnosed under this code.
+              Conditions that are explicitly NOT diagnosed under this code
             </dd>
           </dl>
         </section>
+
         <section>
           <h2>Column Definitions</h2>
           <dl>
             <dt class="fragment">diagnosticCriteria</dt>
             <dd class="fragment">
-              The specific criteria that must be met for a definitive diagnosis.
+              The specific criteria that must be met for a definitive diagnosis
             </dd>
             <dt class="fragment">category_code</dt>
             <dd class="fragment">
               A broader, parent-level category that groups together related
-              codes.
+              codes
             </dd>
           </dl>
         </section>
