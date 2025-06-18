@@ -1141,7 +1141,7 @@
         </section>
 
         <section>
-          <h2>Creating the Vector Store</h2>
+          <h2>CODE 4 - Creating or Loading a Persistent Vector Store</h2>
           <p>
             This code creates a new Chroma database from our documents and
             embeddings if one doesn't already exist, or loads the existing one
@@ -1340,7 +1340,7 @@
         </section>
 
         <section>
-          <h2>Constructing the Chain</h2>
+          <h2>CODE 5 - Building the RAG Chain</h2>
           <p>
             We define a prompt template and then pipe together the retriever,
             the prompt, the LLM, and an output parser.
@@ -1398,9 +1398,7 @@
             defined, returning the final, context-aware answer from the LLM
           </p>
 
-          <aside class="notes">
-
-          </aside>
+          <aside class="notes"></aside>
         </section>
 
         <section>
@@ -1428,8 +1426,10 @@
                       </pre>
         </section>
 
-        <section data-background-image="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2hwZ2o2cGo5bWh2cGVlaHE1M3d0azM5YzJxMDE3cm84YzF3ZnhnaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ebFG4jcnC1Ny8/giphy.gif">
-          <h2 class="r-fit-text">Final Code: <br />Complete RAG System</b></h2>
+        <section
+          data-background-image="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2hwZ2o2cGo5bWh2cGVlaHE1M3d0azM5YzJxMDE3cm84YzF3ZnhnaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ebFG4jcnC1Ny8/giphy.gif"
+        >
+          <h2 class="r-fit-text">Final Code: <br />Complete RAG System</h2>
         </section>
 
         <section>
@@ -1509,8 +1509,34 @@
           </div>
         </section>
 
-        <!-- ===== Q&A ===== -->
-        <section  data-background-image="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmI0aTYxenRoM2xhZXhkMG4wNzgzaG83Nnh4NXA1NzJ5eGc4bTNsMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tU2mV8ALzJEdXAAwRo/giphy.gif">
+        <section data-background-color="#fff">
+          <h2>LLMind</h2>
+          <img src="imgs/scheme/rag_pipeline.png" style="max-width: 80%; height: auto; margin: 20px auto; display: block;">
+
+          <aside class="notes">
+            The pipeline we just explored has also been used to build a tool
+            called LLMind—a system designed to suggest psychiatric diagnoses
+            based on clinical case descriptions. This kind of tool is
+            particularly valuable given the complexity and nuance involved in
+            psychiatric and psychological assessment. Diagnoses often rely on
+            overlapping symptoms, contextual factors, and evolving criteria,
+            which makes decision-making both delicate and cognitively demanding.
+            By integrating structured knowledge from ICD-11 with the flexibility
+            of language models, LLMind helps clinicians navigate this
+            complexity, offering consistent, transparent, and evidence-based
+            support. In expert evaluations, LLMind reached a diagnostic accuracy
+            of 76.1%, showing promising results as a clinical decision support
+            system—not as a replacement, but as a smart assistant.
+          </aside>
+        </section>
+
+        <section
+          data-background-iframe="https://llmind.datai.disco.unimib.it/"
+        ></section>
+
+        <section
+          data-background-image="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmI0aTYxenRoM2xhZXhkMG4wNzgzaG83Nnh4NXA1NzJ5eGc4bTNsMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tU2mV8ALzJEdXAAwRo/giphy.gif"
+        >
           <h2>Questions&nbsp&nbsp&nbsp&nbsp&nbsp;</h2>
         </section>
       </div>
