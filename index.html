@@ -1875,7 +1875,13 @@
             const colorClass = colorSpan.className;
             const colorVar = `var(--${colorClass})`;
 
+            // ✅ CORREZIONE: Rimuovi style precedenti
+            const existingStyle = document.querySelector('#title-animation-style');
+            if (existingStyle) {
+              existingStyle.remove();
+            }
             const style = document.createElement("style");
+            style.id = 'title-animation-style';
             style.textContent = `
               .title-animate::after {
                 background: linear-gradient(120deg, ${colorVar} 0%, ${colorVar} 100%) !important;
@@ -1932,9 +1938,9 @@
         }
 
         function startCountdown(timerElem, endMsgElem) {
-          // Se c'è già un intervallo per questo timer, cancellalo
           if (timerElem.dataset.timerIntervalId) {
             clearInterval(timerIntervals[timerElem.dataset.timerIntervalId]);
+            delete timerIntervals[timerElem.dataset.timerIntervalId];
           }
           // Leggi il tempo iniziale dal testo del div
           let duration = parseTimeString(timerElem.textContent.trim());
