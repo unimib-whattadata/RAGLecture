@@ -60,18 +60,18 @@
         <section>
           <img class="r-stretch" src="imgs/AILC_Logo.png" />
           <h2 class="gradient-title">
+            Building a RAG System with LangChain and <br />ICD-11 Data
+          </h2>
+          <p>
             Retrieval Augmented Generation, Large Language Models and Knowledge
             Bases
-          </h2>
-          <p>Building a RAG System with LangChain and <br />ICD-11 Data</p>
+          </p>
 
           <aside class="notes">
-            Good morning everyone and welcome to our hands on workshop Building
-            a Retrieval Augmented Generation System with LangChain and ICD-11
-            Data. My name is Marco Cremaschi. I'm a researcher at the University
-            of Milano-Biccocca and teacher of a database course in the master's
-            degree in computational linguistics. Over the next two hours we'll
-            explore why RAG matters and set up the environment together.
+            Good morning, everyone. Welcome to our lab, 'Building a Retrieval
+            Augmented Generation System with LangChain and ICD-11 Data.' Over
+            the next two hours, we'll explore why RAG matters and set up the
+            environment together.
           </aside>
         </section>
 
@@ -88,8 +88,8 @@
 
           <aside class="notes">
             My name is Marco Cremaschi. I'm a researcher at the University of
-            Milano-Biccocca and teacher of a database course in the master's
-            degree in computational linguistics.
+            Milan-Bicocca and a lecturer in a database course for the master's
+            degree in Computational Linguistics.
           </aside>
         </section>
 
@@ -131,16 +131,16 @@
             </div>
           </div>
           <aside class="notes">
-            For this lab we have also the help of David Chieregato, Fabio
-            D'Adda, and Davide Ditolve. They'll walk around during the coding
-            checkpoints, so if need any help just raise your hand.
+            For this lab, we also have the help of David, Fabio, and Davide.
+            We'll walk around during the coding checkpoints, so if you need any
+            help, just raise your hand.
           </aside>
         </section>
 
         <!-- ===== LAB AGENDA ===== -->
         <section>
           <h2 class="title-animate">
-            <span class="maya-blue"></span> LAB Agenda
+            <span class="maya-blue"></span>LAB Agenda
           </h2>
         </section>
 
@@ -170,9 +170,9 @@
 
           <aside class="notes">
             Everything is broken into five parts that map directly onto the code
-            checkpoints. We'll start with the fundamentals, then move through
-            setup, embeddings, chain assembly, and finally querying. After the
-            wrap-up there's time for Q&A.
+            checkpoints. We'll start with the fundamentals, then move on to
+            setup, embeddings, chain assembly, and finally, querying. After the
+            Wrap-up, there's time for a Q&A session.
           </aside>
         </section>
 
@@ -184,8 +184,8 @@
           </h2>
 
           <aside class="notes">
-            This first module is purely conceptual: what RAG is and why ICD-11
-            makes a perfect demo dataset.
+            For the first part, we'll examine the conceptual side, covering what
+            RAG is and why ICD-11 makes a suitable demonstration dataset.
           </aside>
         </section>
 
@@ -207,7 +207,7 @@
           <aside class="notes">
             Retrieval-Augmented Generation couples a retriever with a generator
             so the LLM is grounded in real data. Think of it as 'search then
-            answer' rather than 'just answer'. We'll build both halves today.
+            answer' rather than 'just answer'.
           </aside>
         </section>
 
@@ -238,7 +238,8 @@
             Before we write a single line of code, let's examine what we're
             indexing. ICD-11 is the World Health Organization's global standard
             for diagnostic codes. It went live in January 2022 and now contains
-            ≈17000 entities and ≈120000 index terms.
+            approximately 17,000 entities and approximately 120,000 index terms.
+            <strong>Does someone knows ICD-11?</strong>
           </aside>
         </section>
 
@@ -253,21 +254,26 @@
           </p>
 
           <aside class="notes">
-            Chapter 06 - Mental, behavioural or neurodevelopmental disorders.
+            Our work focuses specifically on Chapter 6, which addresses mental,
+            behavioural, and neurodevelopmental disorders. This chapter includes
+            all the conditions typically encountered in psychiatric and
+            psychological practice, and forms the foundation of the dataset used
+            to train our model.
           </aside>
         </section>
 
         <!-- ===== ICD-11 BROWSER ===== -->
         <section
-          data-background-color="white"
-          data-background-iframe="#"
+          data-background-iframe="https://icd.who.int/browse/2025-01/mms/en#334423054"
           data-background-interactive
+          data-background-color="#FFF"
         >
           <aside class="notes">
-            Each entity ships with: an alphanumeric code (e.g., 6B60), a
+            Each entity ships with an alphanumeric code (e.g., 6B60), a
             preferred title and synonyms, a concise definition, hierarchical
-            parents/children and explicit exclusions. For this lab we consider
-            That subset has 557 entities—big enough to stress-test retrieval.
+            parents and children, and explicit exclusions. or this lab, we
+            consider a subset of 557 entities—big enough to stress-test
+            retrieval.
           </aside>
         </section>
 
@@ -278,8 +284,8 @@
           </h2>
 
           <aside class="notes">
-            Let's get our environment ready. We'll start with the prerequisites
-            and then move on to the setup.
+            Let's get our environment ready. We'll begin with the requirements
+            and then proceed to the setup.
           </aside>
         </section>
 
@@ -336,11 +342,27 @@
               </ul>
             </div>
           </div>
+
+          <aside class="notes">
+            This slide compares running Python code locally versus using Google
+            Colab. When working on your PC, you have complete control and can
+            work offline; however, you need to install Python and any required
+            libraries manually. On the other hand, Google Colab requires no
+            setup, comes with many libraries pre-installed, and provides free
+            access to powerful hardware like GPUs. However, it does require an
+            internet connection. Choosing between the two depends on your
+            project's needs, the level of control you require, and the available
+            resources.
+          </aside>
         </section>
 
         <section>
-          <h2>Google Colab</h2>
+          <h2>Jupyter Notebook</h2>
           <p>TODO DAVIDE: link a colab senza codice?</p>
+
+          <aside class="notes">
+            You can download a Jupyter Notebooks blueprint at this link. After the download, you can import it into your Jupyter instance or Colab.
+          </aside>
         </section>
 
         <!-- ===== PREREQUISITES ===== -->
@@ -375,13 +397,15 @@
           </ul>
 
           <aside class="notes">
-            You'll need two things: a Google API key (grab it from AI Studio)
-            and the Chapter 6 CSV which we've already placed in the Google
-            Drive.
+            Concerning the prerequisites, you'll need two things: a Google API key for the model, which will be used, is free of charge. I don't need a subscription or a valid credit card. (Grab it from AI Studio.) and the Chapter 6 CSV, which we've already placed in the Google Drive.
           </aside>
         </section>
 
-        <section data-background-video="https://www.youtube.com/watch?v=T1BTyo1A4Ww" data-background-video-loop data-background-video-muted>
+        <section
+          data-background-video="https://www.youtube.com/watch?v=T1BTyo1A4Ww"
+          data-background-video-loop
+          data-background-video-muted
+        >
           <h2>
             Google API Key
             <img
@@ -394,62 +418,90 @@
 
         <section>
           <h2>ICD-11 Chapter 6 Dataset</h2>
-          <img src="imgs/screenshot.png"/>
+          <img src="imgs/screenshot.png" />
         </section>
         <section>
-					<h2>ICD-11 Chapter 6 dataset</h2>
-					<ul>
-						<li class="fragment">Total Entries: <strong>720</strong></li>
-						<li class="fragment">Most Frequent Category: <strong>6A60</strong> (appearing 18 times)</li>
-						<li class="fragment">Average Title Length: <strong>55 characters</strong></li>
-						<li class="fragment">Average Definition Length: <strong>660 characters</strong></li>
-					</ul>
-				</section>
+          <h2>ICD-11 Chapter 6 dataset</h2>
+          <ul>
+            <li class="fragment">Total Entries: <strong>720</strong></li>
+            <li class="fragment">
+              Most Frequent Category: <strong>6A60</strong> (appearing 18 times)
+            </li>
+            <li class="fragment">
+              Average Title Length: <strong>55 characters</strong>
+            </li>
+            <li class="fragment">
+              Average Definition Length: <strong>660 characters</strong>
+            </li>
+          </ul>
+        </section>
 
-                <!-- Slide 3: Category Distribution Chart -->
-                <section>
-                    <h2>Top 20 Category Codes</h2>
-                    <!-- 
+        <!-- Slide 3: Category Distribution Chart -->
+        <section>
+          <h2>Top 20 Category Codes</h2>
+          <!-- 
                         IMPORTANT: Please replace the 'src' attribute below with the path 
                         to the 'category_distribution.png' file that was generated.
                         For example, if it's in the same folder, you can just use "category_distribution.png".
                     -->
-                    <img src="imgs/scheme/codes_distribution.png" 
-                         alt="Top 20 Category Codes Distribution"
-                         style="max-height: 500px; width: auto;">
-                    <p class="notes">This chart shows the most common parent-level categories in the dataset.</p>
-                </section>
+          <img
+            src="imgs/scheme/codes_distribution.png"
+            alt="Top 20 Category Codes Distribution"
+            style="max-height: 500px; width: auto"
+          />
+          <p class="notes">
+            This chart shows the most common parent-level categories in the
+            dataset.
+          </p>
+        </section>
 
-                <!-- Slide 4: Column Definitions -->
-                <section>
-                    <h2>Column Definitions</h2>
-                    <dl>
-                        <dt class="fragment">code</dt>
-                        <dd class="fragment">The unique alphanumeric identifier for a specific disease or disorder.</dd>
-                        <dt class="fragment">title</dt>
-                        <dd class="fragment">The official, human-readable name of the condition.</dd>
-                        <dt class="fragment">definition</dt>
-                        <dd class="fragment">A detailed clinical description of the disorder.</dd>
-                    </dl>
-                </section>
-                <section>
-                    <h2>Column Definitions</h2>
-                    <dl>
-                        <dt class="fragment">inclusions</dt>
-                        <dd class="fragment">Other conditions or synonyms that are included within this diagnostic category.</dd>
-                        <dt class="fragment">exclusions</dt>
-                        <dd class="fragment">Conditions that are explicitly NOT diagnosed under this code.</dd>
-                    </dl>
-                </section>
-                <section>
-                    <h2>Column Definitions</h2>
-                    <dl>
-                        <dt class="fragment">diagnosticCriteria</dt>
-                        <dd class="fragment">The specific criteria that must be met for a definitive diagnosis.</dd>
-                        <dt class="fragment">category_code</dt>
-                        <dd class="fragment">A broader, parent-level category that groups together related codes.</dd>
-                    </dl>
-                </section>
+        <!-- Slide 4: Column Definitions -->
+        <section>
+          <h2>Column Definitions</h2>
+          <dl>
+            <dt class="fragment">code</dt>
+            <dd class="fragment">
+              The unique alphanumeric identifier for a specific disease or
+              disorder.
+            </dd>
+            <dt class="fragment">title</dt>
+            <dd class="fragment">
+              The official, human-readable name of the condition.
+            </dd>
+            <dt class="fragment">definition</dt>
+            <dd class="fragment">
+              A detailed clinical description of the disorder.
+            </dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Column Definitions</h2>
+          <dl>
+            <dt class="fragment">inclusions</dt>
+            <dd class="fragment">
+              Other conditions or synonyms that are included within this
+              diagnostic category.
+            </dd>
+            <dt class="fragment">exclusions</dt>
+            <dd class="fragment">
+              Conditions that are explicitly NOT diagnosed under this code.
+            </dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Column Definitions</h2>
+          <dl>
+            <dt class="fragment">diagnosticCriteria</dt>
+            <dd class="fragment">
+              The specific criteria that must be met for a definitive diagnosis.
+            </dd>
+            <dt class="fragment">category_code</dt>
+            <dd class="fragment">
+              A broader, parent-level category that groups together related
+              codes.
+            </dd>
+          </dl>
+        </section>
 
         <!-- ===== OUR TOOLS: THE LIBRARIES ===== -->
         <section>
@@ -488,9 +540,7 @@
             real-world applications such as intelligent agents, chatbots,
             research assistants, and knowledge-driven interfaces. It supports
             multiple programming environments, with Python and JavaScript being
-            the most popular. By abstracting away common challenges in working
-            with LLMs, LangChain makes it easier to prototype and deploy
-            advanced AI applications quickly and reliably.
+            the most popular.
           </aside>
         </section>
 
@@ -544,36 +594,37 @@
             efficiently. pandas is widely used in data science, machine
             learning, and statistical analysis thanks to its intuitive syntax
             and strong integration with other Python libraries. Chroma is a
-            vector database that allows you to store and search for text data
-            efficiently. It is designed to be used with large language models
-            (LLMs) and other AI applications that need to process and retrieve
-            text data. Google GenAI is a library that allows you to connect to
-            and use Google's powerful AI models. It provides a simple interface
+            vector database delveloped by langchain. Croma allows you to store
+            and search for text data efficiently. It is designed to be used with
+            large language models (LLMs) and other AI applications that need to
+            process and retrieve text data. Google GenAI is a library that
+            allows you to connect to and use Google's platform as a service LLMS
+            so you can query the model the cloud. It provides a simple interface
             for interacting with these models, making it easy to build and
             deploy AI applications.
           </aside>
         </section>
 
-                <!-- Slide: Setup - Step 1.1: Installing Libraries -->
-                <section>
-                  <h2>Step 2.2: Setting up libraries</h2>
-                  <p>
-                    We use <code><span class="badge">>pip</span></code> to install
-                    LangChain and its related packages, including the integration for
-                    Google's AI models and the Chroma
-                    <img class="inline-logo" src="imgs/logo/chroma-logo.png" alt="" />
-                    vector store
-                  </p>
-                  <pre>
+        <!-- Slide: Setup - Step 1.1: Installing Libraries -->
+        <section>
+          <h2>Step 2.2: Setting up libraries</h2>
+          <p>
+            We use <code><span class="badge">>pip</span></code> to install
+            LangChain and its related packages, including the integration for
+            Google's AI models and the Chroma
+            <img class="inline-logo" src="imgs/logo/chroma-logo.png" alt="" />
+            vector store
+          </p>
+          <pre>
                 <code data-line-numbers="1|2|3|4"  data-trim data-noescape>
-                  pip install -qU requests
-                  pip install -qU langchain langchain-community 
-                  pip install -qU pandas
-                  pip install -qU langchain-chroma
-                  pip install -qU langchain-google-genai
+                  pip install requests
+                  pip install langchain langchain-community 
+                  pip install pandas
+                  pip install langchain-chroma
+                  pip install langchain-google-genai
                 </code>
               </pre>
-                </section>
+        </section>
 
         <section>
           <h2>
@@ -612,8 +663,6 @@
             is often easier to start with
           </p>
         </section>
-
-
 
         <section>
           <h2>Theory: Securing Credentials</h2>
@@ -725,14 +774,17 @@
 
         <section>
           <h2>Step 1.3: Implementing the CSV Loader</h2>
-            <p>
-              The function in the next slide reads the
-              <code><span class="badge">icdchapter6.csv</span></code> file,
-              iterates through each row, and creates a
-              <code><span class="badge">Document</span></code> object with
-              formatted content and metadata
-            </p>
-              <pre><code data-line-numbers data-trim data-noescape>
+          <p>
+            The function in the next slide reads the
+            <code><span class="badge">icdchapter6.csv</span></code> file,
+            iterates through each row, and creates a
+            <code><span class="badge">Document</span></code> object with
+            formatted content and metadata
+          </p>
+        </section>
+
+        <section>
+          <pre><code data-line-numbers data-trim data-noescape>
                 import pandas as pd
                 from langchain_core.documents import Document
 
@@ -748,7 +800,7 @@
                         icd_documents.append(doc)
                       return icd_documents
                     
-                # Let's load the documents
+                #  Let's load the documents
                 icd11_documents = load_icd11_from_csv('icdchapter6.csv')
                 print(f"Loaded {len(icd11_documents)} documents.")
               </code></pre>
@@ -788,10 +840,6 @@
         </section>
         <section>
           <h2 class="r-fit-text checkpoint-animate">Lab Checkpoint 1</h2>
-          <p>
-            Your script should now handle installation, API keys, and data
-            loading.
-          </p>
           <pre>
             <code data-line-numbers="1-4|6-9|11-21|23-29" data-trim data-noescape>
               import os, getpass
@@ -905,7 +953,7 @@
             class in LangChain to perform this conversion
           </p>
           <pre>
-            <code data-line-numbers data-trim data-noescape>
+            <code data-line-numbers="1|3-6|7" data-line-numbers data-trim data-noescape>
             from langchain_google_genai import GoogleGenerativeAIEmbeddings
 		
             # Initialize the embedding model
@@ -915,6 +963,7 @@
             print("Embedding model initialized.")
             </code>
           </pre>
+          <aside class="note">trycatch</aside>
         </section>
 
         <!-- ===== THEORY: INDEXING IN A VECTOR STORE ===== -->
@@ -958,6 +1007,9 @@
             embeddings if one doesn't already exist, or loads the existing one
             from disk
           </p>
+        </section>
+
+        <section>
           <pre>
             <code data-line-numbers="1-2|4|6-11|12-17|19-21" data-trim data-noescape>
               from langchain_chroma import Chroma
@@ -988,10 +1040,6 @@
         <!-- ===== LAB CHECKPOINT 2 ===== -->
         <section>
           <h2 class="r-fit-text checkpoint-animate">LAB Checkpoint 2</h2>
-          <p>
-            Your script should now include the embedding model and vector store
-            creation.
-          </p>
           <pre>
             <code data-line-numbers data-trim data-noescape>
                 # ... (previous code from Checkpoint 1) ...
@@ -1018,6 +1066,11 @@
                 print("Retriever is ready.")
 								 </code></pre>
         </section>
+
+        <!-- ===== LAB CHECKPOINT 2 ===== -->
+        <section
+          data-background-image="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG05dW83bTF5MXMxMGo3YjFncWd4dmdkaHgzendnZWxza3Y1M2x1YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/oYQ9HRm5Mo7VXeMNVR/giphy.gif"
+        ></section>
 
         <section>
           <h2 class="title-animate">
@@ -1122,8 +1175,12 @@
             We define a prompt template and then pipe together the retriever,
             the prompt, the LLM, and an output parser.
           </p>
+        </section>
+
+        <!-- ===== STEP 3.1: CONSTRUCTING THE CHAIN ===== -->
+        <section>
           <pre>
-              <code data-line-numbers data-trim data-noescape>
+              <code data-line-numbers="1-4|6-7|9-16|17 |20-25|27 " data-line-numbers data-trim data-noescape>
                   from langchain_google_genai import ChatGoogleGenerativeAI
                   from langchain_core.prompts import ChatPromptTemplate
                   from langchain_core.output_parsers import StrOutputParser
@@ -1180,20 +1237,25 @@
             We define a helper function and then ask our RAG system a question
             that is inside its knowledge base and one that is outside of it.
           </p>
+        </section>
+
+        <!-- ===== STEP 3.2: PUTTING IT TO THE TEST ===== -->
+        <section>
+          <h3>Step 3.2: Putting it to the Test</h3>
           <pre>
-              <code data-line-numbers data-trim data-noescape>
-                  def ask_rag_system(query: str):
-                    print(f"\\n--- Asking: '{query}' ---")
-                    response = rag_chain.invoke(query)
-                    print(f"Answer:\\n{response}")
-                  
-                  # Query 1: Specific question
-                  ask_rag_system("What is the ICD-11 code for 'Dissociative identity disorder'?")
-                  
-                  # Query 2: Off-topic question
-                  ask_rag_system("What is the capital of France?")
-								</code>
-              </pre>
+                      <code data-line-numbers="1|2|3 -4|6-7|9-10" data-trim data-noescape>
+                          def ask_rag_system(query: str):
+                            print(f"\\n--- Asking: '{query}' ---")
+                            response = rag_chain.invoke(query)
+                            print(f"Answer:\\n{response}")
+                          
+                          # Query 1: Specific question
+                          ask_rag_system("What is the ICD-11 code for 'Dissociative identity disorder'?")
+                          
+                          # Query 2: Off-topic question
+                          ask_rag_system("What is the capital of France?")
+                        </code>
+                      </pre>
         </section>
 
         <section>
