@@ -63,8 +63,6 @@
         animation: gradient-move 3s ease-in-out infinite,
           text-shadow-pulse 2s ease-in-out infinite;
         letter-spacing: 0.1em;
-        text-shadow: 0 0 10px rgba(0, 195, 255, 0.5),
-          0 0 20px rgba(255, 94, 98, 0.3), 0 0 30px rgba(255, 255, 28, 0.2);
       }
       @keyframes gradient-move {
         0% {
@@ -748,7 +746,7 @@
               font-weight: bold;
             "
           >
-            Tempo scaduto!
+            Time is over!
           </div>
           <aside class="notes">
             We leave you 5 minutes to obtain the API key and download the
@@ -1101,7 +1099,7 @@
               font-weight: bold;
             "
           >
-            Tempo scaduto!
+            Time is over!
           </div>
           <aside class="notes">
             We leave you 5 minutes to implement the code.
@@ -1470,6 +1468,20 @@
           data-background-image="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmI0aTYxenRoM2xhZXhkMG4wNzgzaG83Nnh4NXA1NzJ5eGc4bTNsMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/oYQ9HRm5Mo7VXeMNVR/giphy.gif"
         >
           <h2>BREAK</h2>
+          <div id="countdown-timer" class="countdown-animated">05:00</div>
+          <div
+            id="timer-end-message"
+            style="
+              display: none;
+              font-size: 2em;
+              color: #e74c3c;
+              text-align: center;
+              margin-top: 20px;
+              font-weight: bold;
+            "
+          >
+            Time is over!
+          </div>
         </section>
 
         <section>
@@ -1907,26 +1919,25 @@
       });
     </script>
     <script>
-      // TIMER MULTIPLI RESETTABILI SU SLIDE SHOW, CON DURATA PERSONALIZZABILE
+      // TIMER MULTIPLI RESETTABILI SU SLIDE SHOW, TEMPO PRESO DAL TESTO DEL DIV
       (function () {
         // Mappa per tenere traccia degli intervalli attivi per ogni timer
         const timerIntervals = {};
-        const DEFAULT_TIMER_DURATION = 5 * 60; // 5 minuti in secondi
+
+        function parseTimeString(timeStr) {
+          // Accetta formato mm:ss
+          const match = timeStr.match(/^(\d{1,2}):(\d{2})$/);
+          if (!match) return 300; // fallback 5 minuti
+          return parseInt(match[1], 10) * 60 + parseInt(match[2], 10);
+        }
 
         function startCountdown(timerElem, endMsgElem) {
           // Se c'è già un intervallo per questo timer, cancellalo
           if (timerElem.dataset.timerIntervalId) {
             clearInterval(timerIntervals[timerElem.dataset.timerIntervalId]);
           }
-          // Leggi la durata personalizzata (in secondi) o usa default
-          let duration = DEFAULT_TIMER_DURATION;
-          if (timerElem.hasAttribute("data-timer-duration")) {
-            const custom = parseInt(
-              timerElem.getAttribute("data-timer-duration"),
-              10
-            );
-            if (!isNaN(custom) && custom > 0) duration = custom;
-          }
+          // Leggi il tempo iniziale dal testo del div
+          let duration = parseTimeString(timerElem.textContent.trim());
           // Genera un id unico per questo timer
           const timerId = Math.random().toString(36).substr(2, 9);
           timerElem.dataset.timerIntervalId = timerId;
