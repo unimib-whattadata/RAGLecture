@@ -1209,7 +1209,7 @@
         <section>
           <h2 class="r-fit-text checkpoint-animate">Lab Checkpoint 1</h2>
           <pre>
-            <code data-line-numbers="1-4|6-9|11-21|23-29" data-trim data-noescape>
+            <code data-trim data-noescape>
               import os, getpass
               from dotenv import load_dotenv
               import pandas as pd
@@ -1276,36 +1276,30 @@
 
         <section>
           <h2>Creating Text Embeddings</h2>
-          <div class="content">
-            <div class="theory-block">
-              <p class="main-point">
-                To find relevant information, we can't just match keywords. We
-                need to understand the <strong>meaning</strong> or
-                <strong>semantic content</strong> of the text
-              </p>
-              <p class="detail-point">
-                <strong>Embeddings</strong> are numerical vectors that represent
-                this semantic meaning. An embedding model converts our text
-                documents into these vectors, placing similar concepts close to
-                each other in vector space
-              </p>
-            </div>
-          </div>
+          <p>
+            To find relevant information, we can't just match keywords. We need
+            to understand the <strong>meaning</strong> or
+            <strong>semantic content</strong> of the text
+          </p>
+          <p>
+            <strong>Embeddings</strong> are numerical vectors that represent
+            this semantic meaning. An embedding model converts our text
+            documents into these vectors, placing similar concepts close to each
+            other in vector space
+          </p>
 
           <aside class="notes">
-            <p>
-              <strong>Keyword matching</strong> isn't enough. We need the system
-              to understand the <strong>meaning</strong>—the
-              <strong>semantic content</strong>—of a question and find texts
-              that are conceptually related, even if the wording is different.
-              That's where <strong>embeddings</strong> come in. These are
-              numerical vectors that capture the semantic meaning of a text. An
-              <strong>embedding model</strong> transforms each chunk of text
-              into a vector, and similar meanings end up close together in
-              vector space. So instead of searching by words, we're searching by
-              <strong>meaning</strong>—which makes the retrieval process much
-              more powerful and flexible.
-            </p>
+            <strong>Keyword matching</strong> isn't enough. We need the system
+            to understand the <strong>meaning</strong>—the
+            <strong>semantic content</strong>—of a question and find texts that
+            are conceptually related, even if the wording is different. That's
+            where <strong>embeddings</strong> come in. These are numerical
+            vectors that capture the semantic meaning of a text. An
+            <strong>embedding model</strong> transforms each chunk of text into
+            a vector, and similar meanings end up close together in vector
+            space. So instead of searching by words, we're searching by
+            <strong>meaning</strong>—which makes the retrieval process much more
+            powerful and flexible.
           </aside>
         </section>
 
@@ -1876,12 +1870,14 @@
             const colorVar = `var(--${colorClass})`;
 
             // ✅ CORREZIONE: Rimuovi style precedenti
-            const existingStyle = document.querySelector('#title-animation-style');
+            const existingStyle = document.querySelector(
+              "#title-animation-style"
+            );
             if (existingStyle) {
               existingStyle.remove();
             }
             const style = document.createElement("style");
-            style.id = 'title-animation-style';
+            style.id = "title-animation-style";
             style.textContent = `
               .title-animate::after {
                 background: linear-gradient(120deg, ${colorVar} 0%, ${colorVar} 100%) !important;
